@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial;
+    background-color: #e3feff ;
+}
+
+.header {
+    text-align: center;
+    padding: 32px;
+}
+
+/* Create four equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 25%;
+    padding: 10px;
+}
+
+.column img {
+    margin-top: 12px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media (max-width: 800px) {
+    .column {
+        width: 50%;
+    }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}
+</style>
+<body>
+
+<!-- Header -->
+<div class="header"><p><font color=" #4c4f06 ">
+  <h3>  </h3> </font>
+</p>
+</div>
+
+<!-- Photo Grid -->
+<div class="row"> 
+  
+
+<div class="column">
+<a href="images/c1.png"><img src="images/c1.png" style="width:100%"></a>
+<a href="images/c2.PNG"><img src="images/c2.PNG" style="width:105%"></a>
+<a href="images/c3.PNG"><img src="images/c3.PNG" style="width:100%"></a>
+<a href="images/A.png"><img src="images/A.png" style="width:100%"></a>
+</div>
+  
+
+<div class="column">
+<a href="images/a3.PNG"><img src="images/a3.PNG" style="width:110%"></a>
+<a href="images/a4.PNG"><img src="images/a4.PNG" style="width:100%"></a>
+<a href="images/46.jpg"><img src="images/46.jpg" style="width:100%"></a>
+<a href="images/38.jpeg"><img src="images/38.jpeg" style="width:100%"></a>
+</div>  
+  
+
+<div class="column">
+<a href="images/a7.PNG"><img src="images/a7.PNG" style="width:107%"></a>
+<a href="images/a8.PNG"><img src="images/a8.PNG" style="width:105%"></a>
+<a href="images/47.jpg"><img src="images/47.jpg" style="width:100%"></a>
+<a href="images/42.png"><img src="images/42.png" style="width:100%"></a>
+</div>
+  
+
+<div class="column">
+<a href="images/a5.PNG"><img src="images/a5.PNG" style="width:100%"></a>
+<a href="images/a6.PNG"><img src="images/a6.PNG" style="width:100%"></a>
+<a href="images/57.png"><img src="images/57.png" style="width:100%"></a>
+<a href="images/58.jpg"><img src="images/58.jpg" style="width:100%"></a>
+</div>
+</div>
+
+</body>
+</html>
+
