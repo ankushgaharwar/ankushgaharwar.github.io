@@ -1,0 +1,278 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Nunito', Arial, sans-serif; /* Nunito font added */
+}
+
+.container {
+    display: flex;
+    height: 100%;
+}
+
+.window {
+    flex-grow: 1;
+    padding: 20px;
+    border: 1px solid #ddd;
+    overflow: auto;
+    transition: width 0.1s ease; /* Smooth transition for resizing */
+    /* Hide scrollbar but allow scrolling */
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none;  /* For IE 10+ */
+    /* For Chrome, Safari, and Opera */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.window h2 {
+    margin-top: 0;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 10px;
+}
+
+.image-grid img {
+    width: 100%;
+    height: auto;
+    border: 0px solid #ccc;
+}
+
+.divider {
+    position: relative;
+        /* ... other styles ... */
+    background: transparent; /* Make the divider background transparent */
+    width: 1px; /* Actual divider width set to 0 */
+    cursor: ew-resize;
+    position: relative;
+    opacity: 100; /* Make the divider fully transparent */
+    border: none; /* Remove any border */
+    box-shadow: none; /* Remove any shadow effect */
+
+}
+
+.divider:hover {
+    opacity: 0; /* Keep the divider invisible on hover */
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent; /* Invisible visual appearance */
+    width: 20px; /* Invisible but larger hit area */
+    height: 100%;
+    opacity: 0; /* Keep the pseudo-element fully transparent */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F6F6F0; /* Example: A shade of green */
+    border: 2px solid black;
+    padding: 2px; /* Reduced padding */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Adjust the body padding-top if the navbar height changes */
+body {
+    padding-top: 40px; /* Adjust this value based on the new height of your navbar */
+}
+
+.nav-box {
+    display: flex;
+    align-items: center;
+}
+
+#nav-logo img {
+    height: 50px; /* Adjust the height as needed */
+    padding-right: 20px; /* Add padding to the right of the logo */
+    padding-left: 20px; /* Add padding to the right of the logo */
+}
+
+#nav-image img {
+    height: 30px; /* Set the height to control the size of the image */
+    /* If you also need to control the width, you can add: */
+    /* width: auto; */ /* This will maintain the aspect ratio */
+}
+
+.vertical-line {
+    padding: 0 !important;
+}
+
+
+
+
+#nav-links a {
+    margin: 0 10px; /* Adjust margin as needed */
+    text-decoration: none;
+    color: black;
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 14px; /* Adjust font size as needed */
+}
+
+/* ... Rest of your styles ... */
+
+#nav-logo {
+    padding-left: 0px; /* Adjust this value as needed */
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 10px;
+}
+
+.image-container {
+    position: relative;
+    cursor: pointer;
+}
+
+/* Existing styles for images in all image containers */
+.image-container img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    border: 2px solid black; /* Default border color for all images */
+    box-sizing: border-box;
+}
+
+/* Additional styles for images in window2 */
+#window2 .image-container img {
+    border-color: #ADADAD; /* Replace #yourColor with your desired color */
+    
+}
+
+
+
+.image-container .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    transition: 0.3s ease;
+}
+
+.image-container:hover img {
+    filter: blur(8px);
+}
+
+.image-container:hover .overlay {
+    height: 100%;
+}
+
+.text {
+    color: white;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+
+
+
+
+
+
+/* ... existing styles ... */
+
+
+
+#divider-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px; /* Example width */
+    height: auto; /* Maintain aspect ratio */
+    z-index: 100; /* Ensure it's above everything else */
+    opacity: 1; /* Make sure the image is fully opaque */
+}
+
+/* ... remaining styles ... */
+
+.section-title {
+    font-weight: normal; /* This will make the text not bold */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#nav-links {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    align-items: flex-start; /* Align items to the left */
+}
+
+#nav-links .nav-links-upper, #nav-links .nav-links-lower {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align links to the start (left) */
+}
+
+#nav-links a {
+    margin-right: 20px; /* Space between links */
+    text-decoration: none; /* Optional: Removes underline from links */
+}
+
+#nav-links hr {
+    width: 100%; /* Full width horizontal line */
+    border: 0; /* Remove default border */
+    height: 1px; /* Line thickness */
+    background-color: black; /* Line color */
+    margin: 5px 0; /* Space above and below the line */
+}
+
+
+
+
+
+#window1 {
+    background-image: url('images/bg.png');
+    background-color: #F6F6F0; /* existing background color */
+    background-blend-mode: multiply;
+    background-size: cover; /* or 'contain' based on your preference */
+    background-position: center;
+}
+
+#window2 {
+    background-image: url('images/bg.png');
+    background-color: #282828; /* existing background color */
+    background-blend-mode: multiply;
+    background-size: cover; /* or 'contain' based on your preference */
+    background-position: center;
+}
+
+
+
+
+
+
+
+
+
