@@ -308,3 +308,23 @@ body {
     background-size: cover; /* or 'contain' based on your preference */
     background-position: center;
 }
+
+
+
+
+
+/* Center content and make images responsive */
+.col-md-8 {
+    display: flex; /* Use flexbox to center the content */
+    justify-content: center; /* Center content horizontally in the flex container */
+    align-items: center; /* Center content vertically in the flex container */
+    max-width: 100%; /* Ensure the column does not exceed the width of its container */
+    margin: auto; /* Center the column itself if it's smaller than the container */
+}
+
+.col-md-8 img {
+    max-width: 100%; /* Max width is 100% of the .col-md-8 element */
+    height: auto; /* Height is auto to maintain aspect ratio */
+    display: block; /* Display block to remove bottom space associated with inline elements */
+}
+
