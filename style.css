@@ -165,13 +165,10 @@ body {
     transition: 0.3s ease;
 }
 
-.image-container:hover img {
-    filter: blur(8px);
-}
 
-.image-container:hover .overlay {
-    height: 100%;
-}
+
+
+
 
 .text {
     color: white;
@@ -253,7 +250,7 @@ body {
 
 
 #window1 {
-    background-image: url('images/bg.png');
+    
     background-color: #F6F6F0; /* existing background color */
     background-blend-mode: multiply;
     background-size: cover; /* or 'contain' based on your preference */
@@ -261,8 +258,8 @@ body {
 }
 
 #window2 {
-    background-image: url('images/bg.png');
-    background-color: #282828; /* existing background color */
+    
+    background-color: #000000; /* existing background color */
     background-blend-mode: multiply;
     background-size: cover; /* or 'contain' based on your preference */
     background-position: center;
@@ -275,4 +272,21 @@ body {
 
 
 
+.image-container img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    border: 2px solid black; /* Default border color for all images */
+    box-sizing: border-box;
+    border-radius: 15px; /* Adjust this value to control the roundness */
+}
 
+.image-container:hover img {
+    filter: blur(8px);
+border-radius: 10px; /* Adjust this value to control the roundness */
+}
+
+.image-container:hover .overlay {
+    height: 100%;
+border-radius: 10px; /* Adjust this value to control the roundness */
+}
