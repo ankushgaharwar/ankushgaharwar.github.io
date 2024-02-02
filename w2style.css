@@ -341,7 +341,7 @@ body {
     width: 100%;
     height: auto;
     transition: transform 0.3s ease, filter 0.3s ease;
-    border: 2px solid black; /* Default border color for all images */
+    border: 2.5px solid black; /* Default border color for all images */
     box-sizing: border-box;
     border-radius: 500px; /* Adjust this value to control the roundness */
 }
