@@ -346,15 +346,15 @@ body {
     transition: transform 0.3s ease, filter 0.3s ease;
     border: 2px solid black; /* Default border color for all images */
     box-sizing: border-box;
-    border-radius: 15px; /* Adjust this value to control the roundness */
+    border-radius: 500px; /* Adjust this value to control the roundness */
 }
 
 .image-container:hover img {
     filter: blur(8px);
-border-radius: 10px; /* Adjust this value to control the roundness */
+border-radius: 500px; /* Adjust this value to control the roundness */
 }
 
 .image-container:hover .overlay {
     height: 100%;
-border-radius: 10px; /* Adjust this value to control the roundness */
+border-radius: 500px; /* Adjust this value to control the roundness */
 }
