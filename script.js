@@ -38,3 +38,26 @@ document.addEventListener('mouseup', () => {
 
 
 
+
+
+
+
+const window1 = document.getElementById('window1');
+const window2 = document.getElementById('window2');
+
+window1.addEventListener('mouseenter', () => {
+    window1.style.width = "70%";
+    window2.style.width = "30%";
+});
+
+window2.addEventListener('mouseenter', () => {
+    window1.style.width = "30%";
+    window2.style.width = "70%";
+});
+
+// Optional: Reset to default sizes when the mouse leaves the container area
+const container = document.querySelector('.container'); // Assuming the container holds both windows
+container.addEventListener('mouseleave', () => {
+    window1.style.width = "50%"; // Reset to initial sizes or 50% if you prefer equal sizes
+    window2.style.width = "50%";
+});
