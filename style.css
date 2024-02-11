@@ -99,7 +99,7 @@ body {
 }
 
 #nav-image img {
-    height: 30px; /* Set the height to control the size of the image */
+    height: 60px; /* Set the height to control the size of the image */
     /* If you also need to control the width, you can add: */
     /* width: auto; */ /* This will maintain the aspect ratio */
 }
@@ -241,7 +241,7 @@ body {
     width: 100%; /* Full width horizontal line */
     border: 0; /* Remove default border */
     height: 1px; /* Line thickness */
-    background-color: black; /* Line color */
+    background-color: white; /* Line color */
     margin: 5px 0; /* Space above and below the line */
 }
 
@@ -251,7 +251,7 @@ body {
 
 #window1 {
     
-    background-color: #F6F6F0; /* existing background color */
+    background-color: #000000; /* existing background color */
     background-blend-mode: multiply;
     background-size: cover; /* or 'contain' based on your preference */
     background-position: center;
@@ -273,7 +273,7 @@ body {
 
 
 .image-container img {
-    width: 100%;
+    width: 95%;
     height: auto;
     transition: transform 0.3s ease, filter 0.3s ease;
     border: 3px solid black; /* Default border color for all images */
@@ -296,18 +296,102 @@ border-radius: 500px; /* Adjust this value to control the roundness */
 
 
 
-
-
-
-
-
-
-
-
-
-
 .window {
-    transition: width 0.5s ease; /* Smooth transition for resizing */
+    transition: width 1.0s ease; /* Smooth transition for resizing */
     width: 50%; /* Start with equal width */
     /* other styles... */
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.navbar {
+    position: fixed; /* Keep navbar fixed on the left */
+    top: 0;
+    left: 0;
+    height: 100%; /* Extend navbar to full viewport height */
+    width: 150px; /* Set a fixed width for the navbar */
+    background-color: #000000; /* Keep your existing background color */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: start;
+    align-items: center; /* Center items horizontally */
+    border-right: 2px solid white; /* Add a border to the right of the navbar */
+    padding: 20px 0; /* Add some padding on top and bottom */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.nav-box {
+    width: 100%; /* Ensure nav-box items use the full width of the navbar */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    margin-bottom: 20px; /* Add some space between nav-box elements */
+}
+
+.container {
+    margin-left: 150px; /* Push the main content to the right, so it doesn't overlap the navbar */
+    height: 100%;
+    display: flex;
+}
+
+/* Adjust the body padding-top if the navbar height changes */
+body {
+    padding-top: 0; /* You might not need padding-top anymore */
+}
+
+/* Update other styles as needed to ensure the layout works well with the sidebar */
+
+
+
+
+
+.window hr {
+    margin: 0; /* Remove any default margin */
+    width: calc(100% + 40px); /* Extend the width to counteract the parent's padding */
+    position: relative; /* Position relative to allow for negative values in left */
+    left: -20px; /* Move the <hr> to the edge of the container */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Apply grayscale filter to all images inside window1 and window2 */
+#window1 .image-container img, #window2 .image-container img {
+    filter: grayscale(100%); /* Convert images to black and white */
+    transition: filter 0.3s ease; /* Smooth transition for the filter effect */
+}
+
+/* Remove grayscale filter on hover to show original colors */
+#window1 .image-container:hover img, #window2 .image-container:hover img {
+    filter: grayscale(0%); /* Show original image colors */
+}
+
