@@ -121,9 +121,13 @@ body {
 
 /* ... Rest of your styles ... */
 
-#nav-logo {
-    padding-left: 0px; /* Adjust this value as needed */
+#nav-logo img {
+    width: 110px; /* Adjust this value to set the desired width of your logo */
+    height: auto; /* This will maintain the aspect ratio of your logo */
+    padding-left: 4px; /* Keep your padding adjustments */
+    padding-right: 4px; /* Keep your padding adjustments */
 }
+
 
 .image-grid {
     display: grid;
@@ -136,20 +140,20 @@ body {
     cursor: pointer;
 }
 
-/* Existing styles for images in all image containers */
-.image-container img {
-    width: 100%;
-    height: auto;
-    transition: transform 0.3s ease, filter 0.3s ease;
-    border: 2px solid black; /* Default border color for all images */
-    box-sizing: border-box;
-}
+
 
 /* Additional styles for images in window2 */
 #window2 .image-container img {
-    border-color: #ADADAD; /* Replace #yourColor with your desired color */
+    border-color: #ffffff; /* Replace #yourColor with your desired color */
     
 }
+
+
+#window1 .image-container img {
+    border-color: #ffffff; /* Replace #yourColor with your desired color */
+    
+}
+
 
 
 
