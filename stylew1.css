@@ -30,7 +30,7 @@ body, html {
 
 .image-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: auto;
     grid-gap: 10px;
 }
 
@@ -131,7 +131,7 @@ body {
 
 .image-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: auto;
     grid-gap: 10px;
 }
 
@@ -412,3 +412,7 @@ body {
     width: 85%;
     /* Add your existing styles here */
 }
+
+
+
+
