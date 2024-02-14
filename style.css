@@ -301,7 +301,7 @@ border-radius: 500px; /* Adjust this value to control the roundness */
 
 
 .window {
-    transition: width 1.0s ease; /* Smooth transition for resizing */
+    transition: width 2.0s ease; /* Smooth transition for resizing */
     width: 50%; /* Start with equal width */
     /* other styles... */
 }
@@ -391,7 +391,7 @@ body {
 /* Apply grayscale filter to all images inside window1 and window2 */
 #window1 .image-container img, #window2 .image-container img {
     filter: grayscale(100%); /* Convert images to black and white */
-    transition: filter 0.3s ease; /* Smooth transition for the filter effect */
+    transition: filter 0.5s ease; /* Smooth transition for the filter effect */
 }
 
 /* Remove grayscale filter on hover to show original colors */
