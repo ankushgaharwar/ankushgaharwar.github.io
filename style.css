@@ -305,7 +305,7 @@ border-radius: 500px; /* Adjust this value to control the roundness */
 
 
 .window {
-    transition: width 10.0s ease; /* Smooth transition for resizing */
+    transition: width 15.0s ease; /* Smooth transition for resizing */
     width: 50%; /* Start with equal width */
     /* other styles... */
 }
