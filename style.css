@@ -259,14 +259,16 @@ body {
     background-blend-mode: multiply;
     background-size: cover; /* or 'contain' based on your preference */
     background-position: center;
+    position: relative;
 }
 
 #window2 {
     
-    background-color: #1A1A1A; /* existing background color */
+    background-color: #0F0F0F; /* existing background color */
     background-blend-mode: multiply;
     background-size: cover; /* or 'contain' based on your preference */
     background-position: center;
+    position: relative;
 }
 
 
@@ -303,7 +305,7 @@ border-radius: 500px; /* Adjust this value to control the roundness */
 
 
 .window {
-    transition: width 2.0s ease; /* Smooth transition for resizing */
+    transition: width 10.0s ease; /* Smooth transition for resizing */
     width: 50%; /* Start with equal width */
     /* other styles... */
 }
@@ -400,4 +402,16 @@ body {
 #window1 .image-container:hover img, #window2 .image-container:hover img {
     filter: grayscale(0%); /* Show original image colors */
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
