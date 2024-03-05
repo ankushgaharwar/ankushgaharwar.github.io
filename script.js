@@ -46,13 +46,13 @@ const window1 = document.getElementById('window1');
 const window2 = document.getElementById('window2');
 
 window1.addEventListener('mouseenter', () => {
-    window1.style.width = "85%";
-    window2.style.width = "15%";
+    window1.style.width = "80%";
+    window2.style.width = "20%";
 });
 
 window2.addEventListener('mouseenter', () => {
-    window1.style.width = "15%";
-    window2.style.width = "85%";
+    window1.style.width = "20%";
+    window2.style.width = "80%";
 });
 
 // Optional: Reset to default sizes when the mouse leaves the container area
