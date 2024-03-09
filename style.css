@@ -255,7 +255,7 @@ body {
 
 #window1 {
     
-    background-color: #1A1A1A; /* existing background color */
+    background-color: #000; /* existing background color */
     background-blend-mode: multiply;
     background-size: cover; /* or 'contain' based on your preference */
     background-position: center;
@@ -264,7 +264,7 @@ body {
 
 #window2 {
     
-    background-color: #0F0F0F; /* existing background color */
+    background-color: #000; /* existing background color */
     background-blend-mode: multiply;
     background-size: cover; /* or 'contain' based on your preference */
     background-position: center;
@@ -336,12 +336,15 @@ border-radius: 500px; /* Adjust this value to control the roundness */
     left: 0;
     height: 100%; /* Extend navbar to full viewport height */
     width: 150px; /* Set a fixed width for the navbar */
-    background-color: #0F0F0F; /* Keep your existing background color */
+    background-color: #000000; /* Keep your existing background color */
     display: flex;
     flex-direction: column; /* Stack items vertically */
     justify-content: start;
     align-items: center; /* Center items horizontally */
-    border-right: 2px solid white; /* Add a border to the right of the navbar */
+    border-right: 0.2px solid white; /* Add a border to the right of the navbar */
+    border-top: 1px solid white; /* Add a border to the right of the navbar */
+    border-bottom: 1px solid white; /* Add a border to the right of the navbar */
+    border-left: 1px solid white; /* Add a border to the right of the navbar */
     padding: 20px 0; /* Add some padding on top and bottom */
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
 z-index: 10000;
