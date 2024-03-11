@@ -279,7 +279,7 @@ body {
 
 
 .image-container img {
-    width: 100%;
+    width: 90%;
     height: auto;
     transition: transform 0.3s ease, filter 0.3s ease;
     border: 2px solid black; /* Default border color for all images */
@@ -288,7 +288,7 @@ body {
 }
 
 .image-container:hover img {
-width: 100%;
+width: 90%;
     filter: blur(8px);
 border-radius: 500px; /* Adjust this value to control the roundness */
 }
