@@ -85,18 +85,25 @@ body, html {
 
 
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #F6F6F0;
-    border: 2px solid black;
-    padding: 2px; /* Reduced padding */
-    position: fixed;
+    position: fixed; /* Keep navbar fixed on the left */
     top: 0;
     left: 0;
-    width: 100%;
-    z-index: 1000;
+    height: 100%; /* Extend navbar to full viewport height */
+    width: 150px; /* Set a fixed width for the navbar */
+    background-color: #000000; /* Keep your existing background color */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: start;
+    align-items: center; /* Center items horizontally */
+    border-right: 0.2px solid white; /* Add a border to the right of the navbar */
+    border-top: 1px solid white; /* Add a border to the right of the navbar */
+    border-bottom: 1px solid white; /* Add a border to the right of the navbar */
+    border-left: 1px solid white; /* Add a border to the right of the navbar */
+    padding: 20px 0; /* Add some padding on top and bottom */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+z-index: 10000;
 }
+
 
 /* Adjust the body padding-top if the navbar height changes */
 body {

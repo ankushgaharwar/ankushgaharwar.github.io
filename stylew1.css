@@ -338,9 +338,13 @@ border-radius: 500px; /* Adjust this value to control the roundness */
     flex-direction: column; /* Stack items vertically */
     justify-content: start;
     align-items: center; /* Center items horizontally */
-    border-right: 2px solid white; /* Add a border to the right of the navbar */
+    border-right: 0.2px solid white; /* Add a border to the right of the navbar */
+    border-top: 1px solid white; /* Add a border to the right of the navbar */
+    border-bottom: 1px solid white; /* Add a border to the right of the navbar */
+    border-left: 1px solid white; /* Add a border to the right of the navbar */
     padding: 20px 0; /* Add some padding on top and bottom */
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
+z-index: 10000;
 }
 
 .nav-box {
