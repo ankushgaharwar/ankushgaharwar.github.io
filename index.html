@@ -151,12 +151,13 @@
   
 <div class="col-md-12 col-lg-6 text-start text-lg-end aos-init aos-animate custom-padding-right" data-aos="fade-up" data-aos-delay="100">
     <div id="filters" class="filters custom-padding-filters">
-        <a href="#" data-filter="*" id="all-filter" class="active">All</a>
-        <a href="#" data-filter=".web" id="uiux-filter">UI/UX Design</a>
-        <a href="#" data-filter=".design" id="design-filter">3D Design</a>
-        <!-- <a href="#" data-filter=".branding">Miscellaneous</a> -->
+      <a href="#" data-filter="*" id="all-filter" class="active">All</a>
+      <a href="#" data-filter=".web" id="uiux-filter">UI/UX Design</a>
+      <a href="#" data-filter=".design" id="3d-filter">3D Design</a>
+      <!-- <a href="#" data-filter=".branding">Miscellaneous</a> -->
     </div>
 </div>
+
 
 
 
@@ -858,22 +859,28 @@ document.addEventListener('DOMContentLoaded', function() {
 <!------filter----------->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Function to get the fragment identifier
-    function getFragment() {
-        return window.location.hash.substring(1);
-    }
-
-    // Get the filter from the fragment identifier
-    var filter = getFragment();
-
-    // Check the filter and simulate a click on the corresponding link
-    if (filter) {
-        var filterLink = document.getElementById(filter + '-filter');
+    const urlParams = new URLSearchParams(window.location.search);
+    const filterParam = urlParams.get('filter');
+    if (filterParam) {
+        const filterLink = document.querySelector(`[data-filter="${filterParam}"]`);
         if (filterLink) {
-            filterLink.click();
+            filterLink.click(); // Simulate click to apply the filter
         }
     }
+
+    // Add click event listeners to update URL when a filter is selected
+    const filterLinks = document.querySelectorAll('#filters a');
+    filterLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const filterValue = this.getAttribute('data-filter');
+            const newUrl = `${window.location.pathname}?filter=${encodeURIComponent(filterValue)}`;
+            window.history.pushState({ path: newUrl }, '', newUrl);
+            // Apply the filter logic here if needed
+        });
+    });
 });
+
 </script>
 
 
