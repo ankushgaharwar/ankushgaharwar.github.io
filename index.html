@@ -132,7 +132,7 @@
   <div class="untree_co-section untree_co-section-4 pb-0"  id="portfolio-section">
   </div>
   
-<!----<a href="https://ankushgaharwar.github.io/#design">3D Design Filter Link</a>--->
+<!----<a href="https://ankushgaharwar.github.io/?filter=.design">3D Design Filter Link</a>--->
 
   
   
@@ -149,14 +149,14 @@
   
   
   
-<div class="col-md-12 col-lg-6 text-start text-lg-end aos-init aos-animate custom-padding-right" data-aos="fade-up" data-aos-delay="100">
-    <div id="filters" class="filters custom-padding-filters">
-      <a href="#" data-filter="*" id="all-filter" class="active">All</a>
-      <a href="#" data-filter=".web" id="uiux-filter">UI/UX Design</a>
-      <a href="#" data-filter=".design" id="3d-filter">3D Design</a>
-      <!-- <a href="#" data-filter=".branding">Miscellaneous</a> -->
+    <div class="col-md-12 col-lg-6 text-start text-lg-end aos-init aos-animate custom-padding-right" data-aos="fade-up" data-aos-delay="100">
+        <div id="filters" class="filters custom-padding-filters">
+            <a href="javascript:void(0);" data-filter="*" id="all-filter" class="active">All</a>
+            <a href="javascript:void(0);" data-filter=".web" id="uiux-filter">UI/UX Design</a>
+            <a href="javascript:void(0);" data-filter=".design" id="3d-filter">3D Design</a>
+            <!-- <a href="javascript:void(0);" data-filter=".branding">Miscellaneous</a> -->
+        </div>
     </div>
-</div>
 
 
 
@@ -857,31 +857,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <!------filter----------->
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const filterParam = urlParams.get('filter');
-    if (filterParam) {
-        const filterLink = document.querySelector(`[data-filter="${filterParam}"]`);
-        if (filterLink) {
-            filterLink.click(); // Simulate click to apply the filter
-        }
-    }
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Function to apply the filter based on URL parameter
+            function applyFilterFromUrl() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const filterParam = urlParams.get('filter');
+                if (filterParam) {
+                    const filterLink = document.querySelector(`[data-filter="${filterParam}"]`);
+                    if (filterLink) {
+                        document.querySelectorAll('#filters a').forEach(link => link.classList.remove('active'));
+                        filterLink.classList.add('active');
+                        // Trigger filter logic here
+                        // For demonstration, just log the filter to the console
+                        console.log('Applying filter:', filterParam);
+                        // Add your filtering logic here (e.g., show/hide elements based on the filter)
+                    }
+                }
+            }
 
-    // Add click event listeners to update URL when a filter is selected
-    const filterLinks = document.querySelectorAll('#filters a');
-    filterLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            const filterValue = this.getAttribute('data-filter');
-            const newUrl = `${window.location.pathname}?filter=${encodeURIComponent(filterValue)}`;
-            window.history.pushState({ path: newUrl }, '', newUrl);
-            // Apply the filter logic here if needed
+            // Call the function to apply filter on page load
+            applyFilterFromUrl();
+
+            // Add click event listeners to update URL and apply filter when a link is clicked
+            const filterLinks = document.querySelectorAll('#filters a');
+            filterLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const filterValue = this.getAttribute('data-filter');
+                    const newUrl = `${window.location.pathname}?filter=${encodeURIComponent(filterValue)}`;
+                    window.history.pushState({ path: newUrl }, '', newUrl);
+                    // Apply the filter logic here
+                    document.querySelectorAll('#filters a').forEach(link => link.classList.remove('active'));
+                    this.classList.add('active');
+                    console.log('Applying filter:', filterValue);
+                    // Add your filtering logic here (e.g., show/hide elements based on the filter)
+                });
+            });
+
+            // Handle browser back/forward navigation
+            window.addEventListener('popstate', applyFilterFromUrl);
         });
-    });
-});
-
-</script>
+    </script>
 
 
 
