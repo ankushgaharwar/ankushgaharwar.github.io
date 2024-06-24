@@ -1,16 +1,11 @@
-<!-- /*
-* Template Name: Minimal
-* Template Author: Untree.co
-* Author URI: https://untree.co/
-* License: https://creativecommons.org/licenses/by/3.0/
-*/ -->
+
 <!doctype html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="author" content="Untree.co">
+  <meta name="author" content="">
   <link rel="shortcut icon" href="favicon.png">
 
   <meta name="description" content="" />
@@ -837,9 +832,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-----disable right click------>
 <script>
-  // Disable right-click context menu
+  // Disable right-click context menu except for .contact-section
   document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
+    if (!event.target.closest('.contact-section')) {
+      event.preventDefault();
+    }
   });
 
   // Optionally, disable keyboard shortcuts for "Save As" or "Inspect Element"
@@ -852,6 +849,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 </script>
+
 
 
 
