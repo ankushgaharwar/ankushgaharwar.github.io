@@ -1,0 +1,422 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Nunito', Arial, sans-serif; /* Nunito font added */
+}
+
+.container {
+    display: flex;
+    height: 100%;
+}
+
+.window {
+    flex-grow: 1;
+    padding: 20px;
+    border: 1px solid #ddd;
+    overflow: auto;
+    transition: width 0.1s ease; /* Smooth transition for resizing */
+    /* Hide scrollbar but allow scrolling */
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none;  /* For IE 10+ */
+    /* For Chrome, Safari, and Opera */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.window h2 {
+    margin-top: 0;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 10px;
+}
+
+.image-grid img {
+    width: 100%;
+    height: auto;
+    border: 0px solid #ccc;
+}
+
+.divider {
+    position: relative;
+        /* ... other styles ... */
+    background: transparent; /* Make the divider background transparent */
+    width: 1px; /* Actual divider width set to 0 */
+    cursor: ew-resize;
+    position: relative;
+    opacity: 100; /* Make the divider fully transparent */
+    border: none; /* Remove any border */
+    box-shadow: none; /* Remove any shadow effect */
+
+}
+
+.divider:hover {
+    opacity: 0; /* Keep the divider invisible on hover */
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent; /* Invisible visual appearance */
+    width: 20px; /* Invisible but larger hit area */
+    height: 100%;
+    opacity: 0; /* Keep the pseudo-element fully transparent */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F6F6F0; /* Example: A shade of green */
+    border: 2px solid black;
+    padding: 2px; /* Reduced padding */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Adjust the body padding-top if the navbar height changes */
+body {
+    padding-top: 40px; /* Adjust this value based on the new height of your navbar */
+}
+
+.nav-box {
+    display: flex;
+    align-items: center;
+}
+
+#nav-logo img {
+    height: 50px; /* Adjust the height as needed */
+    padding-right: 20px; /* Add padding to the right of the logo */
+    padding-left: 20px; /* Add padding to the right of the logo */
+}
+
+#nav-image img {
+    height: 60px; /* Set the height to control the size of the image */
+    /* If you also need to control the width, you can add: */
+    /* width: auto; */ /* This will maintain the aspect ratio */
+}
+
+.vertical-line {
+    padding: 0 !important;
+}
+
+
+
+
+#nav-links a {
+    margin: 0 10px; /* Adjust margin as needed */
+    text-decoration: none;
+    color: black;
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 14px; /* Adjust font size as needed */
+}
+
+/* ... Rest of your styles ... */
+
+#nav-logo img {
+    width: 110px; /* Adjust this value to set the desired width of your logo */
+    height: auto; /* This will maintain the aspect ratio of your logo */
+    padding-left: 4px; /* Keep your padding adjustments */
+    padding-right: 4px; /* Keep your padding adjustments */
+}
+
+
+.image-grid {
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 10px;
+}
+
+.image-container {
+    position: relative;
+    cursor: pointer;
+}
+
+
+
+/* Additional styles for images in window2 */
+#window2 .image-container img {
+    border-color: #ffffff; /* Replace #yourColor with your desired color */
+    
+}
+
+
+#window1 .image-container img {
+    border-color: #ffffff; /* Replace #yourColor with your desired color */
+    
+}
+
+
+
+
+.image-container .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    transition: 0.3s ease;
+}
+
+
+
+
+
+
+.text {
+    color: white;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+
+
+
+
+
+
+/* ... existing styles ... */
+
+
+
+#divider-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px; /* Example width */
+    height: auto; /* Maintain aspect ratio */
+    z-index: 100; /* Ensure it's above everything else */
+    opacity: 1; /* Make sure the image is fully opaque */
+}
+
+/* ... remaining styles ... */
+
+.section-title {
+    font-weight: normal; /* This will make the text not bold */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#nav-links {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    align-items: flex-start; /* Align items to the left */
+}
+
+#nav-links .nav-links-upper, #nav-links .nav-links-lower {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align links to the start (left) */
+}
+
+#nav-links a {
+    margin-right: 20px; /* Space between links */
+    text-decoration: none; /* Optional: Removes underline from links */
+}
+
+#nav-links hr {
+    width: 100%; /* Full width horizontal line */
+    border: 0; /* Remove default border */
+    height: 1px; /* Line thickness */
+    background-color: white; /* Line color */
+    margin: 5px 0; /* Space above and below the line */
+}
+
+
+
+
+
+#window1 {
+    
+    background-color: #000000; /* existing background color */
+    background-blend-mode: multiply;
+    background-size: cover; /* or 'contain' based on your preference */
+    background-position: center;
+}
+
+#window2 {
+    
+    background-color: #000000; /* existing background color */
+    background-blend-mode: multiply;
+    background-size: cover; /* or 'contain' based on your preference */
+    background-position: center;
+}
+
+
+
+
+
+
+
+
+.image-container img {
+    width: 95%;
+    height: auto;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    border: 3px solid black; /* Default border color for all images */
+    box-sizing: border-box;
+    border-radius: 500px; /* Adjust this value to control the roundness */
+}
+
+.image-container:hover img {
+    filter: blur(8px);
+border-radius: 500px; /* Adjust this value to control the roundness */
+}
+
+.image-container:hover .overlay {
+    height: 100%;
+border-radius: 500px; /* Adjust this value to control the roundness */
+}
+
+
+
+
+
+
+.window {
+    transition: width 1.0s ease; /* Smooth transition for resizing */
+    width: 50%; /* Start with equal width */
+    /* other styles... */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.navbar {
+    position: fixed; /* Keep navbar fixed on the left */
+    top: 0;
+    left: 0;
+    height: 100%; /* Extend navbar to full viewport height */
+    width: 150px; /* Set a fixed width for the navbar */
+    background-color: #000000; /* Keep your existing background color */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: start;
+    align-items: center; /* Center items horizontally */
+    border-right: 0.2px solid white; /* Add a border to the right of the navbar */
+    border-top: 1px solid white; /* Add a border to the right of the navbar */
+    border-bottom: 1px solid white; /* Add a border to the right of the navbar */
+    border-left: 1px solid white; /* Add a border to the right of the navbar */
+    padding: 20px 0; /* Add some padding on top and bottom */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+z-index: 10000;
+}
+
+.nav-box {
+    width: 100%; /* Ensure nav-box items use the full width of the navbar */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    margin-bottom: 20px; /* Add some space between nav-box elements */
+}
+
+.container {
+    margin-left: 150px; /* Push the main content to the right, so it doesn't overlap the navbar */
+    height: 100%;
+    display: flex;
+}
+
+/* Adjust the body padding-top if the navbar height changes */
+body {
+    padding-top: 0; /* You might not need padding-top anymore */
+}
+
+/* Update other styles as needed to ensure the layout works well with the sidebar */
+
+
+
+
+
+.window hr {
+    margin: 0; /* Remove any default margin */
+    width: calc(100% + 40px); /* Extend the width to counteract the parent's padding */
+    position: relative; /* Position relative to allow for negative values in left */
+    left: -20px; /* Move the <hr> to the edge of the container */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Apply grayscale filter to all images inside window1 and window2 */
+#window1 .image-container img, #window2 .image-container img {
+    filter: grayscale(100%); /* Convert images to black and white */
+    transition: filter 0.3s ease; /* Smooth transition for the filter effect */
+}
+
+/* Remove grayscale filter on hover to show original colors */
+#window1 .image-container:hover img, #window2 .image-container:hover img {
+    filter: grayscale(0%); /* Show original image colors */
+}
+
+
+
+
+
+#window1 {
+    width: 85%;
+    /* Add your existing styles here */
+}
+
+#window2 {
+    width: 15%;
+    /* Add your existing styles here */
+}
+
+
+
+
