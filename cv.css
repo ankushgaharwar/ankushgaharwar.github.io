@@ -1,0 +1,108 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+  color: #2c3e50;
+  line-height: 1.6;
+}
+
+.cv-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.header {
+  text-align: center;
+  padding: 40px 20px;
+  background: #34495e;
+  color: #ecf0f1;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.location {
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.tagline {
+  max-width: 900px;
+  margin: 0 auto 20px;
+}
+
+.links a {
+  color: #f1c40f;
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: 600;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 40px;
+  gap: 40px;
+}
+
+.primary {
+  flex: 2 1 600px;
+}
+
+.sidebar {
+  flex: 1 1 300px;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  height: fit-content;
+}
+
+h2 {
+  color: #e74c3c;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #e74c3c;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.job, .edu {
+  margin-bottom: 20px;
+}
+
+.job-meta {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+ul {
+  margin-left: 20px;
+}
+
+.skills li {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .main {
+    flex-direction: column;
+  }
+  .sidebar {
+    order: -1;
+  }
+}
