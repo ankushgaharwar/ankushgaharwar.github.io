@@ -47,6 +47,34 @@
     border-radius: 50%;
     object-fit: cover;
   }
+  #portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    grid-auto-rows: 80px;
+    gap: 10px;
+    justify-content: center;
+  }
+  #portfolio-grid .item {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+  }
+  #portfolio-grid .item a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  #portfolio-grid .item img {
+    width: 100%;
+    height: 100%;
+  }
+  #portfolio-grid .item:nth-child(10n+6),
+  #portfolio-grid .item:nth-child(10n+7),
+  #portfolio-grid .item:nth-child(10n+8),
+  #portfolio-grid .item:nth-child(10n+9),
+  #portfolio-grid .item:nth-child(10n+10) {
+    transform: translateX(40px);
+  }
 </style>
 
   <title>Portfolio - Ankush Gaharwar</title>
@@ -176,14 +204,14 @@
 		  
 		  
 		  
-		<div id="portfolio-grid" class="row no-gutter" data-aos="fade-up" data-aos-delay="200">
+		<div id="portfolio-grid" class="apple-watch-grid" data-aos="fade-up" data-aos-delay="200">
 		
 		
 	
 		
 		
 		
-          <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+          <div class="item web">
             <a href="Trading Leagues.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Trading Leagues</h3>
@@ -203,7 +231,7 @@
 		  
 		  
 		  
-          <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+          <div class="item design">
             <a href="https://www.figma.com/proto/bjSyG6gRwkMcudy5dhxWf6/Thesis?page-id=0%3A1&type=design&node-id=655-337&viewport=-8875%2C1883%2C0.27&t=9iTmugv8s8g84VrV-1&scaling=contain" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Cosmic Kaksh</h3>
@@ -214,7 +242,7 @@
           </div>
 
 
-          <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+          <div class="item web">
             <a href="https://www.figma.com/proto/jXGgzr0nLWG7c2YmzOuvPc/Compre-Ahora-Arg-Case-Study?page-id=&type=design&node-id=1-16&viewport=363%2C654%2C0.04&t=W5j2ONZ1YkA2ABd7-1&scaling=scale-down-width&mode=design" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Compre Ahora - UX Case Study</h3>
@@ -236,7 +264,7 @@
 		  
 
 		  
-		  		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+		  		  <div class="item web">
             <a href="https://www.figma.com/proto/wpr0chW47Dq2o3oXZ9U0Gh/UBER-UX-Case-study?page-id=0%3A1&type=design&node-id=8-1976&viewport=-174%2C-9123%2C0.27&t=o4zyaARb9fiY2bsI-1&scaling=scale-down-width" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Uber - UI/UX Case Study</h3>
@@ -247,7 +275,7 @@
           </div>
 		  
 		  
-		            <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+		            <div class="item web">
             <a href="Vilgain.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Vilgain - Review Screen</h3>
@@ -257,7 +285,7 @@
             </a>
           </div>	
 		  
-		  		            <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  		            <div class="item design">
             <a href="treehouse.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Tree House Design</h3>
@@ -268,7 +296,7 @@
           </div>
 		  
 		  
-		  		  		            <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  		  		            <div class="item design">
             <a href="spacedesign.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Gaganyan Crew Seat</h3>
@@ -280,7 +308,7 @@
 		  
 		  
 		  
-		  		            <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  		            <div class="item design">
             <a href="arborfelix.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Arbor Felix</h3>
@@ -290,7 +318,7 @@
             </a>
           </div>
 		  
-		  		  		            <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  		  		            <div class="item design">
             <a href="villamedici.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Cabanes Night</h3>
@@ -303,7 +331,7 @@
 
 
 
-		  		  		            <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  		  		            <div class="item design">
             <a href="verde.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>7 Story Tensile Structure</h3>
@@ -314,7 +342,7 @@
           </div>
 
 		  
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item web">
             <a href="U Smile.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>U Smile</h3>
@@ -324,7 +352,7 @@
             </a>
           </div>
           
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item web">
             <a href="CA Arg Prod.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Compre Ahore Argentina App</h3>
@@ -334,7 +362,7 @@
             </a>
           </div>
           
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item web">
             <a href="https://www.figma.com/file/qdJnCFrPIMKqy7Gx1hxSWQ/Gro-247-DLS?node-id=0%3A1&t=L4vtAg0UVFo9glDK-1" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Gro 24/7 DLS</h3>
@@ -352,7 +380,7 @@
 		  
 		  <!------3d---------------->
 		  
-		  		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  		  <div class="item design">
             <a href="Barrier Design.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Barrier Design</h3>
@@ -362,7 +390,7 @@
             </a>
           </div>
           
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item design">
             <a href="smarte.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Smarte +</h3>
@@ -374,7 +402,7 @@
           
 		  
 		  
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item design">
             <a href="Package Design.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Package Design</h3>
@@ -386,7 +414,7 @@
           
 		  
 		  
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item design">
             <a href="Smart Objects lamp.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Smart Objects - Lamp</h3>
@@ -398,7 +426,7 @@
           
 		  
 		  
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item design">
             <a href="scooper.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Smart Object - Scooper</h3>
@@ -411,7 +439,7 @@
 
 
 
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item design">
             <a href="drive from wheelchair.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Drive From Wheelchair</h3>
@@ -421,7 +449,7 @@
             </a>
           </div>
           
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item design">
             <a href="entry level motorcycle.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Entry Level Motorcycle</h3>
@@ -431,7 +459,7 @@
             </a>
           </div>
           
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item design">
             <a href="aurora.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Aurora</h3>
@@ -443,7 +471,7 @@
 
 
 
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item design">
             <a href="hope.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Hope</h3>
@@ -455,7 +483,7 @@
           
 		  
 		  
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item design">
             <a href="taming the drone.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Taming The Drone</h3>
@@ -467,7 +495,7 @@
           
 		  
 		  
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item design">
             <a href="quizventure.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Quizventure</h3>
@@ -483,7 +511,7 @@
 
 
 
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item design">
             <a href="zombie chase saga.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Zombie Chase Saga</h3>
@@ -496,7 +524,7 @@
 		  <!---------3d-------->
 		  
 		  
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item web">
             <a href="https://www.figma.com/proto/aAIxMjFCpUQGY8dpcN0tvz/CA-Style-Guide-PWA?page-id=0%3A1&node-id=1501-3756&viewport=489%2C386%2C0.52&scaling=min-zoom" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Compre Ahora Style Guide Arg</h3>
@@ -506,7 +534,7 @@
             </a>
           </div>
           
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item web">
             <a href="https://www.figma.com/proto/WAG2t0H47YJB5PDxQtKScX/Dev-Handoff?page-id=0%3A1&node-id=256-10170&viewport=491%2C359%2C0.49&scaling=scale-down" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Dev Handoff</h3>
@@ -516,7 +544,7 @@
             </a>
           </div>
           
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item web">
             <a href="https://www.figma.com/proto/TtUeIk4w3pxXYe0UFuhZrz/Unilever-DA-Dashboard-Style-Guide1?page-id=0%3A1&node-id=286-1097&viewport=494%2C190%2C0.38&scaling=scale-down" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>DA & Dashboard Style Guide</h3>
@@ -529,7 +557,7 @@
 
 
 
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item web">
             <a href="https://www.figma.com/proto/73vW71nDe4CppzGY0LqRRb/Unilever-D%26A-Dashboards?page-id=20938%3A11567&node-id=20938-11569&viewport=513%2C375%2C0.49&scaling=scale-down" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>D&A Dashboard Dev Handoff</h3>
@@ -541,7 +569,7 @@
           
 
 
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item web">
             <a href="https://kahvay.com/" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>KahVay</h3>
@@ -553,7 +581,7 @@
           
 		  
 		  
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item web">
             <a href="https://www.bkwai.com/" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>BKWAI</h3>
@@ -565,7 +593,7 @@
 
 
 
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item web">
             <a href="https://conso4s.com/" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Conso4s</h3>
@@ -600,7 +628,7 @@
           
 		  
 		  
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item design">
             <a href="sketches.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Automotive Sketches</h3>
@@ -611,7 +639,7 @@
           
 		  
 		  
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+		  <div class="item design">
             <a href="Miscellaneous.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Miscellaneous</h3>
@@ -632,7 +660,7 @@
 		  
 		  
 		  
-          <!------For future----<div class="item branding col-sm-6 col-md-4 col-lg-4 mb-4">
+          <!------For future----<div class="item branding">
             <a href="work-single.html" class="item-wrap fancybox">
               <div class="work-info">
                 <h3>Amazon</h3>
