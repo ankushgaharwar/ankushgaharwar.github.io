@@ -110,6 +110,15 @@
       scrollTop = outer.scrollTop;
     });
 
+    outer.addEventListener('touchstart', (e) => {
+      isDown = true;
+      outer.classList.add('dragging');
+      startX = e.touches[0].pageX - outer.offsetLeft;
+      startY = e.touches[0].pageY - outer.offsetTop;
+      scrollLeft = outer.scrollLeft;
+      scrollTop = outer.scrollTop;
+    });
+
     outer.addEventListener('mouseleave', () => {
       isDown = false;
       outer.classList.remove('dragging');
@@ -120,11 +129,27 @@
       outer.classList.remove('dragging');
     });
 
+    outer.addEventListener('touchend', () => {
+      isDown = false;
+      outer.classList.remove('dragging');
+    });
+
     outer.addEventListener('mousemove', (e) => {
       if (!isDown) return;
       e.preventDefault();
       const x = e.pageX - outer.offsetLeft;
       const y = e.pageY - outer.offsetTop;
+      const walkX = x - startX;
+      const walkY = y - startY;
+      outer.scrollLeft = scrollLeft - walkX;
+      outer.scrollTop = scrollTop - walkY;
+    });
+
+    outer.addEventListener('touchmove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.touches[0].pageX - outer.offsetLeft;
+      const y = e.touches[0].pageY - outer.offsetTop;
       const walkX = x - startX;
       const walkY = y - startY;
       outer.scrollLeft = scrollLeft - walkX;
