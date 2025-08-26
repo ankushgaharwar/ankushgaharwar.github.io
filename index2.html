@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ankush Gaharwar - Explore</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+    .outer-container {
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      cursor: grab;
+      background-color: #f7f7ef;
+    }
+    .outer-container.dragging {
+      cursor: grabbing;
+    }
+    #canvas {
+      position: relative;
+    }
+    .scatter-image {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      pointer-events: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="outer-container" id="outer">
+    <div id="canvas"></div>
+  </div>
+  <script>
+    const images = [
+      'images/CAcover.png',
+      'images/arr.png',
+      'images/as.png',
+      'images/bkwai.png',
+      'images/caarg.png',
+      'images/ck.png',
+      'images/conso.png',
+      'images/dfw.png',
+      'images/elm.png',
+      'images/gro247dls.png',
+      'images/hp.png',
+      'images/kv.png',
+      'images/mb.png',
+      'images/pd.png',
+      'images/qz.png',
+      'images/slider.png',
+      'images/sol.png',
+      'images/sos.png',
+      'images/sp.png',
+      'images/tl.png',
+      'images/ttd.png',
+      'images/ubercover.png',
+      'images/usmile.png',
+      'images/zcs.png'
+    ];
+    const canvas = document.getElementById('canvas');
+    const imageSize = 150;
+    const gap = 20;
+    const jitter = 10;
+    const columns = Math.ceil(Math.sqrt(images.length));
+    const rows = Math.ceil(images.length / columns);
+    canvas.style.width = (columns * (imageSize + gap) + gap) + 'px';
+    canvas.style.height = (rows * (imageSize + gap) + gap) + 'px';
+
+    const positions = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < columns; c++) {
+        positions.push({
+          x: gap + c * (imageSize + gap),
+          y: gap + r * (imageSize + gap)
+        });
+      }
+    }
+    // shuffle positions for scattered layout
+    positions.sort(() => Math.random() - 0.5);
+
+    images.forEach((src, i) => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.className = 'scatter-image';
+      const pos = positions[i];
+      img.style.left = (pos.x + (Math.random() * jitter - jitter / 2)) + 'px';
+      img.style.top = (pos.y + (Math.random() * jitter - jitter / 2)) + 'px';
+      canvas.appendChild(img);
+    });
+
+    const outer = document.getElementById('outer');
+    let isDown = false;
+    let startX, startY, scrollLeft, scrollTop;
+
+    outer.addEventListener('mousedown', (e) => {
+      isDown = true;
+      outer.classList.add('dragging');
+      startX = e.pageX - outer.offsetLeft;
+      startY = e.pageY - outer.offsetTop;
+      scrollLeft = outer.scrollLeft;
+      scrollTop = outer.scrollTop;
+    });
+
+    outer.addEventListener('mouseleave', () => {
+      isDown = false;
+      outer.classList.remove('dragging');
+    });
+
+    outer.addEventListener('mouseup', () => {
+      isDown = false;
+      outer.classList.remove('dragging');
+    });
+
+    outer.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - outer.offsetLeft;
+      const y = e.pageY - outer.offsetTop;
+      const walkX = x - startX;
+      const walkY = y - startY;
+      outer.scrollLeft = scrollLeft - walkX;
+      outer.scrollTop = scrollTop - walkY;
+    });
+  </script>
+</body>
+</html>
