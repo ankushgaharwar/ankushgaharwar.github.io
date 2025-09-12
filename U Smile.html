@@ -44,10 +44,13 @@
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="100">
-
-
-
-
+<script>
+  const password = prompt('Enter password to view this case study:');
+  if (password !== 'gaharwardesigns') {
+    alert('Incorrect password!');
+    window.location.href = 'index.html';
+  }
+</script>
 
   <div class="lines-wrap">
     <div class="lines-inner">
