@@ -201,7 +201,7 @@
 
 
           <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="#" class="item-wrap fancybox" onclick="return openCompreAhoraCaseStudy()">
+            <a href="#" class="item-wrap fancybox" onclick="return openProtected('https://www.figma.com/proto/jXGgzr0nLWG7c2YmzOuvPc/Compre-Ahora-Arg-Case-Study?page-id=&type=design&node-id=1-16&viewport=363%2C654%2C0.04&t=W5j2ONZ1YkA2ABd7-1&scaling=scale-down-width&mode=design')">
               <div class="work-info">
                 <h3>Compre Ahora - UX Case Study</h3>
                 <span>UI/UX Design</span>
@@ -321,7 +321,7 @@
           </div>
           
 		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="https://www.figma.com/file/qdJnCFrPIMKqy7Gx1hxSWQ/Gro-247-DLS?node-id=0%3A1&t=L4vtAg0UVFo9glDK-1" class="item-wrap fancybox">
+            <a href="#" class="item-wrap fancybox" onclick="return openProtected('https://www.figma.com/file/qdJnCFrPIMKqy7Gx1hxSWQ/Gro-247-DLS?node-id=0%3A1&t=L4vtAg0UVFo9glDK-1')">
               <div class="work-info">
                 <h3>Gro 24/7 DLS</h3>
                 <span>Unilever</span>
@@ -493,7 +493,7 @@
           </div>
           
 		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="https://www.figma.com/proto/WAG2t0H47YJB5PDxQtKScX/Dev-Handoff?page-id=0%3A1&node-id=256-10170&viewport=491%2C359%2C0.49&scaling=scale-down" class="item-wrap fancybox">
+            <a href="#" class="item-wrap fancybox" onclick="return openProtected('https://www.figma.com/proto/WAG2t0H47YJB5PDxQtKScX/Dev-Handoff?page-id=0%3A1&node-id=256-10170&viewport=491%2C359%2C0.49&scaling=scale-down')">
               <div class="work-info">
                 <h3>Dev Handoff</h3>
                 <span>Unilever</span>
@@ -516,7 +516,7 @@
 
 
 		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="https://www.figma.com/proto/73vW71nDe4CppzGY0LqRRb/Unilever-D%26A-Dashboards?page-id=20938%3A11567&node-id=20938-11569&viewport=513%2C375%2C0.49&scaling=scale-down" class="item-wrap fancybox">
+            <a href="#" class="item-wrap fancybox" onclick="return openProtected('https://www.figma.com/proto/73vW71nDe4CppzGY0LqRRb/Unilever-D%26A-Dashboards?page-id=20938%3A11567&node-id=20938-11569&viewport=513%2C375%2C0.49&scaling=scale-down')">
               <div class="work-info">
                 <h3>D&A Dashboard Dev Handoff</h3>
                 <span>Unilever</span>
@@ -1067,10 +1067,10 @@ setInterval(() => {
 
 
 <script>
-  function openCompreAhoraCaseStudy() {
-    var password = prompt('Enter password to view this case study:');
+  function openProtected(url) {
+    const password = prompt('Enter password to view this case study:');
     if (password === 'gaharwardesigns') {
-      window.open('https://www.figma.com/proto/jXGgzr0nLWG7c2YmzOuvPc/Compre-Ahora-Arg-Case-Study?page-id=&type=design&node-id=1-16&viewport=363%2C654%2C0.04&t=W5j2ONZ1YkA2ABd7-1&scaling=scale-down-width&mode=design', '_blank');
+      window.open(url, '_blank');
     } else if (password !== null) {
       alert('Incorrect password!');
     }

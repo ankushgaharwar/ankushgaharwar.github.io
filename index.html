@@ -320,8 +320,8 @@
             </a>
           </div>
           
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="https://www.figma.com/file/qdJnCFrPIMKqy7Gx1hxSWQ/Gro-247-DLS?node-id=0%3A1&t=L4vtAg0UVFo9glDK-1" class="item-wrap fancybox">
+          <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+            <a href="#" class="item-wrap fancybox" onclick="return openProtected('https://www.figma.com/file/qdJnCFrPIMKqy7Gx1hxSWQ/Gro-247-DLS?node-id=0%3A1&t=L4vtAg0UVFo9glDK-1')">
               <div class="work-info">
                 <h3>Gro 24/7 DLS</h3>
                 <span>Unilever</span>
@@ -492,8 +492,8 @@
             </a>
           </div>
           
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="https://www.figma.com/proto/WAG2t0H47YJB5PDxQtKScX/Dev-Handoff?page-id=0%3A1&node-id=256-10170&viewport=491%2C359%2C0.49&scaling=scale-down" class="item-wrap fancybox">
+          <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+            <a href="#" class="item-wrap fancybox" onclick="return openProtected('https://www.figma.com/proto/WAG2t0H47YJB5PDxQtKScX/Dev-Handoff?page-id=0%3A1&node-id=256-10170&viewport=491%2C359%2C0.49&scaling=scale-down')">
               <div class="work-info">
                 <h3>Dev Handoff</h3>
                 <span>Unilever</span>
@@ -515,8 +515,8 @@
 
 
 
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="https://www.figma.com/proto/73vW71nDe4CppzGY0LqRRb/Unilever-D%26A-Dashboards?page-id=20938%3A11567&node-id=20938-11569&viewport=513%2C375%2C0.49&scaling=scale-down" class="item-wrap fancybox">
+          <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+            <a href="#" class="item-wrap fancybox" onclick="return openProtected('https://www.figma.com/proto/73vW71nDe4CppzGY0LqRRb/Unilever-D%26A-Dashboards?page-id=20938%3A11567&node-id=20938-11569&viewport=513%2C375%2C0.49&scaling=scale-down')">
               <div class="work-info">
                 <h3>D&A Dashboard Dev Handoff</h3>
                 <span>Unilever</span>
@@ -1066,6 +1066,18 @@ setInterval(() => {
 
 
 
-  </body>
+  <script>
+  function openProtected(url) {
+    const password = prompt("Enter password to view this case study:");
+    if (password === "gaharwardesigns") {
+      window.open(url, "_blank");
+    } else if (password !== null) {
+      alert("Incorrect password!");
+    }
+    return false;
+  }
+</script>
+
+</body>
 
   </html>
