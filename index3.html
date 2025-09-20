@@ -7,6 +7,9 @@
     <style>
       :root {
         color-scheme: dark;
+        --icon-size: clamp(84px, 11vw, 132px);
+        --icon-gap: clamp(18px, 3vw, 32px);
+        --spread-multiplier: 2.8;
       }
 
       * {
@@ -16,48 +19,58 @@
       body {
         margin: 0;
         min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: grid;
+        place-items: center;
         background: radial-gradient(circle at top, #1c1c1c, #050505 65%);
         font-family: "SF Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         color: #f5f5f5;
+        overflow: hidden;
       }
 
       main {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        max-height: 100vh;
         text-align: center;
-        padding: 2rem 1.5rem 3rem;
+        isolation: isolate;
       }
 
       h1 {
+        position: absolute;
+        top: clamp(2rem, 8vh, 5rem);
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0;
         font-weight: 600;
         letter-spacing: 0.04em;
-        margin-bottom: 1.75rem;
         color: rgba(255, 255, 255, 0.9);
         text-transform: uppercase;
         font-size: clamp(1.1rem, 2vw + 0.8rem, 1.75rem);
+        z-index: 2;
+        pointer-events: none;
       }
 
       .app-drawer {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        align-items: center;
-      }
-
-      .row {
-        display: flex;
-        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: clamp(1600px, calc(var(--spread-multiplier) * 100vw), 4800px);
+        height: clamp(1600px, calc(var(--spread-multiplier) * 100vh), 4800px);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(var(--icon-size), var(--icon-size)));
+        grid-auto-rows: var(--icon-size);
+        gap: var(--icon-gap);
+        padding: calc(var(--icon-gap) * 1.5);
         justify-content: center;
-        gap: 1.5rem;
-      }
-
-      .row.offset {
-        transform: translateX(3.4rem);
+        align-content: center;
+        place-items: center;
       }
 
       .app-icon {
-        width: clamp(90px, 11vw, 132px);
+        width: var(--icon-size);
         aspect-ratio: 1 / 1;
         border-radius: 50%;
         overflow: hidden;
@@ -82,10 +95,6 @@
         filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
       }
 
-      .app-icon.center {
-        width: clamp(104px, 13vw, 152px);
-      }
-
       .app-icon:hover {
         --hover-scale: 1.07;
         --hover-lift: -12px;
@@ -93,26 +102,22 @@
       }
 
       @media (max-width: 768px) {
-        .row.offset {
-          transform: translateX(1.8rem);
+        :root {
+          --spread-multiplier: 3.2;
+        }
+
+        h1 {
+          top: clamp(1.5rem, 9vh, 4.5rem);
         }
       }
 
       @media (max-width: 520px) {
-        body {
-          padding: 2rem 0.5rem;
+        :root {
+          --spread-multiplier: 3.6;
         }
 
-        .app-drawer {
-          gap: 1.2rem;
-        }
-
-        .row {
-          gap: 1.2rem;
-        }
-
-        .row.offset {
-          transform: translateX(1rem);
+        h1 {
+          top: clamp(1rem, 10vh, 4rem);
         }
       }
     </style>
@@ -121,70 +126,111 @@
     <main>
       <h1>Apple Watch Style App Drawer</h1>
       <div class="app-drawer" aria-label="Application icons">
-        <div class="row">
-          <div class="app-icon"><img src="images/arr.png" alt="ARR Project" /></div>
-          <div class="app-icon"><img src="images/CAcover.png" alt="CA Cover" /></div>
-          <div class="app-icon"><img src="images/dfw.png" alt="DFW" /></div>
-          <div class="app-icon"><img src="images/gro247dls.png" alt="Gro247" /></div>
-          <div class="app-icon"><img src="images/mb.png" alt="MB" /></div>
-        </div>
-        <div class="row offset">
-          <div class="app-icon"><img src="images/pd.png" alt="Product Design" /></div>
-          <div class="app-icon"><img src="images/elm.png" alt="ELM" /></div>
-          <div class="app-icon center"><img src="images/hp.png" alt="HP" /></div>
-          <div class="app-icon"><img src="images/qz.png" alt="Quiz" /></div>
-          <div class="app-icon"><img src="images/zcs.png" alt="ZCS" /></div>
-        </div>
-        <div class="row">
-          <div class="app-icon"><img src="images/sol.png" alt="SOL" /></div>
-          <div class="app-icon"><img src="images/sos.png" alt="SOS" /></div>
-          <div class="app-icon center"><img src="images/sp.png" alt="SP" /></div>
-          <div class="app-icon"><img src="images/ttd.png" alt="TTD" /></div>
-          <div class="app-icon"><img src="images/ubercover.png" alt="Uber" /></div>
-        </div>
-        <div class="row offset">
-          <div class="app-icon"><img src="images/usmile.png" alt="U Smile" /></div>
-          <div class="app-icon"><img src="images/kv.png" alt="KV" /></div>
-          <div class="app-icon"><img src="images/ck.png" alt="CK" /></div>
-          <div class="app-icon center"><img src="images/caarg.png" alt="CA ARG" /></div>
-          <div class="app-icon"><img src="images/dadshsg.png" alt="Dadsh SG" /></div>
-        </div>
-        <div class="row">
-          <div class="app-icon"><img src="images/as.png" alt="AS" /></div>
-          <div class="app-icon"><img src="images/bkwai.png" alt="BKW AI" /></div>
-          <div class="app-icon"><img src="images/kv.png" alt="KV" /></div>
-          <div class="app-icon"><img src="images/qachecklist.png" alt="QA Checklist" /></div>
-          <div class="app-icon"><img src="images/tl.png" alt="TL" /></div>
-        </div>
+        <div class="app-icon"><img src="images/arr.png" alt="ARR Project" /></div>
+        <div class="app-icon"><img src="images/CAcover.png" alt="CA Cover" /></div>
+        <div class="app-icon"><img src="images/dfw.png" alt="DFW" /></div>
+        <div class="app-icon"><img src="images/gro247dls.png" alt="Gro247" /></div>
+        <div class="app-icon"><img src="images/mb.png" alt="MB" /></div>
+        <div class="app-icon"><img src="images/pd.png" alt="Product Design" /></div>
+        <div class="app-icon"><img src="images/elm.png" alt="ELM" /></div>
+        <div class="app-icon"><img src="images/hp.png" alt="HP" /></div>
+        <div class="app-icon"><img src="images/qz.png" alt="Quiz" /></div>
+        <div class="app-icon"><img src="images/zcs.png" alt="ZCS" /></div>
+        <div class="app-icon"><img src="images/sol.png" alt="SOL" /></div>
+        <div class="app-icon"><img src="images/sos.png" alt="SOS" /></div>
+        <div class="app-icon"><img src="images/sp.png" alt="SP" /></div>
+        <div class="app-icon"><img src="images/ttd.png" alt="TTD" /></div>
+        <div class="app-icon"><img src="images/ubercover.png" alt="Uber" /></div>
+        <div class="app-icon"><img src="images/usmile.png" alt="U Smile" /></div>
+        <div class="app-icon"><img src="images/kv.png" alt="KV" /></div>
+        <div class="app-icon"><img src="images/ck.png" alt="CK" /></div>
+        <div class="app-icon"><img src="images/caarg.png" alt="CA ARG" /></div>
+        <div class="app-icon"><img src="images/dadshsg.png" alt="Dadsh SG" /></div>
+        <div class="app-icon"><img src="images/as.png" alt="AS" /></div>
+        <div class="app-icon"><img src="images/bkwai.png" alt="BKW AI" /></div>
+        <div class="app-icon"><img src="images/kv.png" alt="KV" /></div>
+        <div class="app-icon"><img src="images/qachecklist.png" alt="QA Checklist" /></div>
+        <div class="app-icon"><img src="images/tl.png" alt="TL" /></div>
       </div>
     </main>
     <script>
-      const icons = document.querySelectorAll(".app-icon");
-      const maxShift = 20;
+      (() => {
+        const drawer = document.querySelector(".app-drawer");
+        if (!drawer) return;
 
-      const updateIconOffset = (clientX, clientY) => {
-        const xRatio = clientX / window.innerWidth - 0.5;
-        const yRatio = clientY / window.innerHeight - 0.5;
-        const offsetX = xRatio * maxShift;
-        const offsetY = yRatio * maxShift;
+        const baseIcons = Array.from(drawer.children);
+        if (!baseIcons.length) return;
 
-        icons.forEach((icon, index) => {
-          const depth = 0.4 + (index % 5) * 0.12;
-          icon.style.setProperty("--offset-x", `${offsetX * depth}px`);
-          icon.style.setProperty("--offset-y", `${offsetY * depth}px`);
+        const maxShift = 20;
+        let icons = [];
+        let resizeFrame = null;
+
+        const populateDrawer = () => {
+          while (drawer.children.length > baseIcons.length) {
+            drawer.removeChild(drawer.lastElementChild);
+          }
+
+          const computedStyles = getComputedStyle(drawer);
+          const gapValue = parseFloat(computedStyles.gap) || 0;
+          const sampleIcon = baseIcons[0].getBoundingClientRect();
+          const stepX = sampleIcon.width + gapValue;
+          const stepY = sampleIcon.height + gapValue;
+          const columns = Math.max(1, Math.ceil(drawer.offsetWidth / stepX));
+          const rows = Math.max(1, Math.ceil(drawer.offsetHeight / stepY));
+          const targetCount = (columns + 2) * (rows + 2);
+
+          let index = 0;
+          while (drawer.children.length < targetCount) {
+            const clone = baseIcons[index % baseIcons.length].cloneNode(true);
+            drawer.appendChild(clone);
+            index += 1;
+          }
+
+          icons = Array.from(drawer.querySelectorAll(".app-icon"));
+        };
+
+        const updateIconOffset = (clientX, clientY) => {
+          const xRatio = clientX / window.innerWidth - 0.5;
+          const yRatio = clientY / window.innerHeight - 0.5;
+          const offsetX = xRatio * maxShift;
+          const offsetY = yRatio * maxShift;
+
+          icons.forEach((icon, iconIndex) => {
+            const depth = 0.35 + (iconIndex % 7) * 0.08;
+            icon.style.setProperty("--offset-x", `${offsetX * depth}px`);
+            icon.style.setProperty("--offset-y", `${offsetY * depth}px`);
+          });
+        };
+
+        const resetOffsets = () => {
+          icons.forEach((icon) => {
+            icon.style.setProperty("--offset-x", "0px");
+            icon.style.setProperty("--offset-y", "0px");
+          });
+        };
+
+        const schedulePopulate = () => {
+          if (resizeFrame) {
+            cancelAnimationFrame(resizeFrame);
+          }
+
+          resizeFrame = window.requestAnimationFrame(() => {
+            resizeFrame = null;
+            populateDrawer();
+            resetOffsets();
+          });
+        };
+
+        window.addEventListener("pointermove", (event) => {
+          updateIconOffset(event.clientX, event.clientY);
         });
-      };
 
-      window.addEventListener("pointermove", (event) => {
-        updateIconOffset(event.clientX, event.clientY);
-      });
+        window.addEventListener("pointerleave", resetOffsets);
+        window.addEventListener("resize", schedulePopulate);
+        window.addEventListener("load", schedulePopulate);
 
-      window.addEventListener("pointerleave", () => {
-        icons.forEach((icon) => {
-          icon.style.setProperty("--offset-x", "0px");
-          icon.style.setProperty("--offset-y", "0px");
-        });
-      });
+        populateDrawer();
+      })();
     </script>
   </body>
 </html>
