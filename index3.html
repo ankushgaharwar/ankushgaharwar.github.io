@@ -19,20 +19,28 @@
         font-family: "Figtree", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         background: radial-gradient(circle at top, #1d2333, #090b15 55%);
         color: #ffffff;
+      }
+
+      body {
+        min-height: 100vh;
         display: flex;
-        align-items: center;
-        justify-content: center;
+        flex-direction: column;
       }
 
       #root {
-        width: min(90vw, 1100px);
+        flex: 1;
+        width: 100%;
       }
 
       .demo-wrapper {
-        border-radius: 24px;
-        background: rgba(18, 24, 38, 0.75);
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
-        padding: 1.5rem;
+        min-height: 100%;
+        width: 100%;
+        padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 6vw, 5rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
       }
 
       .demo-wrapper h1 {
@@ -49,9 +57,10 @@
       }
 
       .gallery-shell {
-        height: 600px;
+        height: min(70vh, 700px);
+        width: 100%;
         position: relative;
-        border-radius: 18px;
+        border-radius: 0;
         overflow: hidden;
       }
 
@@ -67,10 +76,6 @@
       }
 
       @media (max-width: 768px) {
-        .demo-wrapper {
-          padding: 1rem;
-        }
-
         .gallery-shell {
           height: 420px;
         }
@@ -392,6 +397,7 @@
           this.container = container;
           this.scrollSpeed = scrollSpeed;
           this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0, position: 0 };
+          this.autoScrollRate = 0.001;
           this.onCheckDebounce = debounce(this.onCheck, 200);
           this.createRenderer();
           this.createCamera();
@@ -519,6 +525,7 @@
         }
 
         update() {
+          this.scroll.target += this.autoScrollRate;
           this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
           const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
           if (this.medias) {
