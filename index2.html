@@ -42,13 +42,14 @@
     }
 
     .distortion-frame {
-      width: 100%;
+      width: 100vw;
       height: 600px;
       position: relative;
       background: #0b0b0b;
-      border-radius: 12px;
+      border-radius: 0;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
       border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-left: calc(50% - 50vw);
     }
   </style>
 
@@ -1371,10 +1372,25 @@ void main() {
 
   const distortionRoot = document.getElementById('grid-distortion-root');
   if (distortionRoot) {
+    const imageOptions = [
+      'bg/1.jpg',
+      'bg/2.jpg',
+      'bg/3.jpg',
+      'bg/4.jpg',
+      'bg/5.jpg',
+      'bg/6.jpg',
+      'bg/7.jpg',
+      'bg/8.jpg',
+      'bg/9.jpg',
+      'bg/10.jpg'
+    ];
+
+    const selectedImage = imageOptions[Math.floor(Math.random() * imageOptions.length)];
+
     const root = ReactDOM.createRoot(distortionRoot);
     root.render(
       <GridDistortion
-        imageSrc="https://picsum.photos/1920/1080?grayscale"
+        imageSrc={selectedImage}
         grid={10}
         mouse={0.1}
         strength={0.15}
