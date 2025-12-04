@@ -1372,20 +1372,7 @@ void main() {
 
   const distortionRoot = document.getElementById('grid-distortion-root');
   if (distortionRoot) {
-    const imageOptions = [
-      'bg/1.jpg',
-      'bg/2.jpg',
-      'bg/3.jpg',
-      'bg/4.jpg',
-      'bg/5.jpg',
-      'bg/6.jpg',
-      'bg/7.jpg',
-      'bg/8.jpg',
-      'bg/9.jpg',
-      'bg/10.jpg'
-    ];
-
-    const selectedImage = imageOptions[Math.floor(Math.random() * imageOptions.length)];
+    const selectedImage = 'bg/8.jpg';
 
     const root = ReactDOM.createRoot(distortionRoot);
     root.render(
