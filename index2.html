@@ -1,1405 +1,361 @@
-
 <!doctype html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="author" content="">
-  <link rel="shortcut icon" href="favicon.png">
-
-  <meta name="description" content="" />
-  <meta name="keywords" content="" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=PT+Mono&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/owl.carousel.min.css">
-  <link rel="stylesheet" href="css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="css/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="fonts/icomoon/style.css">
-  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-  <link rel="stylesheet" href="css/aos.css">
-  <link rel="stylesheet" href="css/style.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive App Wall</title>
   <style>
-    .distortion-wrapper {
-      padding: 60px 15px;
+    :root {
+      --bg: #edf0f4;
+      --panel: #e8ebef;
+      --shadow-soft: rgba(146, 156, 168, 0.28);
+      --shadow-hard: rgba(98, 108, 120, 0.24);
+      --icon-size: clamp(88px, 9vw, 130px);
+      --tilt-x: 0deg;
+      --tilt-y: 0deg;
+      --move-x: 0px;
+      --move-y: 0px;
     }
 
-    .distortion-wrapper h2 {
-      margin-bottom: 16px;
-      font-weight: 700;
+    * {
+      box-sizing: border-box;
     }
 
-    .distortion-container {
-      width: 100%;
-      height: 100%;
-      min-height: 0;
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Inter", "SF Pro Text", "Segoe UI", sans-serif;
+      background: linear-gradient(125deg, #dfe5ec 0%, #f6f8fb 42%, #e6e9ee 100%);
       overflow: hidden;
+      color: #1d232c;
     }
 
-    .distortion-frame {
-      width: 100vw;
-      height: 600px;
+    .scene {
       position: relative;
-      background: #0b0b0b;
-      border-radius: 0;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      margin-left: calc(50% - 50vw);
+      width: 100vw;
+      height: 100vh;
+      perspective: 1200px;
+      background:
+        radial-gradient(1200px 700px at 15% 80%, rgba(255, 255, 255, 0.78), transparent 68%),
+        linear-gradient(140deg, #d7dce3 0%, #f6f8fa 40%, #dde2e9 100%);
+      cursor: default;
+      isolation: isolate;
+    }
+
+    .room {
+      position: absolute;
+      inset: 7% 13% 10%;
+      border-radius: 30px;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(255, 255, 255, 0.2) 22%, rgba(0, 0, 0, 0.03) 100%),
+        linear-gradient(122deg, #e7ecf1 0%, #f8fafd 38%, #e0e6ed 100%);
+      box-shadow:
+        inset 12px 12px 30px rgba(149, 159, 173, 0.35),
+        inset -12px -12px 35px rgba(255, 255, 255, 0.9),
+        0 40px 80px rgba(130, 142, 158, 0.24);
+      transform-style: preserve-3d;
+      transform: translate3d(var(--move-x), var(--move-y), 0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+      transition: transform 180ms ease;
+    }
+
+    .sun-shafts {
+      position: absolute;
+      right: 4%;
+      top: 0;
+      width: 45%;
+      height: 100%;
+      pointer-events: none;
+      background:
+        linear-gradient(145deg, transparent 0%, rgba(255, 255, 255, 0.78) 37%, rgba(185, 194, 206, 0.33) 40%, transparent 58%),
+        linear-gradient(145deg, transparent 23%, rgba(255, 255, 255, 0.56) 27%, rgba(185, 194, 206, 0.24) 30%, transparent 44%);
+      mix-blend-mode: screen;
+      opacity: 0.8;
+      transform: translateX(calc(var(--move-x) * -0.7));
+      transition: transform 200ms ease;
+    }
+
+    .apps {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(720px, 72vw);
+      display: grid;
+      grid-template-columns: repeat(4, var(--icon-size));
+      gap: clamp(16px, 2vw, 24px);
+      justify-content: center;
+      transform: translate(-50%, -50%) translate3d(calc(var(--move-x) * 0.45), calc(var(--move-y) * 0.45), 30px);
+      transition: transform 120ms linear;
+    }
+
+    .app {
+      position: relative;
+      width: var(--icon-size);
+      height: var(--icon-size);
+      border: none;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      padding: 0;
+      color: #111;
+      background: radial-gradient(circle at 35% 30%, #ffffff, #edf0f4);
+      box-shadow:
+        inset 7px 7px 10px rgba(255, 255, 255, 0.95),
+        inset -10px -12px 16px rgba(169, 179, 191, 0.35),
+        0 10px 22px rgba(109, 118, 131, 0.25);
+      transform: translate3d(calc(var(--depth, 0) * var(--move-x) * 0.25), calc(var(--depth, 0) * var(--move-y) * 0.25), 0)
+        scale(1);
+      transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+      user-select: none;
+    }
+
+    .app:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow:
+        inset 7px 7px 10px rgba(255, 255, 255, 0.95),
+        inset -10px -12px 16px rgba(169, 179, 191, 0.35),
+        0 14px 26px rgba(92, 100, 111, 0.3);
+      filter: saturate(1.08);
+    }
+
+    .app:active {
+      transform: translateY(-1px) scale(0.98);
+    }
+
+    .app small {
+      position: absolute;
+      bottom: -28px;
+      width: max-content;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: rgba(47, 56, 68, 0.72);
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 150ms ease, transform 150ms ease;
+    }
+
+    .app:hover small {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .app .glyph {
+      font-size: clamp(34px, 3.8vw, 54px);
+      line-height: 1;
+      filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+    }
+
+    .weather { background: radial-gradient(circle at 30% 28%, #37b5ff, #1687ff 56%, #0f67d7); }
+    .chat { background: radial-gradient(circle at 30% 26%, #56ef70, #22c73f 60%, #15a533); }
+    .calendar { background: radial-gradient(circle at 30% 26%, #fff, #e9e9e9); }
+    .photos { background: radial-gradient(circle at 30% 26%, #fff, #eceef2); }
+    .clock { background: radial-gradient(circle at 35% 25%, #fff, #eceef3); }
+    .safari { background: radial-gradient(circle at 30% 26%, #49b4ff, #2f85ea 62%, #1b5db9); }
+    .calc { background: radial-gradient(circle at 35% 26%, #5b626f, #383f4b); color: #f5f7fb; }
+    .music { background: radial-gradient(circle at 32% 26%, #fff, #eceef3); }
+    .play { background: radial-gradient(circle at 30% 26%, #ff2e2e, #dd0707); color: #fff; }
+    .settings { background: radial-gradient(circle at 32% 26%, #646b74, #2f333a); color: #edf2f8; }
+
+    .calendar .glyph {
+      display: grid;
+      text-align: center;
+      gap: 0;
+      filter: none;
+    }
+
+    .calendar .month {
+      font-size: clamp(20px, 1.6vw, 32px);
+      color: #ff4e3b;
+      line-height: 1;
+    }
+
+    .calendar .day {
+      font-size: clamp(48px, 4.2vw, 62px);
+      margin-top: 2px;
+      line-height: 0.9;
+      color: #2f343d;
+      font-weight: 500;
+    }
+
+    .clock-face {
+      width: 64%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      position: relative;
+      background: radial-gradient(circle at 32% 20%, #ffffff, #f0f2f5);
+      box-shadow: inset 0 0 0 2px rgba(60, 67, 75, 0.12);
+    }
+
+    .clock-hand {
+      position: absolute;
+      left: 50%;
+      bottom: 50%;
+      transform-origin: bottom center;
+      border-radius: 99px;
+    }
+
+    .hour { width: 4px; height: 20px; background: #222; transform: translateX(-50%) rotate(305deg); }
+    .minute { width: 3px; height: 28px; background: #2f2f2f; transform: translateX(-50%) rotate(62deg); }
+    .second { width: 2px; height: 31px; background: #f58900; transform: translateX(-50%) rotate(180deg); }
+
+    .pulse {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      opacity: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.75), rgba(255,255,255,0));
+      transform: scale(0.6);
+      pointer-events: none;
+    }
+
+    .app.launch .pulse {
+      animation: pulse 420ms ease;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.9; transform: scale(0.65); }
+      100% { opacity: 0; transform: scale(1.35); }
+    }
+
+    .message {
+      position: absolute;
+      left: 50%;
+      bottom: 5%;
+      transform: translateX(-50%);
+      min-width: 220px;
+      max-width: min(90vw, 500px);
+      text-align: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(33, 39, 46, 0.64);
+      color: #f4f7fb;
+      font-size: 14px;
+      letter-spacing: 0.2px;
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      transition: opacity 180ms ease, transform 180ms ease;
+      pointer-events: none;
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    @media (max-width: 900px) {
+      .scene { overflow: auto; }
+      .room { inset: 4%; min-height: 680px; }
+      .apps {
+        width: 100%;
+        top: 52%;
+        grid-template-columns: repeat(3, var(--icon-size));
+      }
+      .app:nth-child(10) { grid-column: 2; }
     }
   </style>
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-  <title>Portfolio - Ankush Gaharwar</title>
 </head>
-
-<body data-spy="scroll" data-target=".site-navbar-target" data-offset="100">
-
-
-<br>
-  <center>
-    <!-- Smiley -->
-    <div class="header-logo-container">
-      
-        <a href="index.html"><img id="logo" class="logo" src="logo-gifs/4.gif"></a>
-      
-    </div>
-  </center>
-
-
-  <div class="lines-wrap">
-    <div class="lines-inner">
-      <div class="lines"></div>
-    </div>
-  </div>
-  <!-- END lines -->
-
-
-
-
-
-
-
-
-
-<nav class="site-nav dark mb-5 site-navbar-target fixed-top navbar-default">
-  <div class="container">
-    <div class="site-navigation">
-      <a href="index.html" class="logo m-0">अंकुश<span class="text-primary">.</span></a>
-
-      <div class="site-mobile-menu site-navbar-target" style="top: 0;">
-        <div class="site-mobile-menu-header">
-          <div class="site-mobile-menu-close">
-            <span class="icofont-close js-menu-toggle"></span>
-          </div>
-        </div>
-        <div class="site-mobile-menu-body"></div>
-      </div>
-
-      <ul class="js-clone-nav d-none d-lg-inline-none site-menu float-right site-nav-wrap">
-        <li><a href="#home-section" class="nav-link active">Home</a></li>
-        <li><a href="#portfolio-section" class="nav-link">Portfolio</a></li>
-        <li><a href="#contact-section" class="nav-link">Contact Me</a></li>
-        <li><a href="#socials-section" class="nav-link">Socials</a></li>
-      </ul>
-
-      <a href="#" class="burger ml-auto float-right site-menu-toggle js-menu-toggle d-inline-block d-lg-inline-block" data-toggle="collapse" data-target="#main-navbar">
-        <span></span>
-      </a>
-    </div>
-  </div>
-</nav>
-
-
-
-
-
-
-
-
-  <div class="untree_co-section pb-0" id="home-section">
-    <div class="container">
-      <div class="row justify-content-center text-center">
-        <div class="col-md-7">
-          <h1 class="heading gsap-reveal-hero mb-3"><strong>Ankush Gaharwar<span class="text-primary">.</span></strong></h1>
-          <h6 class="subheading gsap-reveal-hero mb-4">
-            Blending artistry with functionality, I design products that transform everyday experiences into moments of delight and efficiency.
-          </h6>
-<hr>   
-        </div>
-      </div>
-      
-    </div>
-  </div>
-
-
-
-
-
-
-
-
-  <div class="untree_co-section untree_co-section-4 pb-0"  id="portfolio-section">
-  </div>
-  
-<!----<a href="https://ankushgaharwar.github.io/?filter=.design">3D Design Filter Link</a>--->
-
-  
-  
- <!-- ======= Works Section ======= -->
-    <section class="section site-portfolio" style="padding-top: 10px;">
-      <div class="container">
-	  
-	  
-	  
-<div class="row mb-5 align-items-center custom-padding-row">
-  <div class="col-md-12 col-lg-6 mb-4 mb-lg-0 aos-init aos-animate custom-padding-left" data-aos="fade-up">
-    <!-- Content for the left column -->
-  </div>
-  
-  
-  
-    <div class="col-md-12 col-lg-6 text-start text-lg-end aos-init aos-animate custom-padding-right" data-aos="fade-up" data-aos-delay="100">
-        <div id="filters" class="filters custom-padding-filters">
-            <a href="javascript:void(0);" data-filter="*" id="all-filter" class="active">All</a>
-            <a href="javascript:void(0);" data-filter=".web" id="uiux-filter">UI/UX Design</a>
-            <a href="javascript:void(0);" data-filter=".design" id="3d-filter">3D Design</a>
-            <!-- <a href="javascript:void(0);" data-filter=".branding">Miscellaneous</a> -->
-        </div>
-    </div>
-
-
-
-
-</div>
-
-		
-		  
-		  
-		  
-		<div id="portfolio-grid" class="row no-gutter" data-aos="fade-up" data-aos-delay="200">
-		
-		
-	
-		
-		
-		
-          <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="Trading Leagues.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Trading Leagues</h3>
-                <span>UI/UX Design</span>
-              </div>
-              <img class="img-fluid" src="portfolio/tl/TL.png">
-            </a>
-          </div>
-		  
-		  
-
-
-
-
-
-		 
-		  
-		  
-		  
-          <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="https://www.figma.com/proto/bjSyG6gRwkMcudy5dhxWf6/Thesis?page-id=0%3A1&type=design&node-id=655-337&viewport=-8875%2C1883%2C0.27&t=9iTmugv8s8g84VrV-1&scaling=contain" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Cosmic Kaksh</h3>
-                <span>3D Design</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Cosmic Kaksh/Cosmic Kaksh.png">
-            </a>
-          </div>
-
-
-          <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="#" class="item-wrap fancybox" onclick="return openProtected('https://www.figma.com/proto/jXGgzr0nLWG7c2YmzOuvPc/Compre-Ahora-Arg-Case-Study?page-id=&type=design&node-id=1-16&viewport=363%2C654%2C0.04&t=W5j2ONZ1YkA2ABd7-1&scaling=scale-down-width&mode=design')">
-              <div class="work-info">
-                <h3>Compre Ahora - UX Case Study</h3>
-                <span>UI/UX Design</span>
-              </div>
-              <img class="img-fluid" src="images/CAcover.png">
-            </a>
-          </div>
-
-
-
-
-
-
-
-		  
-		  
-		  <!----old ui ux------>
-		  
-
-		  
-		  		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="https://www.figma.com/proto/wpr0chW47Dq2o3oXZ9U0Gh/UBER-UX-Case-study?page-id=0%3A1&type=design&node-id=8-1976&viewport=-174%2C-9123%2C0.27&t=o4zyaARb9fiY2bsI-1&scaling=scale-down-width" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Uber - UI/UX Case Study</h3>
-                <span>UI/UX Design</span>
-              </div>
-              <img class="img-fluid" src="images/ubercover.png">
-            </a>
-          </div>
-		  
-		  
-		            <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="Vilgain.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Vilgain - Review Screen</h3>
-                <span>UI/UX Design</span>
-              </div>
-              <img class="img-fluid" src="portfolio/vilgain/Vilgain.png">
-            </a>
-          </div>	
-		  
-		  		            <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="treehouse.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Tree House Design</h3>
-                <span>Volume Zero</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Tree House/p.png">
-            </a>
-          </div>
-		  
-		  
-		  		  		            <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="spacedesign.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Gaganyan Crew Seat</h3>
-                <span>Space Design</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Space Design/p.png">
-            </a>
-          </div>
-		  
-		  
-		  
-		  		            <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="arborfelix.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Arbor Felix</h3>
-                <span>Lamp Design</span>
-              </div>
-              <img class="img-fluid" src="portfolio/arborfelix/p.png">
-            </a>
-          </div>
-		  
-		  		  		            <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="villamedici.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Cabanes Night</h3>
-                <span>Villa Medici</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Villa Medici/p.png">
-            </a>
-          </div>
-
-
-
-
-		  		  		            <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="verde.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>7 Story Tensile Structure</h3>
-                <span>Festival del Verde</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Verde/p.png">
-            </a>
-          </div>
-
-		  
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="U Smile.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>U Smile</h3>
-                <span>Unilever</span>
-              </div>
-              <img class="img-fluid" src="portfolio/U Smile/usmile.png">
-            </a>
-          </div>
-          
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="CA Arg Prod.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Compre Ahore Argentina App</h3>
-                <span>Unilever</span>
-              </div>
-              <img class="img-fluid" src="portfolio/CA Arg/caarg.png">
-            </a>
-          </div>
-          
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="#" class="item-wrap fancybox" onclick="return openProtected('https://www.figma.com/file/qdJnCFrPIMKqy7Gx1hxSWQ/Gro-247-DLS?node-id=0%3A1&t=L4vtAg0UVFo9glDK-1')">
-              <div class="work-info">
-                <h3>Gro 24/7 DLS</h3>
-                <span>Unilever</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Gro 247 dls/cover.png">
-            </a>
-          </div>
-          
-		  
-		  
-		  
-		  
-		  
-		  
-		  <!------3d---------------->
-		  
-		  		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="Barrier Design.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Barrier Design</h3>
-                <span>Sapienza</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Barrier Designs/Barrier Designs.png">
-            </a>
-          </div>
-          
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="smarte.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Smarte +</h3>
-                <span>Sapienza</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Smarte +/Smarte +.png">
-            </a>
-          </div>
-          
-		  
-		  
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="Package Design.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Package Design</h3>
-                <span>Sapienza</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Package Design/Package Design.png">
-            </a>
-          </div>
-          
-		  
-		  
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="Smart Objects lamp.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Smart Objects - Lamp</h3>
-                <span>Sapienza</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Smart Objects - Lamp/Smart Objects - Lamp.png">
-            </a>
-          </div>
-          
-		  
-		  
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="scooper.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Smart Object - Scooper</h3>
-                <span>Sapienza</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Smart Object - Scooper/Smart Objects - Scooper.png">
-            </a>
-          </div>
-
-
-
-
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="drive from wheelchair.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Drive From Wheelchair</h3>
-                <span>IDC</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Drive from wheelchair/Drive from wheelchair.png">
-            </a>
-          </div>
-          
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="entry level motorcycle.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Entry Level Motorcycle</h3>
-                <span>IDC</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Entry level motorcycle/Entry level motercycle for Indian market.png">
-            </a>
-          </div>
-          
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="aurora.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Aurora</h3>
-                <span>Personal</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Aurora/Aurora.png">
-            </a>
-          </div>
-
-
-
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="hope.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Hope</h3>
-                <span>IDC</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Hope/Hope.png">
-            </a>
-          </div>
-          
-		  
-		  
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="taming the drone.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Taming The Drone</h3>
-                <span>IDC</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Taming the drone/Taming the drone.png">
-            </a>
-          </div>
-          
-		  
-		  
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="quizventure.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Quizventure</h3>
-                <span>SRM</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Quizventure/Quizventure.png">
-            </a>
-          </div>
-
-
-
-
-
-
-
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="zombie chase saga.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Zombie Chase Saga</h3>
-                <span>Xiaomi's POCO GDA</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Zombie chase saga/cover.png">
-            </a>
-          </div>
-		  
-		  <!---------3d-------->
-		  
-		  
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="https://www.figma.com/proto/aAIxMjFCpUQGY8dpcN0tvz/CA-Style-Guide-PWA?page-id=0%3A1&node-id=1501-3756&viewport=489%2C386%2C0.52&scaling=min-zoom" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Compre Ahora Style Guide Arg</h3>
-                <span>Unilever</span>
-              </div>
-              <img class="img-fluid" src="portfolio/CA Arg SG/QA Checklist.png">
-            </a>
-          </div>
-          
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="#" class="item-wrap fancybox" onclick="return openProtected('https://www.figma.com/proto/WAG2t0H47YJB5PDxQtKScX/Dev-Handoff?page-id=0%3A1&node-id=256-10170&viewport=491%2C359%2C0.49&scaling=scale-down')">
-              <div class="work-info">
-                <h3>Dev Handoff</h3>
-                <span>Unilever</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Dev Handoff/cover.png">
-            </a>
-          </div>
-          
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="https://www.figma.com/proto/TtUeIk4w3pxXYe0UFuhZrz/Unilever-DA-Dashboard-Style-Guide1?page-id=0%3A1&node-id=286-1097&viewport=494%2C190%2C0.38&scaling=scale-down" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>DA & Dashboard Style Guide</h3>
-                <span>Unilever</span>
-              </div>
-              <img class="img-fluid" src="portfolio/DA & Dashboard SG/cover.png">
-            </a>
-          </div>
-
-
-
-
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="#" class="item-wrap fancybox" onclick="return openProtected('https://www.figma.com/proto/73vW71nDe4CppzGY0LqRRb/Unilever-D%26A-Dashboards?page-id=20938%3A11567&node-id=20938-11569&viewport=513%2C375%2C0.49&scaling=scale-down')">
-              <div class="work-info">
-                <h3>D&A Dashboard Dev Handoff</h3>
-                <span>Unilever</span>
-              </div>
-              <img class="img-fluid" src="portfolio/D&A Dashboard Handoff/cover.png">
-            </a>
-          </div>
-          
-
-
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="https://kahvay.com/" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>KahVay</h3>
-                <span>Conso4s</span>
-              </div>
-              <img class="img-fluid" src="portfolio/KahVay/cover.png">
-            </a>
-          </div>
-          
-		  
-		  
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="https://www.bkwai.com/" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>BKWAI</h3>
-                <span>CONSO4S</span>
-              </div>
-              <img class="img-fluid" src="portfolio/BKWAI/cover.png">
-            </a>
-          </div>
-
-
-
-		  <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="https://conso4s.com/" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Conso4s</h3>
-                <span>Conso4s</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Conso4s/cover.png">
-            </a>
-          </div>
-
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  <!------old ui ux------------->
-		  
-		  
-		  
-		  
-		  
-		  <!--old------>
-		  
-		  
-		  
-		  
-		  
-
-          
-		  
-		  
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="sketches.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Automotive Sketches</h3>
-                <span>Personal</span>
-              </div>
-              <img class="img-fluid" src="portfolio/Automotive Sketches/Automotive Sketches.png">
-          </div>
-          
-		  
-		  
-		  <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="Miscellaneous.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Miscellaneous</h3>
-                <span>Images</span>
-              </div>
-              <img class="img-fluid" src="portfolio/miscellaneous.png">
-            </a>
-          </div>
-
-		  
-		  
-		  
-		  
-		  
-		  
-
-		  <!----old------>
-		  
-		  
-		  
-          <!------For future----<div class="item branding col-sm-6 col-md-4 col-lg-4 mb-4">
-            <a href="work-single.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>Amazon</h3>
-                <span>Miscellaneous</span>
-              </div>
-              <img class="img-fluid" src="assets/img/img_6.jpg">
-            </a>
-          </div>
-		  --->
-		  
-		  
-		  
-        </div>
-      </div>
-    </section><!-- End  Works Section -->
-	
-	
-	
-<!----contact me section------>	
-  <div class="untree_co-section untree_co-section-4 pb-0"  id="contact-section">
-  </div>
-
-
-
-
-<div class="contact-section">
-    <div class="contact-item">
-        <i class="fas fa-map-marker-alt"></i>
-        <p>Location</p>
-        <p class="nowrap">Rome, Italy / Lucknow, India</p>
-    </div>
-    <div class="contact-item">
-        <i class="fas fa-envelope"></i>
-        <p>Email</p>
-        <p class="nowrap"><a href="mailto:ankushgaharwar@gmail.com">ankushgaharwar@gmail.com</a></p>
-    </div>
-    <div class="contact-item">
-        <i class="fas fa-phone"></i>
-        <p>Phone</p>
-        <p class="nowrap">+39 351 949 7594 / +91 9940 571 495</p>
-    </div>
-</div>
-
-
-<br>
-<br>
-<br>
-
-<center>
-<div class="row">
-  <div class="col-md-12">
-
-    <div class="untree_co-section untree_co-section-4 pb-0" id="socials-section" style="background-color: #fff; padding: 20px; border-radius: 8px;">
-      <ul class="list-unstyled social" style="list-style: none; padding: 0; margin: 0;">
-        <li style="display: inline-block; margin-right: 10px;"><a href="https://www.instagram.com/ankushgaharwar/"><span class="icon-instagram"></span></a></li>
-        <li style="display: inline-block; margin-right: 10px;"><a href="#"><span class="icon-twitter"></span></a></li>
-        <li style="display: inline-block; margin-right: 10px;"><a href=""><span class="icon-facebook"></span></a></li>
-        <li style="display: inline-block; margin-right: 10px;"><a href="https://www.linkedin.com/in/ankushgaharwar/"><span class="icon-linkedin"></span></a></li>
-
-      </ul>
-    </div>
-    <br>
-  </div>
-</div>
-</center>
-
-<br>
-<br>
-<br>
-
-<hr style="
-    margin-top: 0px;
-    margin-bottom: 0px;
-">
-
-<section class="distortion-wrapper">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <h2>Grid Distortion Experiment</h2>
-        <p>Interactive distortion shader built with Three.js and React.</p>
-        <div class="distortion-frame">
-          <div id="grid-distortion-root" class="distortion-container"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-    <div id="overlay"></div>
-
-	
-	
-	
-<footer class="site-footer">
-  <div class="container">
-
-
-	
-    <div class="row">
-      <div class="col-md-12" style="padding-right: 0px;padding-left: 0px;">
-        <img src="footer-illustration.png" alt="Footer Image" class="footer-image">
-      </div>
-    </div>	
-	
-	
-	    <div class="row">
-      <div class="col-md-12">
-	  <br>
-        <p>© 2024 Ankush Gaharwar. All rights reserved.</p>
-		</br>
-		
-		
-
-      </div>
-    </div>
-	
-	
-	
-  </div>
-</footer>
-
-
-
-
-
-
-
-
-
-    <div id="overlayer"></div>
-    <div class="loader">
-      <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div>
-
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.animateNumber.min.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/jquery.fancybox.min.js"></script>
-    <script src="js/aos.js"></script>
-    <script src="js/wave-animate.js"></script>
-    <script src="js/circle-progress.js"></script>
-    <script src="js/imagesloaded.pkgd.js"></script>
-    <script src="js/isotope.pkgd.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/TweenMax.min.js"></script>
-    <script src="js/ScrollMagic.min.js"></script>
-    <script src="js/scrollmagic.animation.gsap.min.js"></script>
-
-
-    <script src="js/custom.js"></script>
-    
-
-
-
-
-
-
-
-
+<body>
+  <main class="scene" id="scene" aria-label="Interactive app wall">
+    <section class="room" aria-hidden="true"></section>
+    <div class="sun-shafts" aria-hidden="true"></div>
+
+    <section class="apps" id="apps">
+      <button class="app weather" style="--depth:1.3" data-app="Weather">
+        <span class="glyph">🌤️</span><span class="pulse"></span><small>Weather</small>
+      </button>
+      <button class="app chat" style="--depth:1.4" data-app="Messages">
+        <span class="glyph">💬</span><span class="pulse"></span><small>Messages</small>
+      </button>
+      <button class="app calendar" style="--depth:0.9" data-app="Calendar">
+        <span class="glyph"><span class="month">Sep</span><span class="day">7</span></span>
+        <span class="pulse"></span><small>Calendar</small>
+      </button>
+      <button class="app photos" style="--depth:1.1" data-app="Photos">
+        <span class="glyph">🌈</span><span class="pulse"></span><small>Photos</small>
+      </button>
+      <button class="app clock" style="--depth:1.2" data-app="Clock">
+        <span class="clock-face">
+          <span class="clock-hand hour"></span>
+          <span class="clock-hand minute"></span>
+          <span class="clock-hand second"></span>
+        </span>
+        <span class="pulse"></span><small>Clock</small>
+      </button>
+      <button class="app safari" style="--depth:1.5" data-app="Browser">
+        <span class="glyph">🧭</span><span class="pulse"></span><small>Browser</small>
+      </button>
+      <button class="app calc" style="--depth:1.1" data-app="Calculator">
+        <span class="glyph">🧮</span><span class="pulse"></span><small>Calculator</small>
+      </button>
+      <button class="app music" style="--depth:0.8" data-app="Music">
+        <span class="glyph">🎵</span><span class="pulse"></span><small>Music</small>
+      </button>
+      <button class="app play" style="--depth:1.4" data-app="Player">
+        <span class="glyph">▶️</span><span class="pulse"></span><small>Player</small>
+      </button>
+      <button class="app settings" style="--depth:1.3" data-app="Settings">
+        <span class="glyph">⚙️</span><span class="pulse"></span><small>Settings</small>
+      </button>
+    </section>
+
+    <div class="message" id="message" role="status" aria-live="polite"></div>
+  </main>
 
   <script>
-    // Array of GIFs and the favicon
-    const gifs = [
-      'logo-gifs/1.gif',
-      'logo-gifs/2.gif',
-      'logo-gifs/3.gif',
-      'logo-gifs/4.gif',
-      'logo-gifs/5.gif',
-      'logo-gifs/6.gif',
-      'logo-gifs/7.gif',
-      'logo-gifs/8.gif'
-    ];
-    const favicon = 'favicon.png';
+    const scene = document.getElementById("scene");
+    const message = document.getElementById("message");
+    const appButtons = Array.from(document.querySelectorAll(".app"));
 
-    const displayTime = 3000; // 5 seconds
-    const logoElement = document.getElementById('logo');
+    function setParallax(clientX, clientY) {
+      const rect = scene.getBoundingClientRect();
+      const px = (clientX - rect.left) / rect.width - 0.5;
+      const py = (clientY - rect.top) / rect.height - 0.5;
 
-    function getRandomGif() {
-      return gifs[Math.floor(Math.random() * gifs.length)];
+      const tiltY = px * 8;
+      const tiltX = py * -7;
+      const moveX = px * 24;
+      const moveY = py * 18;
+
+      scene.style.setProperty("--tilt-x", `${tiltX}deg`);
+      scene.style.setProperty("--tilt-y", `${tiltY}deg`);
+      scene.style.setProperty("--move-x", `${moveX}px`);
+      scene.style.setProperty("--move-y", `${moveY}px`);
     }
 
-    function loopGifs() {
-      setInterval(() => {
-        // Update the src attribute of the image element
-        if (logoElement.src.endsWith(favicon)) {
-          logoElement.src = getRandomGif();
-        } else {
-          logoElement.src = favicon;
+    function resetParallax() {
+      scene.style.setProperty("--tilt-x", "0deg");
+      scene.style.setProperty("--tilt-y", "0deg");
+      scene.style.setProperty("--move-x", "0px");
+      scene.style.setProperty("--move-y", "0px");
+    }
+
+    function launchApp(button) {
+      const appName = button.dataset.app;
+      button.classList.remove("launch");
+      button.offsetHeight;
+      button.classList.add("launch");
+
+      message.textContent = `${appName} opened`;
+      message.classList.add("show");
+      clearTimeout(launchApp.timer);
+      launchApp.timer = setTimeout(() => message.classList.remove("show"), 1100);
+    }
+
+    appButtons.forEach((button) => {
+      button.addEventListener("click", () => launchApp(button));
+      button.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          launchApp(button);
         }
-      }, displayTime);
-    }
+      });
+    });
 
-    // Start the loop
-    loopGifs();
+    scene.addEventListener("pointermove", (event) => setParallax(event.clientX, event.clientY));
+    scene.addEventListener("pointerleave", resetParallax);
   </script>
-
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const filterButtons = document.querySelectorAll('.filter-button');
-    const portfolioItems = document.querySelectorAll('.item');
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const filter = button.getAttribute('data-filter');
-
-            portfolioItems.forEach(item => {
-                if (filter === 'all' || item.getAttribute('data-category') === filter) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        });
-    });
-});
-
-</script>
-
-
-
-
-
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const filterButtons = document.querySelectorAll('.filter-button');
-    const portfolioItems = document.querySelectorAll('.item');
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Remove 'active' class from all buttons
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Add 'active' class to the clicked button
-            button.classList.add('active');
-
-            const filter = button.getAttribute('data-filter');
-
-            portfolioItems.forEach(item => {
-                if (filter === 'all' || item.getAttribute('data-category') === filter) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        });
-    });
-});
-
-</script>
-
-
-
-
-
-
-
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-
-
-
-
-
-
-
-<script>
-  window.addEventListener('scroll', function() {
-    const navbar = document.querySelector('.site-nav');
-    if (window.scrollY > 0) {
-      navbar.classList.add('navbar-scrolled');
-    } else {
-      navbar.classList.remove('navbar-scrolled');
-    }
-  });
-</script>
-
-
-
-
-
-
-
-
-
-<!-----disable right click------>
-<script>
-  // Disable right-click context menu except for .contact-section
-  document.addEventListener('contextmenu', function(event) {
-    if (!event.target.closest('.contact-section')) {
-      event.preventDefault();
-    }
-  });
-
-  // Optionally, disable keyboard shortcuts for "Save As" or "Inspect Element"
-  document.addEventListener('keydown', function(event) {
-    if (event.ctrlKey && (event.key === 'u' || event.key === 's' || event.key === 'a' || event.key === 'p')) {
-      event.preventDefault();
-    }
-    if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && event.key === 'I')) {
-      event.preventDefault();
-    }
-  });
-</script>
-
-
-
-
-
-<!------filter----------->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Function to apply the filter based on URL parameter
-            function applyFilterFromUrl() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const filterParam = urlParams.get('filter');
-                if (filterParam) {
-                    const filterLink = document.querySelector(`[data-filter="${filterParam}"]`);
-                    if (filterLink) {
-                        document.querySelectorAll('#filters a').forEach(link => link.classList.remove('active'));
-                        filterLink.classList.add('active');
-                        // Trigger filter logic here
-                        // For demonstration, just log the filter to the console
-                        console.log('Applying filter:', filterParam);
-                        // Add your filtering logic here (e.g., show/hide elements based on the filter)
-                    }
-                }
-            }
-
-            // Call the function to apply filter on page load
-            applyFilterFromUrl();
-
-            // Add click event listeners to update URL and apply filter when a link is clicked
-            const filterLinks = document.querySelectorAll('#filters a');
-            filterLinks.forEach(link => {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const filterValue = this.getAttribute('data-filter');
-                    const newUrl = `${window.location.pathname}?filter=${encodeURIComponent(filterValue)}`;
-                    window.history.pushState({ path: newUrl }, '', newUrl);
-                    // Apply the filter logic here
-                    document.querySelectorAll('#filters a').forEach(link => link.classList.remove('active'));
-                    this.classList.add('active');
-                    console.log('Applying filter:', filterValue);
-                    // Add your filtering logic here (e.g., show/hide elements based on the filter)
-                });
-            });
-
-            // Handle browser back/forward navigation
-            window.addEventListener('popstate', applyFilterFromUrl);
-        });
-    </script>
-
-
-
-
-
-
-
-
-
-
-<!-----screenshot prevention----
-<script>
-  // Function to show the overlay
-  function showOverlay() {
-    const overlay = document.getElementById('overlay');
-    overlay.classList.add('visible');
-  }
-
-  // Function to hide the overlay
-  function hideOverlay() {
-    const overlay = document.getElementById('overlay');
-    overlay.classList.remove('visible');
-  }
-
-  // Show overlay when the document is hidden
-  document.addEventListener('visibilitychange', function() {
-    if (document.visibilityState === 'hidden') {
-      showOverlay();
-    } else {
-      hideOverlay();
-    }
-  });
-
-  // Show overlay when the window loses focus
-  window.addEventListener('blur', function() {
-    showOverlay();
-  });
-
-  // Hide overlay when the window gains focus
-  window.addEventListener('focus', function() {
-    hideOverlay();
-  });
-
-  // Disable right-click context menu
-  document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-  });
-
-  // Disable screenshot attempts via copy
-  document.addEventListener('copy', function(event) {
-    showOverlay();
-    event.preventDefault();
-  });
-  
-  // Attempt to detect the Print Screen key
-document.addEventListener('keydown', function(event) {
-  if (event.key === 'PrintScreen') {
-    showOverlay();
-    alert('Screenshots are disabled on this website.');
-  }
-});
-
-
-// Attempt to disable the Snipping Tool by frequently checking for focus changes
-setInterval(() => {
-  if (document.visibilityState === 'hidden') {
-    showOverlay();
-  }
-}, 1000);
-  
-</script>
----->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-<script type="text/babel" data-presets="env,react">
-  const { useRef, useEffect } = React;
-
-  const vertexShader = `
-uniform float time;
-varying vec2 vUv;
-varying vec3 vPosition;
-
-void main() {
-  vUv = uv;
-  vPosition = position;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-}`;
-
-  const fragmentShader = `
-uniform sampler2D uDataTexture;
-uniform sampler2D uTexture;
-uniform vec4 resolution;
-varying vec2 vUv;
-
-void main() {
-  vec2 uv = vUv;
-  vec4 offset = texture2D(uDataTexture, vUv);
-  gl_FragColor = texture2D(uTexture, uv - 0.02 * offset.rg);
-}`;
-
-  function GridDistortion({ grid = 15, mouse = 0.1, strength = 0.15, relaxation = 0.9, imageSrc, className = '' }) {
-    const containerRef = useRef(null);
-    const sceneRef = useRef(null);
-    const rendererRef = useRef(null);
-    const cameraRef = useRef(null);
-    const planeRef = useRef(null);
-    const imageAspectRef = useRef(1);
-    const animationIdRef = useRef(null);
-    const resizeObserverRef = useRef(null);
-
-    useEffect(() => {
-      const container = containerRef.current;
-      if (!container) return undefined;
-
-      const scene = new THREE.Scene();
-      sceneRef.current = scene;
-
-      const renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        alpha: true,
-        powerPreference: 'high-performance'
-      });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setClearColor(0x000000, 0);
-      rendererRef.current = renderer;
-
-      container.innerHTML = '';
-      container.appendChild(renderer.domElement);
-
-      const camera = new THREE.OrthographicCamera(0, 0, 0, 0, -1000, 1000);
-      camera.position.z = 2;
-      cameraRef.current = camera;
-
-      const uniforms = {
-        time: { value: 0 },
-        resolution: { value: new THREE.Vector4() },
-        uTexture: { value: null },
-        uDataTexture: { value: null }
-      };
-
-      const handleResize = () => {
-        if (!container || !renderer || !camera) return;
-
-        const rect = container.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-
-        if (width === 0 || height === 0) return;
-
-        const containerAspect = width / height;
-
-        renderer.setSize(width, height);
-
-        if (planeRef.current) {
-          planeRef.current.scale.set(containerAspect, 1, 1);
-        }
-
-        const frustumHeight = 1;
-        const frustumWidth = frustumHeight * containerAspect;
-        camera.left = -frustumWidth / 2;
-        camera.right = frustumWidth / 2;
-        camera.top = frustumHeight / 2;
-        camera.bottom = -frustumHeight / 2;
-        camera.updateProjectionMatrix();
-
-        uniforms.resolution.value.set(width, height, 1, 1);
-      };
-
-      const textureLoader = new THREE.TextureLoader();
-      textureLoader.load(imageSrc, texture => {
-        texture.minFilter = THREE.LinearFilter;
-        texture.magFilter = THREE.LinearFilter;
-        texture.wrapS = THREE.ClampToEdgeWrapping;
-        texture.wrapT = THREE.ClampToEdgeWrapping;
-        imageAspectRef.current = texture.image.width / texture.image.height;
-        uniforms.uTexture.value = texture;
-        handleResize();
-      });
-
-      const size = grid;
-      const data = new Float32Array(4 * size * size);
-      for (let i = 0; i < size * size; i += 1) {
-        data[i * 4] = Math.random() * 255 - 125;
-        data[i * 4 + 1] = Math.random() * 255 - 125;
-      }
-
-      const dataTexture = new THREE.DataTexture(data, size, size, THREE.RGBAFormat, THREE.FloatType);
-      dataTexture.needsUpdate = true;
-      uniforms.uDataTexture.value = dataTexture;
-
-      const material = new THREE.ShaderMaterial({
-        side: THREE.DoubleSide,
-        uniforms,
-        vertexShader,
-        fragmentShader,
-        transparent: true
-      });
-
-      const geometry = new THREE.PlaneGeometry(1, 1, size - 1, size - 1);
-      const plane = new THREE.Mesh(geometry, material);
-      planeRef.current = plane;
-      scene.add(plane);
-
-      if (window.ResizeObserver) {
-        const resizeObserver = new ResizeObserver(() => {
-          handleResize();
-        });
-        resizeObserver.observe(container);
-        resizeObserverRef.current = resizeObserver;
-      } else {
-        window.addEventListener('resize', handleResize);
-      }
-
-      const mouseState = {
-        x: 0,
-        y: 0,
-        prevX: 0,
-        prevY: 0,
-        vX: 0,
-        vY: 0
-      };
-
-      const handleMouseMove = e => {
-        const rect = container.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width;
-        const y = 1 - (e.clientY - rect.top) / rect.height;
-        mouseState.vX = x - mouseState.prevX;
-        mouseState.vY = y - mouseState.prevY;
-        Object.assign(mouseState, { x, y, prevX: x, prevY: y });
-      };
-
-      const handleMouseLeave = () => {
-        dataTexture.needsUpdate = true;
-        Object.assign(mouseState, {
-          x: 0,
-          y: 0,
-          prevX: 0,
-          prevY: 0,
-          vX: 0,
-          vY: 0
-        });
-      };
-
-      container.addEventListener('mousemove', handleMouseMove);
-      container.addEventListener('mouseleave', handleMouseLeave);
-
-      handleResize();
-
-      const animate = () => {
-        animationIdRef.current = requestAnimationFrame(animate);
-
-        if (!renderer || !scene || !camera) return;
-
-        uniforms.time.value += 0.05;
-
-        const texData = dataTexture.image.data;
-        for (let i = 0; i < size * size; i += 1) {
-          texData[i * 4] *= relaxation;
-          texData[i * 4 + 1] *= relaxation;
-        }
-
-        const gridMouseX = size * mouseState.x;
-        const gridMouseY = size * mouseState.y;
-        const maxDist = size * mouse;
-
-        for (let i = 0; i < size; i += 1) {
-          for (let j = 0; j < size; j += 1) {
-            const distSq = Math.pow(gridMouseX - i, 2) + Math.pow(gridMouseY - j, 2);
-            if (distSq > 0 && distSq < maxDist * maxDist) {
-              const index = 4 * (i + size * j);
-              const power = Math.min(maxDist / Math.sqrt(distSq), 10);
-              texData[index] += strength * 100 * mouseState.vX * power;
-              texData[index + 1] -= strength * 100 * mouseState.vY * power;
-            }
-          }
-        }
-
-        dataTexture.needsUpdate = true;
-        renderer.render(scene, camera);
-      };
-
-      animate();
-
-      return () => {
-        if (animationIdRef.current) {
-          cancelAnimationFrame(animationIdRef.current);
-        }
-
-        if (resizeObserverRef.current) {
-          resizeObserverRef.current.disconnect();
-        } else {
-          window.removeEventListener('resize', handleResize);
-        }
-
-        container.removeEventListener('mousemove', handleMouseMove);
-        container.removeEventListener('mouseleave', handleMouseLeave);
-
-        if (renderer) {
-          renderer.dispose();
-          if (container.contains(renderer.domElement)) {
-            container.removeChild(renderer.domElement);
-          }
-        }
-
-        geometry.dispose();
-        material.dispose();
-        dataTexture.dispose();
-        if (uniforms.uTexture.value) uniforms.uTexture.value.dispose();
-
-        sceneRef.current = null;
-        rendererRef.current = null;
-        cameraRef.current = null;
-        planeRef.current = null;
-      };
-    }, [grid, mouse, strength, relaxation, imageSrc]);
-
-    return (
-      <div
-        ref={containerRef}
-        className={`distortion-container ${className}`}
-        style={{
-          width: '100%',
-          height: '100%',
-          minWidth: '0',
-          minHeight: '0'
-        }}
-      />
-    );
-  }
-
-  const distortionRoot = document.getElementById('grid-distortion-root');
-  if (distortionRoot) {
-    const selectedImage = 'bg/8.jpg';
-
-    const root = ReactDOM.createRoot(distortionRoot);
-    root.render(
-      <GridDistortion
-        imageSrc={selectedImage}
-        grid={10}
-        mouse={0.1}
-        strength={0.15}
-        relaxation={0.9}
-        className="custom-class"
-      />
-    );
-  }
-</script>
-
-<script>
-  function openProtected(url) {
-    const password = prompt('Enter password to view this case study:');
-    if (password === 'gaharwardesigns') {
-      window.open(url, '_blank');
-    } else if (password !== null) {
-      alert('Incorrect password!');
-    }
-    return false;
-  }
-</script>
-
-  </body>
-
-  </html>
+</body>
+</html>
