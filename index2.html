@@ -11,6 +11,8 @@
       --shadow-soft: rgba(146, 156, 168, 0.28);
       --shadow-hard: rgba(98, 108, 120, 0.24);
       --icon-size: clamp(88px, 9vw, 130px);
+      --grid-gap: clamp(20px, 2.2vw, 30px);
+      --row-step: calc((var(--icon-size) + var(--grid-gap)) * 0.62);
       --tilt-x: 0deg;
       --tilt-y: 0deg;
       --move-x: 0px;
@@ -80,25 +82,22 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      width: min(760px, 76vw);
-      display: grid;
-      grid-template-columns: repeat(4, var(--icon-size));
-      gap: clamp(20px, 2.2vw, 30px);
-      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      gap: var(--row-step);
       transform: translate(-50%, -50%) translate3d(calc(var(--move-x) * 0.45), calc(var(--move-y) * 0.45), 30px);
       transition: transform 120ms linear;
     }
 
-    .app:nth-child(1) { --offset-x: -6px; --offset-y: 8px; }
-    .app:nth-child(2) { --offset-x: 10px; --offset-y: -4px; }
-    .app:nth-child(3) { --offset-x: -8px; --offset-y: 6px; }
-    .app:nth-child(4) { --offset-x: 5px; --offset-y: -7px; }
-    .app:nth-child(5) { --offset-x: 8px; --offset-y: 3px; }
-    .app:nth-child(6) { --offset-x: -9px; --offset-y: -6px; }
-    .app:nth-child(7) { --offset-x: 7px; --offset-y: 7px; }
-    .app:nth-child(8) { --offset-x: -4px; --offset-y: -4px; }
-    .app:nth-child(9) { --offset-x: 12px; --offset-y: 4px; }
-    .app:nth-child(10) { --offset-x: -10px; --offset-y: -2px; }
+    .app-row {
+      display: flex;
+      gap: var(--grid-gap);
+      align-items: center;
+    }
+
+    .app-row:nth-child(even) {
+      margin-left: calc((var(--icon-size) + var(--grid-gap)) / 2);
+    }
 
     .app {
       position: relative;
@@ -118,8 +117,8 @@
         inset 2px 2px 6px rgba(255, 255, 255, 0.55),
         inset -2px -2px 5px rgba(148, 158, 171, 0.18);
       transform: translate3d(
-          calc(var(--offset-x, 0px) + (var(--depth, 0) * var(--move-x) * 0.2)),
-          calc(var(--offset-y, 0px) + (var(--depth, 0) * var(--move-y) * 0.2)),
+          calc(var(--depth, 0) * var(--move-x) * 0.2),
+          calc(var(--depth, 0) * var(--move-y) * 0.2),
           0
         );
       transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
@@ -271,14 +270,13 @@
 
     @media (max-width: 900px) {
       .scene { overflow: auto; }
-      .room { inset: 4%; min-height: 680px; }
+      .room { inset: 4%; min-height: 780px; }
       .apps {
-        width: 100%;
-        top: 52%;
-        grid-template-columns: repeat(3, var(--icon-size));
+        top: 54%;
+        --icon-size: clamp(78px, 18vw, 110px);
+        --grid-gap: clamp(14px, 3.4vw, 22px);
+        --row-step: calc((var(--icon-size) + var(--grid-gap)) * 0.58);
       }
-      .app:nth-child(10) { grid-column: 2; }
-      .app { --offset-x: 0px; --offset-y: 0px; }
     }
   </style>
 </head>
@@ -288,42 +286,50 @@
     <div class="sun-shafts" aria-hidden="true"></div>
 
     <section class="apps" id="apps">
-      <button class="app weather" style="--depth:1.3; --delay:-0.3s" data-app="Weather">
-        <span class="glyph">🌤️</span><span class="pulse"></span><small>Weather</small>
-      </button>
-      <button class="app chat" style="--depth:1.4; --delay:-1.1s" data-app="Messages">
-        <span class="glyph">💬</span><span class="pulse"></span><small>Messages</small>
-      </button>
-      <button class="app calendar" style="--depth:0.9; --delay:-0.8s" data-app="Calendar">
-        <span class="glyph"><span class="month">Sep</span><span class="day">7</span></span>
-        <span class="pulse"></span><small>Calendar</small>
-      </button>
-      <button class="app photos" style="--depth:1.1; --delay:-1.8s" data-app="Photos">
-        <span class="glyph">🌈</span><span class="pulse"></span><small>Photos</small>
-      </button>
-      <button class="app clock" style="--depth:1.2; --delay:-2.2s" data-app="Clock">
-        <span class="clock-face">
-          <span class="clock-hand hour"></span>
-          <span class="clock-hand minute"></span>
-          <span class="clock-hand second"></span>
-        </span>
-        <span class="pulse"></span><small>Clock</small>
-      </button>
-      <button class="app safari" style="--depth:1.5; --delay:-0.6s" data-app="Browser">
-        <span class="glyph">🧭</span><span class="pulse"></span><small>Browser</small>
-      </button>
-      <button class="app calc" style="--depth:1.1; --delay:-1.4s" data-app="Calculator">
-        <span class="glyph">🧮</span><span class="pulse"></span><small>Calculator</small>
-      </button>
-      <button class="app music" style="--depth:0.8; --delay:-2.7s" data-app="Music">
-        <span class="glyph">🎵</span><span class="pulse"></span><small>Music</small>
-      </button>
-      <button class="app play" style="--depth:1.4; --delay:-1.9s" data-app="Player">
-        <span class="glyph">▶️</span><span class="pulse"></span><small>Player</small>
-      </button>
-      <button class="app settings" style="--depth:1.3; --delay:-0.1s" data-app="Settings">
-        <span class="glyph">⚙️</span><span class="pulse"></span><small>Settings</small>
-      </button>
+      <div class="app-row">
+        <button class="app weather" style="--depth:1.3; --delay:-0.3s" data-app="Weather">
+          <span class="glyph">🌤️</span><span class="pulse"></span><small>Weather</small>
+        </button>
+        <button class="app chat" style="--depth:1.4; --delay:-1.1s" data-app="Messages">
+          <span class="glyph">💬</span><span class="pulse"></span><small>Messages</small>
+        </button>
+        <button class="app calendar" style="--depth:0.9; --delay:-0.8s" data-app="Calendar">
+          <span class="glyph"><span class="month">Sep</span><span class="day">7</span></span>
+          <span class="pulse"></span><small>Calendar</small>
+        </button>
+        <button class="app photos" style="--depth:1.1; --delay:-1.8s" data-app="Photos">
+          <span class="glyph">🌈</span><span class="pulse"></span><small>Photos</small>
+        </button>
+      </div>
+
+      <div class="app-row">
+        <button class="app clock" style="--depth:1.2; --delay:-2.2s" data-app="Clock">
+          <span class="clock-face">
+            <span class="clock-hand hour"></span>
+            <span class="clock-hand minute"></span>
+            <span class="clock-hand second"></span>
+          </span>
+          <span class="pulse"></span><small>Clock</small>
+        </button>
+        <button class="app safari" style="--depth:1.5; --delay:-0.6s" data-app="Browser">
+          <span class="glyph">🧭</span><span class="pulse"></span><small>Browser</small>
+        </button>
+        <button class="app calc" style="--depth:1.1; --delay:-1.4s" data-app="Calculator">
+          <span class="glyph">🧮</span><span class="pulse"></span><small>Calculator</small>
+        </button>
+      </div>
+
+      <div class="app-row">
+        <button class="app music" style="--depth:0.8; --delay:-2.7s" data-app="Music">
+          <span class="glyph">🎵</span><span class="pulse"></span><small>Music</small>
+        </button>
+        <button class="app play" style="--depth:1.4; --delay:-1.9s" data-app="Player">
+          <span class="glyph">▶️</span><span class="pulse"></span><small>Player</small>
+        </button>
+        <button class="app settings" style="--depth:1.3; --delay:-0.1s" data-app="Settings">
+          <span class="glyph">⚙️</span><span class="pulse"></span><small>Settings</small>
+        </button>
+      </div>
     </section>
 
     <div class="message" id="message" role="status" aria-live="polite"></div>
