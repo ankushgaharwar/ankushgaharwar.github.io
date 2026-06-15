@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="BKWAI project cover.">
+    <title>BKWAI - Ankush Gaharwar</title>
+    <link rel="icon" type="image/gif" href="logo-gifs/1.gif">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <style>
+      :root { --page-bg: #f7f6f2; --page-text: #111111; --page-muted: #8d8c86; }
+      * { box-sizing: border-box; }
+      html, body { min-height: 100%; }
+      body { margin: 0; background: var(--page-bg); color: var(--page-text); font-family: Arial, Helvetica, sans-serif; }
+      .cover-detail { min-height: 100vh; padding: clamp(132px, 13vw, 188px) clamp(20px, 3.35vw, 64px) 136px; }
+      .cover-detail__header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; margin-bottom: 24px; }
+      .cover-detail h2 { margin: 0; max-width: 980px; font-size: clamp(42px, 7vw, 104px); line-height: 0.95; font-weight: 400; letter-spacing: 0; }
+      .cover-detail__meta { margin: 0 0 0 auto; color: var(--page-muted); font-size: clamp(14px, 1.25vw, 22px); white-space: nowrap; }
+      .cover-detail__media { width: 100%; min-height: 55vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+      .cover-detail__media img { display: block; width: 100%; max-height: min(74vh, 900px); object-fit: contain; border-radius: 8px; }
+      @media (max-width: 760px) {
+        .cover-detail { padding: 132px 20px 124px; }
+        .cover-detail__header { grid-template-columns: 1fr; gap: 10px; }
+        .cover-detail__meta { margin-left: 0; }
+        .cover-detail__media { min-height: 45vh; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav dark mb-5 site-navbar-target fixed-top navbar-default" aria-label="Primary">
+      <div class="container">
+        <div class="site-navigation">
+          <a class="logo m-0" href="index.html" aria-label="Ankush Gaharwar" data-rotating-brand data-logo-base="logo-gifs/"><img class="brand-logo" data-rotating-brand-logo src="logo-gifs/1.gif" alt="" aria-hidden="true" decoding="async"><span data-rotating-brand-word>&#x0921;&#x093f;&#x091c;&#x093c;&#x093e;&#x0907;&#x0928;&#x0930;</span></a>
+          <ul class="js-clone-nav d-none d-lg-inline-none site-menu float-right site-nav-wrap">
+            <li><a href="index.html" class="nav-link active" aria-current="page">Home,</a></li>
+            <li><a href="about/about.html" class="nav-link">About</a></li>
+          </ul>
+          <a href="mailto:ankushgaharwar@gmail.com" class="legacy-contact-link">Send me a message</a>
+        </div>
+      </div>
+    </nav>
+    <main class="cover-detail">
+      <header class="cover-detail__header">
+        <h2>BKWAI</h2>
+        <p class="cover-detail__meta">[AI Product]</p>
+      </header>
+      <div class="cover-detail__media">
+        <img src="portfolio/BKWAI/cover.png" alt="BKWAI cover" decoding="async">
+      </div>
+    </main>
+    <script src="assets/js/rotating-brand.js"></script>
+  </body>
+</html>

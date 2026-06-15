@@ -1,0 +1,2060 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      (function () {
+        var path = window.location.pathname || "/";
+        var last = path.substring(path.lastIndexOf("/") + 1);
+        if (!/\/$/.test(path) && last && !/\.[^/]+$/.test(last)) path += "/";
+        document.write('<base href="' + path.replace(/"/g, "%22") + '">');
+      })();
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Ankush Gaharwar is a digital artist specialising in 3D, motion, and art direction.">
+    <title>Ankush Gaharwar - Index</title>
+    <link rel="icon" type="image/gif" href="logo-gifs/1.gif">
+    <link rel="preload" href="_nuxt/fonts/ABCDiatype-Medium.64d0b84.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="_nuxt/fonts/Inferi-NormalItalic.829c761.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="portfolio/tl/TL.png" as="image">
+    <style>
+      :root {
+        --bg: #f7f6f2;
+        --text: #111111;
+        --muted: #b8b8b3;
+        --line: rgba(17, 17, 17, 0.2);
+        --shadow: 0 20px 45px rgba(17, 17, 17, 0.08);
+        --pad: clamp(20px, 3.35vw, 64px);
+        --card-width: 390px;
+        --active-card-width: 560px;
+        --rail-gap: 1px;
+        --image-ratio: 1 / 1.18;
+        --motion: cubic-bezier(0.19, 1, 0.22, 1);
+        --expand-motion: cubic-bezier(0.45, 0, 0.2, 1);
+      }
+
+      @font-face {
+        font-family: "Diatype";
+        src: url("_nuxt/fonts/ABCDiatype-Medium.64d0b84.woff2") format("woff2");
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Inferi";
+        src: url("_nuxt/fonts/Inferi-NormalItalic.829c761.woff2") format("woff2");
+        font-weight: 400;
+        font-style: italic;
+        font-display: swap;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: radial-gradient(circle at top, #fbfaf7 0%, var(--bg) 55%, #f2f0ea 100%);
+        color: var(--text);
+      }
+
+      body {
+        font-family: "Diatype", Arial, sans-serif;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .home-shell {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .topbar {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 24px;
+        align-items: center;
+        padding: 36px var(--pad) 0;
+      }
+
+      .brandline,
+      .nav,
+      .contact-link,
+      .tile-title,
+      .mode-time {
+        font-size: clamp(18px, 1.55vw, 29px);
+        line-height: 1.02;
+        letter-spacing: -0.045em;
+      }
+
+      .brandline {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65em;
+        justify-self: start;
+        font-size: clamp(18px, 1.55vw, 28px);
+      }
+
+      .brand-logo {
+        width: 3.2em;
+        height: 3.2em;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        object-fit: cover;
+        overflow: hidden;
+      }
+
+      .nav {
+        align-self: center;
+        justify-self: center;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 0.28em;
+        color: var(--muted);
+      }
+
+      .nav a,
+      .mode-switch a,
+      .mode-switch button,
+      .contact-link {
+        transition: color 0.35s ease, opacity 0.35s ease, border-color 0.35s ease;
+      }
+
+      .nav a:hover,
+      .mode-switch a:hover,
+      .mode-switch button:hover {
+        color: var(--text);
+      }
+
+      .nav a.active,
+      .mode-switch .active {
+        color: var(--text);
+      }
+
+      .contact-wrap {
+        align-self: center;
+        justify-self: end;
+      }
+
+      .contact-link {
+        display: inline-block;
+        font-size: clamp(22px, 2vw, 28px);
+        padding-bottom: 0.16em;
+        border-bottom: 2px solid currentColor;
+      }
+
+      button.contact-link {
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: inherit;
+        letter-spacing: inherit;
+        line-height: inherit;
+        padding: 0 0 0.16em;
+        border: 0;
+        border-bottom: 2px solid currentColor;
+      }
+
+      .contact-panel {
+        position: fixed;
+        inset: 0;
+        z-index: 10050;
+        display: grid;
+        grid-template-rows: clamp(96px, 9.7vw, 126px) minmax(0, 1fr);
+        min-height: 100svh;
+        background: #b86c50;
+        color: #000;
+        font-family: "Diatype", ABCDiatype, Arial, Helvetica, sans-serif;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(100%);
+        transition: transform 0.7s var(--motion), opacity 0.45s ease;
+      }
+
+      .contact-panel.is-open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .contact-panel__bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 0 var(--pad);
+        border-bottom: 1px solid #000;
+      }
+
+      .contact-panel__mark {
+        font-size: clamp(20px, 1.65vw, 30px);
+        line-height: 1;
+        letter-spacing: -0.055em;
+        text-transform: uppercase;
+      }
+
+      .contact-panel__close,
+      .contact-panel__copy,
+      .contact-panel__submit {
+        appearance: none;
+        background: transparent;
+        border: 0;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+        letter-spacing: inherit;
+      }
+
+      .contact-panel__close {
+        padding: 0 0 0.18em;
+        border-bottom: 2px solid currentColor;
+        font-size: clamp(18px, 1.5vw, 27px);
+        line-height: 1;
+      }
+
+      .contact-panel__body {
+        display: grid;
+        grid-template-columns: 56.2% 43.8%;
+        min-height: 0;
+      }
+
+      .contact-panel__left {
+        display: flex;
+        min-height: 0;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: clamp(38px, 5vw, 80px);
+        padding: clamp(48px, 5vw, 96px) var(--pad) clamp(46px, 4.4vw, 70px);
+        border-right: 1px solid #000;
+      }
+
+      .contact-panel__headline {
+        max-width: 11ch;
+        margin: 0;
+        font-size: clamp(56px, 6.05vw, 118px);
+        font-weight: 500;
+        line-height: 0.97;
+        letter-spacing: -0.07em;
+        text-transform: uppercase;
+      }
+
+      .contact-panel__headline em {
+        font-family: "Inferi", inf, Georgia, serif;
+        font-style: italic;
+        font-weight: 400;
+        letter-spacing: -0.085em;
+        text-transform: none;
+      }
+
+      .contact-panel__bottom {
+        display: grid;
+        grid-template-columns: minmax(220px, 430px) auto;
+        align-items: end;
+        gap: clamp(28px, 5vw, 92px);
+      }
+
+      .contact-panel__intro,
+      .contact-panel__social {
+        margin: 0;
+        font-size: clamp(19px, 1.45vw, 27px);
+        line-height: 1.35;
+        letter-spacing: -0.035em;
+      }
+
+      .contact-panel__social {
+        display: inline-flex;
+        gap: 0.45em;
+        align-items: center;
+      }
+
+      .contact-panel__form {
+        display: grid;
+        grid-template-rows: clamp(100px, 9vw, 124px) clamp(100px, 9vw, 124px) clamp(100px, 9vw, 124px) minmax(260px, 1fr);
+        min-height: 0;
+      }
+
+      .contact-panel__row {
+        display: flex;
+        align-items: center;
+        gap: clamp(14px, 1.6vw, 26px);
+        min-width: 0;
+        padding: 0 clamp(28px, 3.75vw, 72px);
+        border-bottom: 1px solid #000;
+      }
+
+      .contact-panel__row span,
+      .contact-panel__copy,
+      .contact-panel__field,
+      .contact-panel__message {
+        font-size: clamp(20px, 1.48vw, 28px);
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+      }
+
+      .contact-panel__pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: clamp(150px, 10.4vw, 198px);
+        padding: 0.82em 1.45em 0.9em;
+        border-radius: 999px;
+        background: #000;
+        color: #fff;
+      }
+
+      .contact-panel__copy {
+        margin-left: auto;
+        white-space: nowrap;
+      }
+
+      .contact-panel__field,
+      .contact-panel__message {
+        width: 100%;
+        min-width: 0;
+        border: 0;
+        background: transparent;
+        color: #000;
+        font-family: inherit;
+        outline: none;
+      }
+
+      .contact-panel__field::placeholder,
+      .contact-panel__message::placeholder {
+        color: rgba(0, 0, 0, 0.34);
+        opacity: 1;
+      }
+
+      .contact-panel__message-row {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: clamp(26px, 3vw, 46px);
+        padding-top: clamp(42px, 4.3vw, 62px);
+        padding-bottom: clamp(34px, 3.8vw, 62px);
+        border-bottom: 0;
+      }
+
+      .contact-panel__message {
+        flex: 1;
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      .contact-panel__submit {
+        align-self: center;
+        width: min(450px, 88%);
+        margin-top: auto;
+        padding: 1.08em 2em 1.18em;
+        border-radius: 999px;
+        background: #000;
+        color: #fff;
+        font-size: clamp(20px, 1.45vw, 28px);
+        line-height: 1;
+        text-align: center;
+      }
+
+      .contact-panel__trap {
+        display: none;
+      }
+
+      html.contact-panel-open,
+      html.contact-panel-open body {
+        overflow: hidden;
+      }
+
+      .hero {
+        position: relative;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding-top: 12px;
+      }
+
+      .desktop-showcase {
+        position: relative;
+        padding: 0;
+        flex: 0 0 clamp(390px, 38vw, 520px);
+        height: clamp(390px, 38vw, 520px);
+        overflow: visible;
+        z-index: 4;
+      }
+
+      .rail-scrollbar-wrap {
+        padding: 0 var(--pad);
+        margin-top: clamp(26px, 4.8vw, 70px);
+      }
+
+      .rail-scrollbar {
+        display: block;
+        width: 100%;
+        height: 16px;
+        margin: 0;
+        appearance: none;
+        -webkit-appearance: none;
+        background: transparent;
+        cursor: grab;
+      }
+
+      .rail-scrollbar:active {
+        cursor: grabbing;
+      }
+
+      .rail-scrollbar::-webkit-slider-runnable-track {
+        height: 2px;
+        background: rgba(17, 17, 17, 0.25);
+      }
+
+      .rail-scrollbar::-webkit-slider-thumb {
+        width: 86px;
+        height: 8px;
+        margin-top: -3px;
+        border-radius: 0;
+        border: 0;
+        appearance: none;
+        -webkit-appearance: none;
+        background: #111111;
+      }
+
+      .rail-scrollbar::-moz-range-track {
+        height: 2px;
+        background: rgba(17, 17, 17, 0.25);
+      }
+
+      .rail-scrollbar::-moz-range-thumb {
+        width: 86px;
+        height: 8px;
+        border: 0;
+        border-radius: 0;
+        background: #111111;
+      }
+
+      .desktop-rail {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--rail-gap);
+        overflow-x: auto;
+        overflow-y: visible;
+        padding: clamp(16px, 2.4vw, 36px) max(var(--pad), calc(50vw - (var(--active-card-width) / 2))) clamp(36px, 5vw, 80px);
+        scroll-behavior: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .desktop-rail::-webkit-scrollbar {
+        display: none;
+      }
+
+      .case-card {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        flex: 0 0 var(--card-width);
+        width: var(--card-width);
+        max-width: var(--card-width);
+        position: relative;
+        z-index: 1;
+        transition:
+          flex-basis 0.25s var(--expand-motion),
+          width 0.25s var(--expand-motion),
+          max-width 0.25s var(--expand-motion),
+          margin 0.25s var(--expand-motion);
+      }
+
+      .tile-meta {
+        min-height: clamp(64px, 6.2vw, 86px);
+        padding: 0 10px 14px 0;
+        display: flex;
+        align-items: flex-end;
+        opacity: 0.82;
+        transition:
+          min-height 0.72s var(--motion),
+          padding 0.72s var(--motion),
+          opacity 0.45s ease;
+      }
+
+      .tile-title span {
+        color: var(--muted);
+        font-size: 0.64em;
+      }
+
+      .tile-image-shell {
+        position: relative;
+        overflow: visible;
+      }
+
+      .tile-image {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        aspect-ratio: var(--image-ratio);
+        max-height: calc(100vh - 290px);
+        background: #ebe8e0;
+        opacity: 1;
+        box-shadow: 0 16px 36px rgba(17, 17, 17, 0.08);
+        transition:
+          aspect-ratio 0.75s var(--expand-motion),
+          height 0.75s var(--expand-motion),
+          max-height 0.75s var(--expand-motion),
+          opacity 0.45s ease,
+          box-shadow 0.25s var(--expand-motion);
+      }
+
+      .tile-image img,
+      .mobile-card img {
+        transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+
+      .case-card:hover .tile-image img,
+      .mobile-card:hover img {
+        transform: scale(1.045);
+      }
+
+      .desktop-rail .case-card:hover .tile-image img {
+        transform: none;
+      }
+
+      .case-card.is-active {
+        flex-basis: var(--active-card-width);
+        width: var(--active-card-width);
+        max-width: var(--active-card-width);
+        margin-left: calc(var(--rail-gap) * 0.65);
+        margin-right: calc(var(--rail-gap) * 0.65);
+        z-index: 6;
+      }
+
+      .case-card.is-active .tile-meta {
+        min-height: clamp(64px, 6.2vw, 86px);
+        padding: 0 10px 14px 0;
+        opacity: 1;
+      }
+
+      .case-card.is-active .tile-image {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        height: var(--active-image-fit-height);
+        max-height: calc(100vh - 18px - var(--active-image-top, 0px));
+        opacity: 1;
+        box-shadow: 0 32px 72px rgba(17, 17, 17, 0.18);
+      }
+
+      .mobile-showcase {
+        display: none;
+      }
+
+      .footer-zone {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 20;
+        margin-top: 0;
+        padding: 0 var(--pad) clamp(20px, 2.4vw, 38px);
+        pointer-events: none;
+      }
+
+      .mode-time {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .mode-switch {
+        display: flex;
+        gap: 0.28em;
+        color: var(--muted);
+        pointer-events: auto;
+      }
+
+      .mode-switch button {
+        appearance: none;
+        background: transparent;
+        border: 0;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+        letter-spacing: inherit;
+        line-height: inherit;
+        padding: 0;
+      }
+
+      .time-label {
+        text-align: right;
+      }
+
+      .wordmark-wrap {
+        overflow: hidden;
+        margin-top: clamp(18px, 2.6vw, 32px);
+      }
+
+      .wordmark {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: clamp(10px, 1.4vw, 20px);
+        white-space: nowrap;
+        font-size: clamp(60px, 10vw, 156px);
+        line-height: 0.8;
+        letter-spacing: -0.08em;
+        pointer-events: none;
+      }
+
+      .wordmark-ross {
+        font-family: "Inferi", Georgia, serif;
+        font-style: italic;
+      }
+
+      .wordmark-mason {
+        font-family: "Inferi", Georgia, serif;
+        font-style: italic;
+        margin-left: 0.02em;
+      }
+
+      .fade-up {
+        opacity: 0;
+        transform: translateY(28px);
+        animation: fade-up 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        animation-delay: var(--delay, 0s);
+      }
+
+      @keyframes fade-up {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (min-width: 1025px) {
+        html,
+        body {
+          overflow: hidden;
+        }
+      }
+
+      @media (max-width: 1280px) and (min-width: 1025px) {
+        :root {
+          --card-width: 335px;
+          --active-card-width: 480px;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        html,
+        body {
+          overflow-x: hidden;
+          overflow-y: auto;
+        }
+
+        :root {
+          --card-width: 250px;
+          --active-card-width: 250px;
+        }
+
+        .topbar {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .nav,
+        .contact-wrap,
+        .brandline {
+          justify-self: start;
+        }
+
+        .contact-panel {
+          overflow-y: auto;
+        }
+
+        .contact-panel__body {
+          grid-template-columns: 1fr;
+        }
+
+        .contact-panel__left {
+          border-right: 0;
+          border-bottom: 1px solid #000;
+        }
+
+        .contact-panel__bottom {
+          grid-template-columns: 1fr;
+        }
+
+        .contact-panel__form {
+          grid-template-rows: repeat(3, minmax(86px, auto)) minmax(280px, auto);
+        }
+
+        .desktop-showcase {
+          display: block;
+          flex: none;
+          height: auto;
+          min-height: 0;
+          overflow: visible;
+          padding: 0 var(--pad) clamp(60px, 12vw, 110px);
+        }
+
+        .rail-scrollbar-wrap {
+          display: none;
+        }
+
+        .mobile-showcase {
+          display: none;
+        }
+
+        .desktop-rail {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 1px;
+          overflow: visible;
+          padding: 0;
+        }
+
+        .case-card,
+        .case-card.is-active {
+          width: auto;
+          max-width: none;
+          flex: initial;
+          flex-basis: auto;
+          margin: 0;
+        }
+
+        .tile-meta,
+        .case-card.is-active .tile-meta {
+          min-height: auto;
+          padding: 0 0 10px;
+          opacity: 1;
+        }
+
+        .tile-image,
+        .case-card.is-active .tile-image {
+          width: 100%;
+          min-width: 0;
+          max-width: none;
+          height: auto;
+          max-height: none;
+          aspect-ratio: 1 / 1.08;
+          opacity: 1;
+          box-shadow: 0 12px 28px rgba(17, 17, 17, 0.08);
+        }
+
+        .footer-zone {
+          position: static;
+          order: 3;
+          margin-top: 28px;
+          padding-bottom: 18px;
+          pointer-events: auto;
+        }
+
+        .mode-time {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .time-label {
+          text-align: left;
+        }
+
+        .wordmark {
+          justify-content: flex-start;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0;
+          font-size: clamp(50px, 11vw, 90px);
+          line-height: 0.82;
+        }
+
+        .contact-panel__bar,
+        .contact-panel__left,
+        .contact-panel__row {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+
+        .contact-panel__headline {
+          font-size: clamp(50px, 14.5vw, 86px);
+        }
+
+        .contact-panel__row {
+          flex-wrap: wrap;
+          align-content: center;
+          row-gap: 10px;
+        }
+
+        .contact-panel__copy {
+          margin-left: 0;
+        }
+
+        .contact-panel__submit {
+          width: 100%;
+        }
+      }
+
+      html.is-list-view,
+      html.is-list-view body {
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      html.is-list-view .home-shell {
+        min-height: 100vh;
+        overflow: visible;
+      }
+
+      html.is-list-view .hero {
+        display: block;
+        padding-top: 12px;
+      }
+
+      html.is-list-view .desktop-showcase {
+        display: block;
+        flex: none;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+        padding: 0 var(--pad) clamp(120px, 13vw, 220px);
+      }
+
+      @media (max-width: 1024px) {
+        html:not(.is-list-view) .wordmark-wrap {
+          display: none;
+        }
+      }
+
+      html.is-list-view .rail-scrollbar-wrap,
+      html.is-list-view .mobile-showcase,
+      html.is-list-view .wordmark-wrap {
+        display: none;
+      }
+
+      html.is-list-view .desktop-rail {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1px;
+        overflow: visible;
+        padding: 0;
+      }
+
+      html.is-list-view .case-card,
+      html.is-list-view .case-card.is-active {
+        width: auto;
+        max-width: none;
+        flex: initial;
+        flex-basis: auto;
+        margin: 0;
+      }
+
+      html.is-list-view .tile-meta,
+      html.is-list-view .case-card.is-active .tile-meta {
+        min-height: auto;
+        padding: 0 0 12px;
+        opacity: 1;
+      }
+
+      html.is-list-view .tile-image,
+      html.is-list-view .case-card.is-active .tile-image {
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+        height: auto;
+        max-height: none;
+        aspect-ratio: 1 / 1.08;
+        opacity: 1;
+        box-shadow: 0 16px 36px rgba(17, 17, 17, 0.08);
+      }
+
+      html.is-list-view .footer-zone {
+        position: static;
+        z-index: auto;
+        padding: 0 var(--pad) clamp(20px, 3vw, 40px);
+        pointer-events: auto;
+      }
+
+      html.is-list-view .mode-time {
+        pointer-events: auto;
+      }
+
+      html.is-list-view.contact-panel-open,
+      html.is-list-view.contact-panel-open body {
+        overflow: hidden;
+      }
+
+      @media (max-width: 760px) {
+        html.is-list-view .desktop-showcase {
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+
+        html.is-list-view .desktop-rail {
+          gap: 1px;
+        }
+
+        html.is-list-view .tile-title {
+          font-size: clamp(13px, 3vw, 18px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="home-shell">
+      <header class="topbar fade-up">
+        <a class="brandline" href="index.html">
+          <img class="brand-logo" id="logo" src="logo-gifs/1.gif" alt="" aria-hidden="true" decoding="async">
+          <span id="designer-word">डिज़ाइनर</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a class="active" href="index.html" aria-current="page">Home,</a>
+          <a href="about/about.html">About</a>
+        </nav>
+        <div class="contact-wrap">
+          <button class="contact-link" type="button" data-contact-open>Send me a message</button>
+        </div>
+      </header>
+
+      <section class="contact-panel" data-contact-panel aria-hidden="true">
+        <div class="contact-panel__bar">
+          <div class="contact-panel__mark">Ankush</div>
+          <button class="contact-panel__close" type="button" data-contact-close>Close</button>
+        </div>
+        <div class="contact-panel__body" role="dialog" aria-modal="true" aria-labelledby="contact-panel-title">
+          <div class="contact-panel__left">
+            <h2 class="contact-panel__headline" id="contact-panel-title">Want to get in touch or <em>work together</em> on your project? <em>reach out</em></h2>
+            <div class="contact-panel__bottom">
+              <p class="contact-panel__intro">Feel free to send me a message using this convenient form. I look forward to hearing from you!</p>
+              <a class="contact-panel__social" href="https://www.linkedin.com/in/ankushgaharwar/" target="_blank" rel="noreferrer">&#8594; Linkedin</a>
+            </div>
+          </div>
+          <form class="contact-panel__form" action="https://formsubmit.co/ankushgaharwar@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="New message from Ankush Gaharwar portfolio">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            <p class="contact-panel__trap"><label>Do not fill this out <input name="_honey" tabindex="-1" autocomplete="off"></label></p>
+            <div class="contact-panel__row">
+              <span>To:</span>
+              <span class="contact-panel__pill">Ankush</span>
+              <button class="contact-panel__copy" type="button" data-copy-email="ankushgaharwar@gmail.com">Copy email</button>
+            </div>
+            <label class="contact-panel__row">
+              <span>From:</span>
+              <input class="contact-panel__field" name="email" type="email" autocomplete="email" placeholder="Email here" required>
+            </label>
+            <label class="contact-panel__row">
+              <span>Subject:</span>
+              <input class="contact-panel__field" name="subject" type="text" placeholder="Subject here" required>
+            </label>
+            <label class="contact-panel__row contact-panel__message-row">
+              <span>Message</span>
+              <textarea class="contact-panel__message" name="message" rows="7" placeholder="Message here" required></textarea>
+              <button class="contact-panel__submit" type="submit">Send your message</button>
+            </label>
+          </form>
+        </div>
+      </section>
+
+      <main class="hero">
+        <section class="footer-zone fade-up" style="--delay: 0.16s">
+          <div class="mode-time">
+            <div class="mode-switch" aria-label="View mode">
+              <button class="active" type="button" data-view-mode="carousel" aria-pressed="true">Carousel,</button>
+              <button type="button" data-view-mode="grid" aria-pressed="false">Grid</button>
+            </div>
+            <div class="time-label" id="city-time">New Delhi --:--</div>
+          </div>
+
+          <div class="wordmark-wrap" aria-hidden="true">
+            <div class="wordmark">
+              <span class="wordmark-ross">Ankush</span>
+              <span class="wordmark-mason">Gaharwar</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="desktop-showcase fade-up" style="--delay: 0.08s">
+          <div class="rail-scrollbar-wrap">
+            <input class="rail-scrollbar" data-rail-scrollbar type="range" min="0" max="1" value="0" aria-label="Scroll selected portfolio work">
+          </div>
+          <div class="desktop-rail" data-desktop-rail aria-label="Selected portfolio work">
+            <a class="case-card" href="Trading Leagues.html">
+              <div class="tile-meta">
+                <div class="tile-title">Trading Leagues<br><span>UI/UX</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/tl/TL.png" alt="Trading Leagues project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="https://www.figma.com/proto/bjSyG6gRwkMcudy5dhxWf6/Thesis?page-id=0%3A1&amp;type=design&amp;node-id=655-337&amp;viewport=-8875%2C1883%2C0.27&amp;t=9iTmugv8s8g84VrV-1&amp;scaling=contain" target="_blank" rel="noreferrer">
+              <div class="tile-meta">
+                <div class="tile-title">Cosmic Kaksh<br><span>THESIS</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Cosmic Kaksh/Cosmic Kaksh.png" alt="Cosmic Kaksh project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="https://www.figma.com/proto/jXGgzr0nLWG7c2YmzOuvPc/Compre-Ahora-Arg-Case-Study?page-id=&amp;type=design&amp;node-id=1-16&amp;viewport=363%2C654%2C0.04&amp;t=W5j2ONZ1YkA2ABd7-1&amp;scaling=scale-down-width" target="_blank" rel="noreferrer">
+              <div class="tile-meta">
+                <div class="tile-title">Compre Ahora UX Case Study<br><span>UI/UX</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/CA Arg/caarg.png" alt="Compre Ahora UX Case Study project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="https://www.figma.com/proto/wpr0chW47Dq2o3oXZ9U0Gh/UBER-UX-Case-study?page-id=0%3A1&amp;type=design&amp;node-id=8-1976&amp;viewport=-174%2C-9123%2C0.27&amp;t=o4zyaARb9fiY2bsI-1&amp;scaling=scale-down-width" target="_blank" rel="noreferrer">
+              <div class="tile-meta">
+                <div class="tile-title">Uber UX Case Study<br><span>UI/UX</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/UI UX/UI UX.png" alt="Uber UX Case Study project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="protoplanet.html">
+              <div class="tile-meta">
+                <div class="tile-title">Protoplanet x ISRO<br><span>SPACE HABITAT</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/protoplanet/protopcover.jpg" alt="Protoplanet x ISRO project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="Vilgain.html">
+              <div class="tile-meta">
+                <div class="tile-title">Vilgain<br><span>BRAND/UI</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/vilgain/Vilgain.png" alt="Vilgain project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="treehouse.html">
+              <div class="tile-meta">
+                <div class="tile-title">Tree House Design<br><span>ARCHITECTURE</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Tree House/p.png" alt="Tree House Design project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="spacedesign.html">
+              <div class="tile-meta">
+                <div class="tile-title">Gaganyan Crew Seat<br><span>SPACE DESIGN</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Space Design/p.png" alt="Gaganyan Crew Seat project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="arborfelix.html">
+              <div class="tile-meta">
+                <div class="tile-title">Arbor Felix<br><span>LAMP DESIGN</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Arborfelix/p.png" alt="Arbor Felix project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="villamedici.html">
+              <div class="tile-meta">
+                <div class="tile-title">Cabanes Night<br><span>VILLA MEDICI</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Villa Medici/p.png" alt="Cabanes Night project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="verde.html">
+              <div class="tile-meta">
+                <div class="tile-title">7 Story Tensile<br><span>INSTALLATION</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Verde/p.png" alt="7 Story Tensile project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="U Smile.html">
+              <div class="tile-meta">
+                <div class="tile-title">U Smile<br><span>UI/UX</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/U Smile/usmile.png" alt="U Smile project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="CA Arg Prod.html">
+              <div class="tile-meta">
+                <div class="tile-title">CA Argentina Production<br><span>PRODUCTION</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/CA Arg/caarg.png" alt="CA Argentina Production project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="gro-24-7-dls.html">
+              <div class="tile-meta">
+                <div class="tile-title">Gro 24/7 DLS<br><span>DESIGN SYSTEM</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Gro 247 dls/cover.png" alt="Gro 24/7 DLS project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="Barrier Design.html">
+              <div class="tile-meta">
+                <div class="tile-title">Barrier Design<br><span>INDUSTRIAL</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Barrier Designs/Barrier Designs.png" alt="Barrier Design project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="smarte.html">
+              <div class="tile-meta">
+                <div class="tile-title">Smarte +<br><span>INTERACTIVE</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Smarte +/Smarte +.png" alt="Smarte + project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="Package Design.html">
+              <div class="tile-meta">
+                <div class="tile-title">Package Design<br><span>PACKAGING</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Package Design/Package Design.png" alt="Package Design project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="Smart Objects lamp.html">
+              <div class="tile-meta">
+                <div class="tile-title">Smart Objects - Lamp<br><span>SMART OBJECT</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Smart Objects - Lamp/Smart Objects - Lamp.png" alt="Smart Objects - Lamp project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="scooper.html">
+              <div class="tile-meta">
+                <div class="tile-title">Smart Objects - Scoopers<br><span>SMART OBJECT</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Smart Object - Scooper/Smart Objects - Scooper.png" alt="Smart Objects - Scoopers project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="drive from wheelchair.html">
+              <div class="tile-meta">
+                <div class="tile-title">Drive From Wheelchair<br><span>MOBILITY</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Drive from wheelchair/Drive from wheelchair.png" alt="Drive From Wheelchair project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="entry level motorcycle.html">
+              <div class="tile-meta">
+                <div class="tile-title">Entry Level Motorcycle<br><span>MOBILITY</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Entry level motorcycle/Entry level motercycle for Indian market.png" alt="Entry Level Motorcycle project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="aurora.html">
+              <div class="tile-meta">
+                <div class="tile-title">Aurora<br><span>PRODUCT</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Aurora/Aurora.png" alt="Aurora project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="hope.html">
+              <div class="tile-meta">
+                <div class="tile-title">Hope<br><span>PRODUCT</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Hope/Hope.png" alt="Hope project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="taming the drone.html">
+              <div class="tile-meta">
+                <div class="tile-title">Tame The Drone<br><span>DRONE DESIGN</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Taming the drone/Taming the drone.png" alt="Tame The Drone project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="quizventure.html">
+              <div class="tile-meta">
+                <div class="tile-title">Quizventure<br><span>GAME</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Quizventure/Quizventure.png" alt="Quizventure project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="zombie chase saga.html">
+              <div class="tile-meta">
+                <div class="tile-title">Zombie Chase Saga<br><span>GAME</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Zombie chase saga/cover.png" alt="Zombie Chase Saga project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="compre-ahora-style-guide-arg.html">
+              <div class="tile-meta">
+                <div class="tile-title">Compre Ahora Style Guide Arg<br><span>STYLE GUIDE</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/CA Arg SG/QA Checklist.png" alt="Compre Ahora Style Guide Arg project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="dev-handoff.html">
+              <div class="tile-meta">
+                <div class="tile-title">Dev Handoff<br><span>HANDOFF</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Dev Handoff/cover.png" alt="Dev Handoff project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="da-dashboard-style-guide.html">
+              <div class="tile-meta">
+                <div class="tile-title">DA &amp; Dashboard Style Guide<br><span>STYLE GUIDE</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/DA &amp; Dashboard SG/cover.png" alt="DA &amp; Dashboard Style Guide project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="da-dashboard-dev-handoff.html">
+              <div class="tile-meta">
+                <div class="tile-title">DA &amp; Dashboard Dev Handoff<br><span>HANDOFF</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/D&amp;A Dashboard Handoff/cover.png" alt="DA &amp; Dashboard Dev Handoff project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="kahvay.html">
+              <div class="tile-meta">
+                <div class="tile-title">Kahvay<br><span>UI/UX</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/KahVay/cover.png" alt="Kahvay project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="bkwai.html">
+              <div class="tile-meta">
+                <div class="tile-title">BKWAI<br><span>AI PRODUCT</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/BKWAI/cover.png" alt="BKWAI project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="conso4s.html">
+              <div class="tile-meta">
+                <div class="tile-title">conso4s<br><span>PRODUCT</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/Conso4s/cover.png" alt="conso4s project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+            <a class="case-card" href="3D.html">
+              <div class="tile-meta">
+                <div class="tile-title">Miscellaneous<br><span>ARCHIVE</span></div>
+              </div>
+              <div class="tile-image-shell">
+                <div class="tile-image">
+                  <img src="portfolio/miscellaneous.png" alt="Miscellaneous project preview" decoding="async">
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <section class="mobile-showcase fade-up" style="--delay: 0.08s">
+          <div class="mobile-rail" aria-label="Selected work">
+            <a class="mobile-card" href="Trading Leagues.html">
+              <div class="tile-meta">
+                <div class="tile-title">Trading Leagues<br><span>UI/UX</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/tl/TL.png" alt="Trading Leagues project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="https://www.figma.com/proto/bjSyG6gRwkMcudy5dhxWf6/Thesis?page-id=0%3A1&amp;type=design&amp;node-id=655-337&amp;viewport=-8875%2C1883%2C0.27&amp;t=9iTmugv8s8g84VrV-1&amp;scaling=contain" target="_blank" rel="noreferrer">
+              <div class="tile-meta">
+                <div class="tile-title">Cosmic Kaksh<br><span>THESIS</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Cosmic Kaksh/Cosmic Kaksh.png" alt="Cosmic Kaksh project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="https://www.figma.com/proto/jXGgzr0nLWG7c2YmzOuvPc/Compre-Ahora-Arg-Case-Study?page-id=&amp;type=design&amp;node-id=1-16&amp;viewport=363%2C654%2C0.04&amp;t=W5j2ONZ1YkA2ABd7-1&amp;scaling=scale-down-width" target="_blank" rel="noreferrer">
+              <div class="tile-meta">
+                <div class="tile-title">Compre Ahora UX Case Study<br><span>UI/UX</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/CA Arg/caarg.png" alt="Compre Ahora UX Case Study project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="https://www.figma.com/proto/wpr0chW47Dq2o3oXZ9U0Gh/UBER-UX-Case-study?page-id=0%3A1&amp;type=design&amp;node-id=8-1976&amp;viewport=-174%2C-9123%2C0.27&amp;t=o4zyaARb9fiY2bsI-1&amp;scaling=scale-down-width" target="_blank" rel="noreferrer">
+              <div class="tile-meta">
+                <div class="tile-title">Uber UX Case Study<br><span>UI/UX</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/UI UX/UI UX.png" alt="Uber UX Case Study project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="protoplanet.html">
+              <div class="tile-meta">
+                <div class="tile-title">Protoplanet x ISRO<br><span>SPACE HABITAT</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/protoplanet/protopcover.jpg" alt="Protoplanet x ISRO project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="Vilgain.html">
+              <div class="tile-meta">
+                <div class="tile-title">Vilgain<br><span>BRAND/UI</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/vilgain/Vilgain.png" alt="Vilgain project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="treehouse.html">
+              <div class="tile-meta">
+                <div class="tile-title">Tree House Design<br><span>ARCHITECTURE</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Tree House/p.png" alt="Tree House Design project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="spacedesign.html">
+              <div class="tile-meta">
+                <div class="tile-title">Gaganyan Crew Seat<br><span>SPACE DESIGN</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Space Design/p.png" alt="Gaganyan Crew Seat project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="arborfelix.html">
+              <div class="tile-meta">
+                <div class="tile-title">Arbor Felix<br><span>LAMP DESIGN</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Arborfelix/p.png" alt="Arbor Felix project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="villamedici.html">
+              <div class="tile-meta">
+                <div class="tile-title">Cabanes Night<br><span>VILLA MEDICI</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Villa Medici/p.png" alt="Cabanes Night project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="verde.html">
+              <div class="tile-meta">
+                <div class="tile-title">7 Story Tensile<br><span>INSTALLATION</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Verde/p.png" alt="7 Story Tensile project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="U Smile.html">
+              <div class="tile-meta">
+                <div class="tile-title">U Smile<br><span>UI/UX</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/U Smile/usmile.png" alt="U Smile project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="CA Arg Prod.html">
+              <div class="tile-meta">
+                <div class="tile-title">CA Argentina Production<br><span>PRODUCTION</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/CA Arg/caarg.png" alt="CA Argentina Production project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="gro-24-7-dls.html">
+              <div class="tile-meta">
+                <div class="tile-title">Gro 24/7 DLS<br><span>DESIGN SYSTEM</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Gro 247 dls/cover.png" alt="Gro 24/7 DLS project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="Barrier Design.html">
+              <div class="tile-meta">
+                <div class="tile-title">Barrier Design<br><span>INDUSTRIAL</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Barrier Designs/Barrier Designs.png" alt="Barrier Design project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="smarte.html">
+              <div class="tile-meta">
+                <div class="tile-title">Smarte +<br><span>INTERACTIVE</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Smarte +/Smarte +.png" alt="Smarte + project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="Package Design.html">
+              <div class="tile-meta">
+                <div class="tile-title">Package Design<br><span>PACKAGING</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Package Design/Package Design.png" alt="Package Design project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="Smart Objects lamp.html">
+              <div class="tile-meta">
+                <div class="tile-title">Smart Objects - Lamp<br><span>SMART OBJECT</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Smart Objects - Lamp/Smart Objects - Lamp.png" alt="Smart Objects - Lamp project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="scooper.html">
+              <div class="tile-meta">
+                <div class="tile-title">Smart Objects - Scoopers<br><span>SMART OBJECT</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Smart Object - Scooper/Smart Objects - Scooper.png" alt="Smart Objects - Scoopers project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="drive from wheelchair.html">
+              <div class="tile-meta">
+                <div class="tile-title">Drive From Wheelchair<br><span>MOBILITY</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Drive from wheelchair/Drive from wheelchair.png" alt="Drive From Wheelchair project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="entry level motorcycle.html">
+              <div class="tile-meta">
+                <div class="tile-title">Entry Level Motorcycle<br><span>MOBILITY</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Entry level motorcycle/Entry level motercycle for Indian market.png" alt="Entry Level Motorcycle project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="aurora.html">
+              <div class="tile-meta">
+                <div class="tile-title">Aurora<br><span>PRODUCT</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Aurora/Aurora.png" alt="Aurora project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="hope.html">
+              <div class="tile-meta">
+                <div class="tile-title">Hope<br><span>PRODUCT</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Hope/Hope.png" alt="Hope project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="taming the drone.html">
+              <div class="tile-meta">
+                <div class="tile-title">Tame The Drone<br><span>DRONE DESIGN</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Taming the drone/Taming the drone.png" alt="Tame The Drone project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="quizventure.html">
+              <div class="tile-meta">
+                <div class="tile-title">Quizventure<br><span>GAME</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Quizventure/Quizventure.png" alt="Quizventure project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="zombie chase saga.html">
+              <div class="tile-meta">
+                <div class="tile-title">Zombie Chase Saga<br><span>GAME</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Zombie chase saga/cover.png" alt="Zombie Chase Saga project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="compre-ahora-style-guide-arg.html">
+              <div class="tile-meta">
+                <div class="tile-title">Compre Ahora Style Guide Arg<br><span>STYLE GUIDE</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/CA Arg SG/QA Checklist.png" alt="Compre Ahora Style Guide Arg project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="dev-handoff.html">
+              <div class="tile-meta">
+                <div class="tile-title">Dev Handoff<br><span>HANDOFF</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Dev Handoff/cover.png" alt="Dev Handoff project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="da-dashboard-style-guide.html">
+              <div class="tile-meta">
+                <div class="tile-title">DA &amp; Dashboard Style Guide<br><span>STYLE GUIDE</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/DA &amp; Dashboard SG/cover.png" alt="DA &amp; Dashboard Style Guide project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="da-dashboard-dev-handoff.html">
+              <div class="tile-meta">
+                <div class="tile-title">DA &amp; Dashboard Dev Handoff<br><span>HANDOFF</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/D&amp;A Dashboard Handoff/cover.png" alt="DA &amp; Dashboard Dev Handoff project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="kahvay.html">
+              <div class="tile-meta">
+                <div class="tile-title">Kahvay<br><span>UI/UX</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/KahVay/cover.png" alt="Kahvay project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="bkwai.html">
+              <div class="tile-meta">
+                <div class="tile-title">BKWAI<br><span>AI PRODUCT</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/BKWAI/cover.png" alt="BKWAI project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="conso4s.html">
+              <div class="tile-meta">
+                <div class="tile-title">conso4s<br><span>PRODUCT</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/Conso4s/cover.png" alt="conso4s project preview" decoding="async">
+              </div>
+            </a>
+            <a class="mobile-card" href="3D.html">
+              <div class="tile-meta">
+                <div class="tile-title">Miscellaneous<br><span>ARCHIVE</span></div>
+              </div>
+              <div class="tile-image">
+                <img src="portfolio/miscellaneous.png" alt="Miscellaneous project preview" decoding="async">
+              </div>
+            </a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        var timeLabel = document.getElementById("city-time");
+        window.updatePortfolioTime = function (city) {
+          if (!timeLabel || !city) return;
+          try {
+            var value = new Intl.DateTimeFormat("en-GB", {
+              timeZone: city.timeZone,
+              hour: "numeric",
+              minute: "2-digit"
+            }).format(new Date());
+            timeLabel.textContent = city.label + " " + value;
+          } catch (error) {
+            timeLabel.textContent = city.label;
+          }
+        };
+
+        var rail = document.querySelector("[data-desktop-rail]");
+        if (!rail) return;
+
+        var scrollbar = document.querySelector("[data-rail-scrollbar]");
+        var cards = Array.prototype.slice.call(rail.querySelectorAll(".case-card"));
+        var desktopQuery = window.matchMedia("(min-width: 1025px)");
+        var updateFrame = 0;
+        var scrollFrame = 0;
+        var targetScrollLeft = rail.scrollLeft;
+        var activeCard = null;
+        var viewButtons = Array.prototype.slice.call(document.querySelectorAll("[data-view-mode]"));
+
+        function isListView() {
+          return document.documentElement.classList.contains("is-list-view");
+        }
+
+        function clearActiveCards() {
+          activeCard = null;
+          cards.forEach(function (card) {
+            card.classList.remove("is-active");
+            card.style.removeProperty("--active-image-fit-height");
+            card.style.removeProperty("--active-image-top");
+          });
+        }
+
+        function setViewMode(mode) {
+          var listMode = mode === "grid";
+          document.documentElement.classList.toggle("is-list-view", listMode);
+
+          viewButtons.forEach(function (button) {
+            var isActive = button.getAttribute("data-view-mode") === mode;
+            button.classList.toggle("active", isActive);
+            button.setAttribute("aria-pressed", isActive ? "true" : "false");
+          });
+
+          if (scrollFrame) {
+            window.cancelAnimationFrame(scrollFrame);
+            scrollFrame = 0;
+          }
+          if (updateFrame) {
+            window.cancelAnimationFrame(updateFrame);
+            updateFrame = 0;
+          }
+
+          clearActiveCards();
+          rail.scrollLeft = 0;
+          targetScrollLeft = 0;
+          window.scrollTo({ top: 0, behavior: "smooth" });
+
+          if (!listMode) {
+            syncDesktopState();
+          }
+        }
+
+        function clamp(value, min, max) {
+          return Math.max(min, Math.min(max, value));
+        }
+
+        function updateScrollbar() {
+          if (!scrollbar || isListView()) return;
+
+          var max = Math.max(1, rail.scrollWidth - rail.clientWidth);
+          scrollbar.max = String(max);
+          scrollbar.value = String(Math.min(max, rail.scrollLeft));
+        }
+
+        function fitActiveImageToViewport() {
+          if (isListView() || !desktopQuery.matches || !activeCard) return;
+
+          cards.forEach(function (card) {
+            if (card !== activeCard) {
+              card.style.removeProperty("--active-image-fit-height");
+              card.style.removeProperty("--active-image-top");
+            }
+          });
+
+          var image = activeCard.querySelector(".tile-image");
+          if (!image) return;
+
+          var rect = image.getBoundingClientRect();
+          var rowTop = rect.top;
+          var baseHeight = rect.height || 320;
+          var targetHeight = Math.max(baseHeight, window.innerHeight - rowTop - 18);
+          activeCard.style.setProperty("--active-image-top", rowTop + "px");
+          activeCard.style.setProperty("--active-image-fit-height", targetHeight + "px");
+        }
+
+        function prepareActiveImageTransition(card) {
+          if (!card) return;
+          var image = card.querySelector(".tile-image");
+          if (!image) return;
+
+          var rect = image.getBoundingClientRect();
+          card.style.setProperty("--active-image-top", rect.top + "px");
+          card.style.setProperty("--active-image-fit-height", rect.height + "px");
+        }
+
+        function activateNearestCard() {
+          if (isListView() || !desktopQuery.matches) return;
+
+          var viewportCenter = rail.scrollLeft + (rail.clientWidth / 2);
+          var closestCard = null;
+          var closestDistance = Infinity;
+
+          cards.forEach(function (card) {
+            var cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+            var distance = Math.abs(viewportCenter - cardCenter);
+            if (distance < closestDistance) {
+              closestDistance = distance;
+              closestCard = card;
+            }
+          });
+
+          var nextActiveCard = closestCard || activeCard;
+          var changedActiveCard = nextActiveCard && nextActiveCard !== activeCard;
+
+          if (changedActiveCard) {
+            prepareActiveImageTransition(nextActiveCard);
+          }
+
+          cards.forEach(function (card) {
+            card.classList.toggle("is-active", card === nextActiveCard);
+          });
+
+          activeCard = nextActiveCard;
+
+          if (changedActiveCard) {
+            window.requestAnimationFrame(fitActiveImageToViewport);
+          } else {
+            fitActiveImageToViewport();
+          }
+        }
+
+        function updateRailState() {
+          updateFrame = 0;
+          activateNearestCard();
+          updateScrollbar();
+        }
+
+        function requestUpdate() {
+          if (!updateFrame) {
+            updateFrame = window.requestAnimationFrame(updateRailState);
+          }
+        }
+
+        function animateScroll() {
+          scrollFrame = 0;
+
+          var distance = targetScrollLeft - rail.scrollLeft;
+          if (Math.abs(distance) < 0.5) {
+            rail.scrollLeft = targetScrollLeft;
+            requestUpdate();
+            return;
+          }
+
+          rail.scrollLeft += distance * 0.08;
+          requestUpdate();
+          scrollFrame = window.requestAnimationFrame(animateScroll);
+        }
+
+        function setScrollTarget(value) {
+          var max = Math.max(0, rail.scrollWidth - rail.clientWidth);
+          targetScrollLeft = clamp(value, 0, max);
+
+          if (!scrollFrame) {
+            scrollFrame = window.requestAnimationFrame(animateScroll);
+          }
+        }
+
+        function syncDesktopState() {
+          if (isListView()) {
+            clearActiveCards();
+            updateScrollbar();
+            return;
+          }
+
+          if (desktopQuery.matches) {
+            requestUpdate();
+          } else {
+            rail.scrollLeft = 0;
+            cards.forEach(function (card) {
+              card.classList.remove("is-active");
+              card.style.removeProperty("--active-image-fit-height");
+              card.style.removeProperty("--active-image-top");
+            });
+            updateScrollbar();
+          }
+        }
+
+        window.addEventListener("wheel", function (event) {
+          if (isListView() || !desktopQuery.matches) return;
+
+          var primaryDelta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+          if (!primaryDelta) return;
+
+          event.preventDefault();
+          setScrollTarget(targetScrollLeft + (primaryDelta * 1.9));
+          requestUpdate();
+        }, { passive: false });
+
+        rail.addEventListener("scroll", function () {
+          if (isListView()) return;
+
+          if (!scrollFrame) {
+            targetScrollLeft = rail.scrollLeft;
+          }
+          requestUpdate();
+        }, { passive: true });
+
+        if (scrollbar) {
+          scrollbar.addEventListener("input", function () {
+            if (isListView()) return;
+            setScrollTarget(Number(scrollbar.value));
+            requestUpdate();
+          });
+        }
+
+        rail.addEventListener("focusin", function (event) {
+          var card = event.target.closest(".case-card");
+          if (!card || isListView() || !desktopQuery.matches) return;
+
+          var changedActiveCard = card !== activeCard;
+          if (changedActiveCard) {
+            prepareActiveImageTransition(card);
+          }
+
+          cards.forEach(function (item) {
+            item.classList.toggle("is-active", item === card);
+          });
+          activeCard = card;
+          if (changedActiveCard) {
+            window.requestAnimationFrame(fitActiveImageToViewport);
+          } else {
+            fitActiveImageToViewport();
+          }
+          updateScrollbar();
+        });
+
+        window.addEventListener("resize", function () {
+          if (isListView() || !desktopQuery.matches) return;
+          if (activeCard) {
+            activeCard.classList.add("is-active");
+            fitActiveImageToViewport();
+          }
+          requestUpdate();
+        });
+
+        cards.forEach(function (card) {
+          card.addEventListener("transitionend", function (event) {
+            if (isListView()) return;
+            if (event.propertyName !== "height" && event.propertyName !== "width" && event.propertyName !== "flex-basis") return;
+            fitActiveImageToViewport();
+            updateScrollbar();
+          });
+        });
+
+        viewButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            setViewMode(button.getAttribute("data-view-mode"));
+          });
+        });
+
+        if (typeof desktopQuery.addEventListener === "function") {
+          desktopQuery.addEventListener("change", syncDesktopState);
+        } else if (typeof desktopQuery.addListener === "function") {
+          desktopQuery.addListener(syncDesktopState);
+        }
+
+        syncDesktopState();
+      })();
+    </script>
+    <script id="local-static-contact-script">
+      (function () {
+        var panel = document.querySelector("[data-contact-panel]");
+        if (!panel) return;
+
+        var openButtons = document.querySelectorAll("[data-contact-open]");
+        var closeButtons = panel.querySelectorAll("[data-contact-close]");
+        var copyButton = panel.querySelector("[data-copy-email]");
+        var form = panel.querySelector(".contact-panel__form");
+        var lastFocus = null;
+
+        function openPanel(event) {
+          if (event) event.preventDefault();
+          lastFocus = document.activeElement;
+          panel.classList.add("is-open");
+          panel.setAttribute("aria-hidden", "false");
+          document.documentElement.classList.add("contact-panel-open");
+          var firstField = panel.querySelector("input[name='email'], textarea, button");
+          window.setTimeout(function () { if (firstField) firstField.focus(); }, 120);
+        }
+
+        function closePanel() {
+          panel.classList.remove("is-open");
+          panel.setAttribute("aria-hidden", "true");
+          document.documentElement.classList.remove("contact-panel-open");
+          if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+        }
+
+        function copyEmail() {
+          if (!copyButton) return;
+          var email = copyButton.getAttribute("data-copy-email");
+          var resetText = function () {
+            copyButton.textContent = "Copied";
+            window.setTimeout(function () { copyButton.textContent = "Copy email"; }, 1400);
+          };
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(email).then(resetText, resetText);
+          } else {
+            var field = document.createElement("textarea");
+            field.value = email;
+            field.setAttribute("readonly", "");
+            field.style.position = "fixed";
+            field.style.left = "-9999px";
+            document.body.appendChild(field);
+            field.select();
+            try { document.execCommand("copy"); } catch (error) {}
+            document.body.removeChild(field);
+            resetText();
+          }
+        }
+
+        function handleSubmit(event) {
+          if (window.location.protocol !== "file:") return;
+          if (!form) return;
+
+          event.preventDefault();
+          var from = form.querySelector("[name='email']");
+          var subject = form.querySelector("[name='subject']");
+          var message = form.querySelector("[name='message']");
+          var subjectText = subject && subject.value ? subject.value : "Portfolio message";
+          var bodyText = [
+            "From: " + (from && from.value ? from.value : ""),
+            "",
+            message && message.value ? message.value : ""
+          ].join("\n");
+
+          window.location.href = "mailto:ankushgaharwar@gmail.com?subject=" + encodeURIComponent(subjectText) + "&body=" + encodeURIComponent(bodyText);
+        }
+
+        Array.prototype.forEach.call(openButtons, function (button) {
+          button.addEventListener("click", openPanel);
+        });
+        Array.prototype.forEach.call(closeButtons, function (button) {
+          button.addEventListener("click", closePanel);
+        });
+        if (copyButton) copyButton.addEventListener("click", copyEmail);
+        if (form) form.addEventListener("submit", handleSubmit);
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && panel.classList.contains("is-open")) closePanel();
+        });
+      })();
+    </script>
+    <script id="designer-logo-loop">
+      (function () {
+        var gifs = [
+          "logo-gifs/1.gif",
+          "logo-gifs/2.gif",
+          "logo-gifs/3.gif",
+          "logo-gifs/4.gif",
+          "logo-gifs/5.gif",
+          "logo-gifs/6.gif",
+          "logo-gifs/7.gif",
+          "logo-gifs/8.gif"
+        ];
+        var designerWords = [
+          "डिज़ाइनर",
+          "Designer",
+          "Progettista",
+          "Designer",
+          "Diseñador",
+          "Designer",
+          "வடிவமைப்பாளர்",
+          "Designer",
+          "デザイナー",
+          "Designer",
+          "设计师",
+          "Designer",
+          "นักออกแบบ",
+          "Designer",
+          "дизайнер",
+          "Designer",
+          "дизайнер",
+          "Designer",
+          "ଡିଜାଇନର୍",
+          "Designer",
+          "डिज़ाइनर",
+          "Designer",
+          "Proiectant",
+          "Designer",
+          "डिज़ाइनर",
+          "Designer"
+        ];
+        var cityTimes = [
+          { label: "New Delhi", timeZone: "Asia/Kolkata" },
+          { label: "Rome", timeZone: "Europe/Rome" },
+          { label: "Houston", timeZone: "America/Chicago" }
+        ];
+        var displayTime = 3000;
+        var logoElement = document.getElementById("logo");
+        var wordElement = document.getElementById("designer-word");
+        var sequenceIndex = 0;
+
+        function updateSyncedItems() {
+          if (logoElement) {
+            logoElement.setAttribute("src", gifs[sequenceIndex % gifs.length]);
+          }
+          if (wordElement) {
+            wordElement.textContent = designerWords[sequenceIndex];
+          }
+          if (typeof window.updatePortfolioTime === "function") {
+            window.updatePortfolioTime(cityTimes[sequenceIndex % cityTimes.length]);
+          }
+        }
+
+        updateSyncedItems();
+
+        window.setInterval(function () {
+          sequenceIndex = (sequenceIndex + 1) % designerWords.length;
+          updateSyncedItems();
+        }, displayTime);
+      })();
+    </script>
+  </body>
+</html>

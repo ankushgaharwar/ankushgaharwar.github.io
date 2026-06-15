@@ -1,0 +1,25 @@
+[class^="icon-"],
+[class*=" icon-"] {
+  display: inline-block;
+  min-width: 1em;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+}
+
+.icon-instagram::before {
+  content: "ig";
+}
+
+.icon-twitter::before {
+  content: "X";
+}
+
+.icon-facebook::before {
+  content: "f";
+}
+
+.icon-linkedin::before {
+  content: "in";
+}

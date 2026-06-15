@@ -1,0 +1,134 @@
+:root {
+  --bg: #eeebe2;
+  --paper: #fffaf0;
+  --ink: #161616;
+  --muted: #706d66;
+  --line: rgba(22, 22, 22, 0.14);
+  --accent: #3f6f58;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Poppins", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.cv-container {
+  width: min(100% - 28px, 1180px);
+  margin: 28px auto;
+  padding: clamp(24px, 4vw, 56px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 28px 80px rgba(22, 22, 22, 0.1);
+}
+
+.header {
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--line);
+}
+
+.header h1 {
+  margin: 0 0 8px;
+  font-size: clamp(42px, 7vw, 92px);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+}
+
+.location,
+.tagline {
+  max-width: 860px;
+  margin: 0 0 12px;
+  color: var(--muted);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 0;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.34fr);
+  gap: clamp(28px, 5vw, 64px);
+  padding-top: 34px;
+}
+
+h2 {
+  margin: 34px 0 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: clamp(22px, 2.6vw, 34px);
+  letter-spacing: -0.035em;
+}
+
+h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.job,
+.edu {
+  margin-bottom: 24px;
+}
+
+.job-meta {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+ul {
+  margin-top: 8px;
+  padding-left: 20px;
+}
+
+li + li {
+  margin-top: 6px;
+}
+
+.sidebar {
+  padding: 24px;
+  align-self: start;
+  background: rgba(255, 255, 255, 0.46);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.skills {
+  padding-left: 18px;
+}
+
+@media (max-width: 860px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+
+  .cv-container {
+    margin: 14px auto;
+  }
+}

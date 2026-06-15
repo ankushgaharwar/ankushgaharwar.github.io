@@ -1,0 +1,184 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Nunito', Arial, sans-serif; /* Nunito font added */
+}
+
+.container {
+    display: flex;
+    height: 100%;
+}
+
+.window {
+    flex-grow: 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    overflow: auto;
+    transition: width 0.1s ease; /* Smooth transition for resizing */
+    /* Hide scrollbar but allow scrolling */
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none;  /* For IE 10+ */
+    /* For Chrome, Safari, and Opera */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+
+
+
+#window1 {
+    width: 70%; /* Set initial width for window1 */
+}
+
+#window2 {
+    width: 30%; /* Set initial width for window2 */
+}
+
+
+
+
+.window h2 {
+    margin-top: 0;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 10px;
+}
+
+.image-grid img {
+    width: 100%;
+    height: auto;
+    border: 0px solid #ccc;
+}
+
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border: 2px solid black;
+    padding: 2px; /* Reduced padding */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Adjust the body padding-top if the navbar height changes */
+body {
+    padding-top: 40px; /* Adjust this value based on the new height of your navbar */
+}
+
+.nav-box {
+    display: flex;
+    align-items: center;
+}
+
+#nav-logo img {
+    height: 50px; /* Adjust the height as needed */
+    padding-right: 30px; /* Add padding to the right of the logo */
+    padding-left: 20px; /* Add padding to the right of the logo */
+}
+
+#nav-image img {
+    height: 30px; /* Set the height to control the size of the image */
+    /* If you also need to control the width, you can add: */
+    /* width: auto; */ /* This will maintain the aspect ratio */
+}
+
+.vertical-line {
+    padding: 0 !important;
+}
+
+
+
+
+#nav-links a {
+    margin: 0 10px; /* Adjust margin as needed */
+    text-decoration: none;
+    color: black;
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 14px; /* Adjust font size as needed */
+}
+
+/* ... Rest of your styles ... */
+
+#nav-logo {
+    padding-left: 10px; /* Adjust this value as needed */
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 10px;
+}
+
+.image-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.image-container .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    transition: 0.3s ease;
+}
+
+.image-container:hover img {
+    filter: blur(8px);
+}
+
+.image-container:hover .overlay {
+    height: 100%;
+}
+
+.text {
+    color: white;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+
+
+
+
+
+
+/* ... existing styles ... */
+
+
+
+
+/* ... remaining styles ... */
+
+.section-title {
+    font-weight: normal; /* This will make the text not bold */
+}
+
+
+
+
+
+

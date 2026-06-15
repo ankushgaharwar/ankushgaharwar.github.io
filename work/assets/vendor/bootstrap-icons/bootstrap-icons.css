@@ -1,0 +1,25 @@
+.bi {
+  display: inline-block;
+  font-style: normal;
+  line-height: 1;
+}
+
+.bi-twitter::before {
+  content: "X";
+}
+
+.bi-facebook::before {
+  content: "f";
+}
+
+.bi-instagram::before {
+  content: "ig";
+}
+
+.bi-linkedin::before {
+  content: "in";
+}
+
+.bi-arrow-up-short::before {
+  content: "up";
+}
