@@ -26,7 +26,7 @@
         --shadow: 0 20px 45px rgba(17, 17, 17, 0.08);
         --pad: clamp(20px, 3.35vw, 64px);
         --card-width: 390px;
-        --active-card-width: 560px;
+        --active-card-width: var(--card-width);
         --rail-gap: 1px;
         --image-ratio: 1 / 1.18;
         --motion: cubic-bezier(0.19, 1, 0.22, 1);
@@ -526,7 +526,7 @@
 
       .case-card:hover .tile-image img,
       .mobile-card:hover img {
-        transform: scale(1.045);
+        transform: none;
       }
 
       .desktop-rail .case-card:hover .tile-image img {
@@ -655,7 +655,7 @@
       @media (max-width: 1280px) and (min-width: 1025px) {
         :root {
           --card-width: 335px;
-          --active-card-width: 480px;
+          --active-card-width: var(--card-width);
         }
       }
 
