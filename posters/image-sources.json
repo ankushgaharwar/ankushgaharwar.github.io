@@ -1,0 +1,194 @@
+{
+  "aurora": {
+    "source": "portfolio/Aurora/Aurora.png",
+    "asset": "assets/aurora.webp",
+    "width": 490,
+    "height": 490
+  },
+  "hope": {
+    "source": "portfolio/Hope/Hope.png",
+    "asset": "assets/hope.webp",
+    "width": 490,
+    "height": 490
+  },
+  "cosmic-01": {
+    "source": "portfolio/Cosmic Kaksh/1.png",
+    "asset": "assets/cosmic-01.webp",
+    "width": 1123,
+    "height": 632
+  },
+  "cosmic-02": {
+    "source": "portfolio/Cosmic Kaksh/2.png",
+    "asset": "assets/cosmic-02.webp",
+    "width": 1400,
+    "height": 1082
+  },
+  "cosmic-03": {
+    "source": "portfolio/Cosmic Kaksh/3.png",
+    "asset": "assets/cosmic-03.webp",
+    "width": 1400,
+    "height": 1082
+  },
+  "cosmic-04": {
+    "source": "portfolio/Cosmic Kaksh/5.png",
+    "asset": "assets/cosmic-04.webp",
+    "width": 1400,
+    "height": 1082
+  },
+  "cosmic-05": {
+    "source": "portfolio/Cosmic Kaksh/6.png",
+    "asset": "assets/cosmic-05.webp",
+    "width": 1400,
+    "height": 788
+  },
+  "crew-seat": {
+    "source": "portfolio/Space Design/I.png",
+    "asset": "assets/crew-seat.webp",
+    "width": 1400,
+    "height": 788
+  },
+  "crew-cabin": {
+    "source": "portfolio/Space Design/G.png",
+    "asset": "assets/crew-cabin.webp",
+    "width": 1400,
+    "height": 788
+  },
+  "crew-detail": {
+    "source": "portfolio/Space Design/Q.png",
+    "asset": "assets/crew-detail.webp",
+    "width": 1400,
+    "height": 788
+  },
+  "tree-exterior": {
+    "source": "portfolio/Tree House/1.png",
+    "asset": "assets/tree-exterior.webp",
+    "width": 1400,
+    "height": 875
+  },
+  "tree-interior": {
+    "source": "portfolio/Tree House/10.png",
+    "asset": "assets/tree-interior.webp",
+    "width": 1400,
+    "height": 846
+  },
+  "tree-stairs": {
+    "source": "portfolio/Tree House/2.png",
+    "asset": "assets/tree-stairs.webp",
+    "width": 1400,
+    "height": 903
+  },
+  "tree-render": {
+    "source": "portfolio/Tree House/Render.png",
+    "asset": "assets/tree-render.webp",
+    "width": 1400,
+    "height": 994
+  },
+  "habitat-01": {
+    "source": "portfolio/protoplanet/3.jpg",
+    "asset": "assets/habitat-01.webp",
+    "width": 800,
+    "height": 465
+  },
+  "habitat-02": {
+    "source": "portfolio/protoplanet/4.jpg",
+    "asset": "assets/habitat-02.webp",
+    "width": 800,
+    "height": 363
+  },
+  "habitat-03": {
+    "source": "portfolio/protoplanet/7.jpg",
+    "asset": "assets/habitat-03.webp",
+    "width": 800,
+    "height": 600
+  },
+  "cabanes-01": {
+    "source": "portfolio/Villa Medici/13.png",
+    "asset": "assets/cabanes-01.webp",
+    "width": 651,
+    "height": 869
+  },
+  "cabanes-02": {
+    "source": "portfolio/Villa Medici/15.png",
+    "asset": "assets/cabanes-02.webp",
+    "width": 1159,
+    "height": 869
+  },
+  "tensile": {
+    "source": "portfolio/Verde/image 42.png",
+    "asset": "assets/tensile.webp",
+    "width": 651,
+    "height": 869
+  },
+  "motorcycle": {
+    "source": "portfolio/Entry level motorcycle/Entry level motercycle for Indian market.png",
+    "asset": "assets/motorcycle.webp",
+    "width": 490,
+    "height": 490
+  },
+  "motorcycle-views": {
+    "source": "portfolio/Entry level motorcycle/6.jpg",
+    "asset": "assets/motorcycle-views.webp",
+    "width": 1400,
+    "height": 495
+  },
+  "auto-sketch-01": {
+    "source": "portfolio/Automotive Sketches/1.jpg",
+    "asset": "assets/auto-sketch-01.webp",
+    "width": 1400,
+    "height": 989
+  },
+  "auto-sketch-02": {
+    "source": "portfolio/Automotive Sketches/2.jpg",
+    "asset": "assets/auto-sketch-02.webp",
+    "width": 1400,
+    "height": 989
+  },
+  "package-flat": {
+    "source": "portfolio/Package Design/49.png",
+    "asset": "assets/package-flat.webp",
+    "width": 842,
+    "height": 596
+  },
+  "package-open": {
+    "source": "portfolio/Package Design/50.png",
+    "asset": "assets/package-open.webp",
+    "width": 842,
+    "height": 596
+  },
+  "package-filled": {
+    "source": "portfolio/Package Design/51.png",
+    "asset": "assets/package-filled.webp",
+    "width": 842,
+    "height": 596
+  },
+  "package-closed": {
+    "source": "portfolio/Package Design/52.png",
+    "asset": "assets/package-closed.webp",
+    "width": 842,
+    "height": 596
+  },
+  "bird-lamp": {
+    "source": "portfolio/Smart Objects - Lamp/Smart Objects - Lamp.png",
+    "asset": "assets/bird-lamp.webp",
+    "width": 490,
+    "height": 490
+  },
+  "scooper": {
+    "source": "portfolio/Smart Object - Scooper/Smart Objects - Scooper.png",
+    "asset": "assets/scooper.webp",
+    "width": 490,
+    "height": 490
+  },
+  "arbor-objects": {
+    "source": "portfolio/Arborfelix/90.png",
+    "asset": "assets/arbor-objects.webp",
+    "width": 842,
+    "height": 595
+  },
+  "drone-landscape": {
+    "source": "portfolio/Taming the drone/8.png",
+    "asset": "assets/drone-landscape.webp",
+    "width": 960,
+    "height": 540
+  }
+}

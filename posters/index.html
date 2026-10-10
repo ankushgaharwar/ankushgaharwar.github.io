@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171717">
+  <meta name="description" content="Two hundred poster compositions from the design archive of Ankush Gaharwar. An interactive collection of objects, spaces, and experiments.">
+  <title>Posters — Ankush Gaharwar</title>
+  <link rel="icon" href="../favicon.png">
+  <link rel="preload" href="fonts/inter-light.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="posters.css">
+  <script src="posters.js" defer></script>
+</head>
+<body>
+  <header class="masthead">
+    <a class="home-link" href="../index.html" aria-label="Back to Ankush Gaharwar's portfolio">AG<span> / POSTERS</span></a>
+    <span class="edition">OBJECTS, SPACES & EXPERIMENTS · 001—200</span>
+  </header>
+  <main id="wall" aria-label="Poster wall. Move your pointer toward any screen edge or drag to explore. Scroll or pinch to zoom. Use arrow keys to move between posters, and Enter to open one.">
+    <h1 class="sr-only">Posters by Ankush Gaharwar</h1>
+    <div id="board" class="board" aria-label="200 poster compositions"></div>
+  </main>
+  <footer class="wall-tools">
+    <p id="hint">Move near edges or drag <span>·</span> Scroll to zoom <span>·</span> Click a poster</p>
+    <div class="zoom-tools" role="group" aria-label="Wall controls">
+      <button id="auto-pan" aria-label="Automatic edge panning" aria-pressed="true" title="Pause automatic edge panning">Auto-pan on</button>
+      <button id="zoom-out" aria-label="Zoom out" title="Zoom out (−)">−</button>
+      <button id="reset" aria-label="Reset wall view" title="Reset view (0)"><span id="zoom-label">68%</span></button>
+      <button id="zoom-in" aria-label="Zoom in" title="Zoom in (+)">+</button>
+    </div>
+  </footer>
+  <dialog id="viewer" aria-label="Poster detail">
+    <div class="viewer-bar">
+      <span id="poster-number"></span>
+      <button id="close" aria-label="Close poster" title="Close (Esc)">Close <span>×</span></button>
+    </div>
+    <div class="viewer-stage">
+      <button class="step previous" id="previous" aria-label="Previous poster">←</button>
+      <div id="large-poster" class="large-poster"></div>
+      <button class="step next" id="next" aria-label="Next poster">→</button>
+    </div>
+    <div class="viewer-footer">
+      <span id="poster-name"></span>
+      <a id="project-link" href="../index.html">View project ↗</a>
+      <button id="replay" title="Replay the poster animation">Replay ↻</button>
+    </div>
+  </dialog>
+  <noscript><p class="no-script">Enable JavaScript to explore the poster wall. <a href="../index.html">Visit the portfolio ↗</a></p></noscript>
+</body>
+</html>
