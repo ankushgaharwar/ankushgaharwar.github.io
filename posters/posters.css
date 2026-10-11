@@ -77,4 +77,3 @@ dialog::backdrop { background: #101010de; backdrop-filter: blur(3px); }
   #poster-name { max-width: 36%; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
-@media (hover: none) and (pointer: coarse) { #auto-pan { display: none; } }

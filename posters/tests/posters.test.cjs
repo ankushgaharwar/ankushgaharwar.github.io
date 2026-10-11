@@ -76,8 +76,9 @@ function page({ reducedMotion = false } = {}) {
 
 test('all four wide edge zones pan toward the pointer, well before the screen edge', () => {
   for (const [px, py, axis, sign] of [[220, 400, 0, 1], [1060, 400, 0, -1], [640, 160, 1, 1], [640, 640, 1, -1]]) {
-    const p = page(), before = p.position();
-    p.move(px, py); p.tick(30);
+    const p = page();
+    p.move(px, py); p.tick(2);
+    const before = p.position(); p.tick(30);
     const after = p.position();
     assert.ok((after[axis] - before[axis]) * sign > 5, `${px},${py} should pan`);
     assert.equal(after[1 - axis], before[1 - axis]);
@@ -120,8 +121,9 @@ test('automatic motion cannot compete with a drag or a poster detail', () => {
 });
 
 test('touch input never starts hover panning, and users can pause or resume it', () => {
-  const p = page(), before = p.position();
-  p.move(20, 400, { pointerType: 'touch' }); p.tick(20);
+  const p = page();
+  p.move(20, 400, { pointerType: 'touch' }); p.tick(2);
+  const before = p.position(); p.tick(20);
   assert.deepEqual(p.position(), before);
   p.element('auto-pan').emit('click');
   p.move(20, 400); p.tick(20);
@@ -158,4 +160,38 @@ test('the expanded, shuffled collection stays stable and all 200 posters render 
   }
   assert.equal(subjects.size, 15);
   assert.equal(images.size, 32);
+});
+
+
+test('the untouched wall drifts diagonally at a slow, consistent pace', () => {
+  const p = page(), before = p.position(); p.tick(300);
+  const after = p.position();
+  assert.ok(Math.abs((before[0] - after[0]) - 60) < 1);
+  assert.ok(Math.abs((before[1] - after[1]) - 36) < 1);
+});
+
+test('idle drift resumes after interaction, but stays paused over controls and in details', () => {
+  const p = page();
+  p.move(640, 400); p.tick(2);
+  const paused = p.position(); p.tick(60);
+  assert.deepEqual(p.position(), paused);
+  p.tick(120); assert.ok(p.position()[0] < paused[0]);
+  p.move(1200, 760, {target: {closest: () => ({})}}); p.tick(2);
+  const controls = p.position(); p.tick(180);
+  assert.deepEqual(p.position(), controls);
+  p.move(640, 400);
+  p.element('wall').emit('click', {detail: 0, target: p.element('board').children[89]});
+  p.tick(180); assert.deepEqual(p.position(), controls);
+  p.element('close').emit('click'); p.tick(180);
+  assert.ok(p.position()[0] < controls[0]);
+});
+
+test('pause, reduced motion, focus loss, and background tabs stop idle drift', () => {
+  for (const stop of [p => p.element('auto-pan').emit('click'), p => p.window.emit('blur'), p => {p.document.hidden = true; p.document.emit('visibilitychange');}, p => p.motion.emit('change', {matches: true})]) {
+    const p = page(); p.tick(30); stop(p); p.tick(2);
+    const paused = p.position(); p.tick(300);
+    assert.deepEqual(p.position(), paused);
+  }
+  const reduced = page({reducedMotion: true}), before = reduced.position();
+  reduced.tick(300); assert.deepEqual(reduced.position(), before);
 });

@@ -173,6 +173,31 @@
   const pointers = new Map();
   const edgeButton = document.getElementById('auto-pan');
   let edgeEnabled = !reducedMotion.matches, edgeFrame = 0, edgeTime = 0, hover = null;
+  let idleFrame = 0, idleTime = 0, idleResumeAt = 0, pageFocused = true, overControls = false;
+  let driftX = -12, driftY = -7.2;
+
+  function pauseIdle() { idleResumeAt = performance.now() + 1800; idleTime = 0; }
+  function stopIdle() { cancelAnimationFrame(idleFrame); idleFrame = 0; idleTime = 0; }
+  function startIdle() {
+    if (!idleFrame && edgeEnabled && pageFocused && !document.hidden) idleFrame = requestAnimationFrame(drift);
+  }
+  function drift(time) {
+    idleFrame = 0;
+    if (!edgeEnabled || !pageFocused || document.hidden) { idleTime = 0; return; }
+    if (viewer.open || pointers.size || edgeFrame || overControls || time < idleResumeAt) {
+      idleTime = 0;
+    } else {
+      const elapsed = idleTime ? Math.min((time - idleTime) / 1000, .04) : 1 / 60;
+      idleTime = time;
+      const oldX = x, oldY = y;
+      x += driftX * elapsed; y += driftY * elapsed;
+      render();
+      // Gently reverse at the finite wall's boundaries instead of drifting into empty space.
+      if (x === oldX) driftX *= -1;
+      if (y === oldY) driftY *= -1;
+    }
+    startIdle();
+  }
 
   function stopEdgePan() {
     cancelAnimationFrame(edgeFrame);
@@ -206,11 +231,16 @@
   function updateEdgeButton() {
     edgeButton.setAttribute('aria-pressed', String(edgeEnabled));
     edgeButton.textContent = `Auto-pan ${edgeEnabled ? 'on' : 'off'}`;
-    edgeButton.title = edgeEnabled ? 'Pause automatic edge panning' : 'Enable automatic edge panning';
+    edgeButton.title = edgeEnabled ? 'Pause idle drift and edge panning' : 'Enable idle drift and edge panning';
   }
   updateEdgeButton();
-  edgeButton.addEventListener('click', () => { stopEdgePan(); edgeEnabled = !edgeEnabled; updateEdgeButton(); });
+  edgeButton.addEventListener('click', () => {
+    stopEdgePan(); stopIdle(); edgeEnabled = !edgeEnabled; updateEdgeButton();
+    pauseIdle(); startIdle();
+  });
   document.addEventListener('pointermove', event => {
+    pauseIdle();
+    overControls = Boolean(event.target.closest('.zoom-tools, .home-link'));
     if (event.pointerType !== 'mouse' || event.buttons || !edgeEnabled || viewer.open || pointers.size || document.hidden || event.target.closest('.zoom-tools, .home-link')) {
       stopEdgePan(); return;
     }
@@ -218,13 +248,17 @@
     if (!edgeForce(hover.x, viewWidth, 300) && !edgeForce(hover.y, viewHeight, 240)) { stopEdgePan(); return; }
     if (!edgeFrame) edgeFrame = requestAnimationFrame(panAtEdge);
   }, { passive: true });
-  document.addEventListener('pointerleave', stopEdgePan);
+  document.addEventListener('pointerleave', () => { stopEdgePan(); overControls = false; pauseIdle(); });
   wall.addEventListener('pointerleave', stopEdgePan);
   document.addEventListener('pointercancel', stopEdgePan);
-  document.addEventListener('visibilitychange', () => { if (document.hidden) stopEdgePan(); });
-  window.addEventListener('blur', stopEdgePan);
+  document.addEventListener('visibilitychange', () => {
+    stopEdgePan(); stopIdle(); pauseIdle();
+    if (!document.hidden) startIdle();
+  });
+  window.addEventListener('blur', () => { pageFocused = false; stopEdgePan(); stopIdle(); });
+  window.addEventListener('focus', () => { pageFocused = true; overControls = false; pauseIdle(); startIdle(); });
   reducedMotion.addEventListener('change', event => {
-    if (event.matches) { stopEdgePan(); edgeEnabled = false; updateEdgeButton(); }
+    if (event.matches) { stopEdgePan(); stopIdle(); edgeEnabled = false; updateEdgeButton(); }
   });
   function draw() {
     frame = 0;
@@ -250,6 +284,7 @@
     render();
   }
   function zoom(next, px = viewWidth / 2, py = viewHeight / 2) {
+    pauseIdle();
     stopEdgePan();
     cancelAnimationFrame(inertia);
     next = Math.max(.26, Math.min(1.8, next));
@@ -259,6 +294,7 @@
     render();
   }
   function select(index, focus = true) {
+    pauseIdle();
     stopEdgePan();
     buttons[selected].tabIndex = -1;
     selected = Math.max(0, Math.min(TOTAL - 1, index));
@@ -277,6 +313,7 @@
   }
   wall.addEventListener('pointerdown', event => {
     if (event.button !== 0) return;
+    pauseIdle();
     stopEdgePan();
     cancelAnimationFrame(inertia);
     pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
@@ -302,6 +339,7 @@
   });
   function release(event) {
     if (!pointers.has(event.pointerId)) return;
+    pauseIdle();
     pointers.delete(event.pointerId);
     if (pointers.size) { gesture = { ...measure(), time: performance.now() }; return; }
     wall.classList.remove('dragging');
@@ -359,6 +397,7 @@
   }
   function closePoster(fromHash = false) {
     if (!viewer.open) return;
+    pauseIdle();
     viewer.close();
     large.replaceChildren();
     if (!fromHash) {
@@ -382,6 +421,7 @@
   window.addEventListener('hashchange', readHash);
   readHash();
   document.addEventListener('keydown', event => {
+    pauseIdle();
     stopEdgePan();
     if (event.altKey || event.ctrlKey || event.metaKey) return;
     if (viewer.open) {
@@ -405,4 +445,6 @@
     viewWidth = width; viewHeight = height; render();
   });
   if (matchMedia('(pointer: coarse)').matches) document.getElementById('hint').textContent = 'Drag to explore · Pinch to zoom · Tap a poster';
+  idleResumeAt = 0;
+  startIdle();
 })();
