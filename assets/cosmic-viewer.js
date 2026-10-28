@@ -11,9 +11,15 @@
       <div><p class="cosmic-eyebrow">INTERACTIVE 3D / THESIS</p><h2 id="cosmic-title">Cosmic Kaksh</h2></div>
       <button class="cosmic-close" type="button" aria-label="Close 3D viewer" autofocus>&times;</button>
     </div>
-    <div class="cosmic-views" role="group" aria-label="Model view"><button type="button" data-model="cosmic-kaksh.glb" aria-pressed="true">Furniture</button><button type="button" data-model="cosmic-kaksh-scene.glb" aria-pressed="false">Station scene</button></div>
+    <div class="cosmic-views" role="group" aria-label="Model view"><button type="button" data-view="tables" aria-pressed="true">Tables</button><button type="button" data-view="station" aria-pressed="false">Station scene</button></div>
+    <div class="cosmic-variants" role="group" aria-label="Table variants">
+      <button type="button" data-model="cosmic-kaksh.glb" aria-pressed="true"><span>01</span> Game table</button>
+      <button type="button" data-model="cosmic-kaksh-extended.glb" aria-pressed="false"><span>02</span> Extended table</button>
+      <button type="button" data-model="cosmic-kaksh-utility.glb" aria-pressed="false"><span>03</span> Utility table</button>
+      <button type="button" data-model="cosmic-kaksh-wall.glb" aria-pressed="false"><span>04</span> Wall-mounted table</button>
+    </div>
     <div class="cosmic-stage">
-      <model-viewer alt="Cosmic Kaksh: furniture designed for zero-gravity environments" camera-controls touch-action="none" camera-orbit="35deg 65deg 105%" shadow-intensity="0.6" exposure="1.1" interaction-prompt="none" loading="eager"></model-viewer>
+      <model-viewer alt="Cosmic Kaksh: game table designed for zero-gravity environments" camera-controls touch-action="none" camera-orbit="35deg 65deg 105%" shadow-intensity="0.4" shadow-softness="1" exposure="0.65" tone-mapping="neutral" interaction-prompt="none" loading="eager"></model-viewer>
       <div class="cosmic-status" role="status" aria-live="polite"><span>Loading 3D model…</span><button type="button" hidden>Try again</button></div>
     </div>
     <div class="cosmic-footer">
@@ -27,6 +33,8 @@
   const retry = status.querySelector('button');
   let opener, library, timeout;
   let modelFile = 'cosmic-kaksh.glb';
+  let selectedTable = modelFile;
+  let loadRequest = 0;
   function failed() {
     clearTimeout(timeout);
     status.hidden = false;
@@ -34,6 +42,7 @@
     retry.hidden = false;
   }
   async function load(retryRequest = false) {
+    const request = ++loadRequest;
     status.hidden = false;
     retry.hidden = true;
     message.textContent = 'Loading 3D model…';
@@ -42,14 +51,16 @@
     try {
       const libraryURL = new URL('vendor/model-viewer/model-viewer.min.js', assets);
       const modelURL = new URL('models/' + modelFile, assets);
+      modelURL.searchParams.set('v', '2');
       if (retryRequest) {
         libraryURL.searchParams.set('retry', Date.now());
         modelURL.searchParams.set('retry', Date.now());
       }
       library ||= import(libraryURL.href).catch(error => { library = null; throw error; });
       await library;
+      if (request !== loadRequest) return;
       viewer.setAttribute('src', modelURL.href);
-    } catch (error) { failed(); }
+    } catch (error) { if (request === loadRequest) failed(); }
   }
   viewer.addEventListener('load', () => { clearTimeout(timeout); status.hidden = true; });
   viewer.addEventListener('error', failed);
@@ -57,15 +68,29 @@
     if (retry.hidden && event.detail.totalProgress < 1) message.textContent = `Loading 3D model… ${Math.round(event.detail.totalProgress * 100)}%`;
   });
   retry.addEventListener('click', () => load(true));
+  function showModel(file, label) {
+    if (modelFile === file) return;
+    modelFile = file;
+    viewer.alt = `Cosmic Kaksh: ${label}`;
+    viewer.cameraOrbit = '35deg 65deg 105%';
+    viewer.cameraTarget = 'auto auto auto';
+    viewer.fieldOfView = 'auto';
+    load();
+  }
   dialog.querySelectorAll('[data-model]').forEach(button => {
     button.addEventListener('click', () => {
-      if (modelFile === button.dataset.model) return;
-      modelFile = button.dataset.model;
+      selectedTable = button.dataset.model;
       dialog.querySelectorAll('[data-model]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-      viewer.cameraOrbit = '35deg 65deg 105%';
-      viewer.cameraTarget = 'auto auto auto';
-      viewer.fieldOfView = 'auto';
-      load();
+      showModel(selectedTable, button.textContent.trim());
+    });
+  });
+  dialog.querySelectorAll('[data-view]').forEach(button => {
+    button.addEventListener('click', () => {
+      const tables = button.dataset.view === 'tables';
+      dialog.querySelectorAll('[data-view]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      dialog.querySelector('.cosmic-variants').hidden = !tables;
+      const label = tables ? dialog.querySelector('[data-model][aria-pressed="true"]').textContent.trim() : 'Complete station scene';
+      showModel(tables ? selectedTable : 'cosmic-kaksh-scene.glb', label);
     });
   });
   triggers.forEach(trigger => {
